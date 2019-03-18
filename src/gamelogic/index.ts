@@ -136,27 +136,8 @@ export default class GameLogic {
             }
         }
     };
-    wallHandler = function (player, walls) {
-        let isWallClimb = this.wallClimb(player, walls);
-        if (isWallClimb === false) {
-            return;
-        }
-    };
-    wallClimb = function (player, walls) {
-        let playerTouching = { left: player.body.touching.left, right: player.body.touching.right, top: player.body.touching.up, bottom: player.body.touching.down };
-        let wallTouching = { left: walls.body.touching.left, right: walls.body.touching.right, top: walls.body.touching.up, bottom: walls.body.touching.down };
-        if ((playerTouching.left === true && (playerTouching.top === false && playerTouching.bottom === false))
-            || (playerTouching.right === true && (playerTouching.top === false && playerTouching.bottom === false))) {
-            this.state.levelManager.addJump();
-            this.player.setOnWall(wallTouching, playerTouching);
-            return true;
-        }
-        return false;
-    };
-    addJump = function () {
-        if (this.player.walljumps === 0) {
-            this.player.walljumps = 1;
-        }
+    wallHandler = function () {
+        this.player.addJump();
     };
 
     enemiesCount = function () {

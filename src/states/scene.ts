@@ -26,7 +26,6 @@ export default class Scene extends Phaser.State {
 
     // GAME CYCLE
     public preload(): void {
-        let self = this;
         this.player = new Player(this.input, this.game, this);
         this.levelManager = new LevelManager(this.game, this.player, this);
         this.textManager = new TextManager();

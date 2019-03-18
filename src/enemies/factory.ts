@@ -12,7 +12,7 @@ const enum EnemyType {
 }
 export default class EnemiesFactory {
     public MAX_SPEED = 500; // pixels/second
-    public MAX_LIFE = 3;
+    public MAX_LIFE = 1;
     public ACCELERATION = 150; // pixels/second/second
     public DRAG = 400; // pixels/second
     public GRAVITY = 30; // pixels/second/second
@@ -50,8 +50,6 @@ export default class EnemiesFactory {
         enemy.body.setSize(20, 32, 6, 0);
         enemy.anchor.setTo(0.5, 0.5);
         enemy.wandering = false;
-        // enemy.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 5);
-        //  enemy.body.drag.setTo(this.DRAG, 0);
         enemy.body.allowGravity = true;
         enemy.life = this.MAX_LIFE;
         enemy.type = EnemyType.MOB;
@@ -79,10 +77,8 @@ export default class EnemiesFactory {
         enemy.wandering = false;
         enemy.animation = new EnemyAnimation(enemy);
         enemy.animation.initAnimation();
-        // enemy.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 5);
-        // enemy.body.drag.setTo(this.DRAG, 0);
         enemy.body.allowGravity = true;
-        enemy.life = this.MAX_LIFE * 10;
+        enemy.life = this.MAX_LIFE * 3;
         enemy.sight = { x: 400, y: 100 };
         enemy.type = EnemyType.BOSS;
         enemy.facingRight = false;

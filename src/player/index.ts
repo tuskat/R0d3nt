@@ -9,27 +9,23 @@ const enum PlayerStatus {
     RUNNING,
     SHOOTING,
     JUMPING,
-    ONWALL,
     DEFAULT
 };
 
 export default class Player {
-    public MAX_SPEED = 500; // pixels/second
+    public MAX_SPEED = 400; // pixels/second
     public MAX_LIFE = 3;
-    public ACCELERATION = 1500; // pixels/second/second
-    public DRAG = 1750; // pixels/second
-    public GRAVITY = 3000; // pixels/second/second
+    public ACCELERATION = 500; // pixels/second/second
+    public DRAG = 2500; // pixels/second
+    public GRAVITY = 2500; // pixels/second/second
     public JUMP_SPEED = -700; // pixels/second (negative y is up)
     public jumps = 2;
     public scale = 0.25;
-    public walljumps = 0;
     public sprite: Phaser.Sprite = null;
     public playerState: number = PlayerStatus.IDLE;
     public life = 0;
     public jumping = false;
 
-    public walljumping = false;
-    public wallRight = true;
     public weaponManager: WeaponManager;
     public fireButton;
     public invincibility = false;
@@ -80,7 +76,6 @@ export default class Player {
 
     playerControl = function () {
         let onTheGround = this.sprite.body.touching.down;
-        let isTouching = this.sprite.body.touching;
 
         switch (this.playerState) {
             case PlayerStatus.IDLE: {
@@ -99,10 +94,6 @@ export default class Player {
                 this.isRunning(onTheGround);
                 break;
             }
-            case PlayerStatus.ONWALL: {
-                this.isOnWall(onTheGround, isTouching);
-                break;
-            }
             default: {
                 this.isRunning(onTheGround);
                 break;
@@ -110,56 +101,41 @@ export default class Player {
         }
         this.isShooting(onTheGround);
         this.isJumping(onTheGround);
-        this.isOnFloor(isTouching);
+        this.isOnFloor(onTheGround);
     };
 
     isJumping = function (onTheGround) {
-        if (onTheGround === false
-            && this.jumping === false
-            && this.walljumps > 0
-            && this.controls.upInputIsActive(50)) {
-            this.walljumping = true;
-            this.walljumps = 0;
-            this.jumping = false;
-            this.sprite.body.velocity.y = this.JUMP_SPEED;
-            this.sprite.body.acceleration.y = this.JUMP_SPEED;
-            this.animation.playAnimation('fall', 3);
-            this.playerState = PlayerStatus.JUMPING;
-            if (this.wallRight === true) {
-                this.sprite.scale.x = -this.scale;
-                this.sprite.body.acceleration.x = (-this.JUMP_SPEED / 2);
-                this.sprite.body.velocity.x = (-this.JUMP_SPEED / 2) + this.sprite.body.velocity.x;
+        if (this.jumps > 0) {
+            if (onTheGround === false
+                && this.jumping === false
+                && this.controls.upInputIsActive(50)) {
+                this.jumping = false;
+                this.sprite.body.velocity.y = this.JUMP_SPEED;
+                this.sprite.body.acceleration.y = this.JUMP_SPEED;
+                this.animation.playAnimation('jump', 3);
+                this.playerState = PlayerStatus.JUMPING;
+            } else if (this.controls.upInputIsActive(150)) {
+                this.sprite.body.velocity.y = this.JUMP_SPEED;
+                this.jumping = true;
+                this.animation.playAnimation('jump', 3);
+                this.playerState = PlayerStatus.JUMPING;
+
             }
-            else if (this.wallRight === false) {
-                this.sprite.scale.x = this.scale;
-                this.sprite.body.acceleration.x = (this.JUMP_SPEED / 2);
-                this.sprite.body.velocity.x = (this.JUMP_SPEED / 2) + this.sprite.body.velocity.x;
-            }
-        } else if (this.jumps > 0 && this.controls.upInputIsActive(150)) {
-            this.sprite.body.velocity.y = this.JUMP_SPEED;
-            this.jumping = true;
-            this.animation.playAnimation('jump', 3);
-            this.playerState = PlayerStatus.JUMPING;
         }
         if (this.jumping && this.controls.upInputReleased()) {
-            this.jumps--;
             this.jumping = false;
-        }
-        else if (this.walljumping && this.controls.upInputReleased()) {
-            this.walljumping = false;
+            this.jumps--;
+
         }
     };
-    isOnFloor = function (isTouching) {
-        if (isTouching.down === true) {
+    isOnFloor = function (onTheGround) {
+        if (onTheGround === true) {
             this.jumps = 2;
-            this.walljumps = 0;
             this.jumping = false;
-            this.walljumping = false;
             this.sprite.body.acceleration.y = 0;
         }
     };
     isRunning = function (onTheGround) {
-        let touchSides = { left: this.sprite.body.touching.left, right: this.sprite.body.touching.right };
         let previousState = this.playerState;
         if (this.controls.leftInputIsActive()) {
 
@@ -194,96 +170,36 @@ export default class Player {
         }
     };
     isShooting = function (onTheGround) {
-        let lastState = this.playerState;
-        if (this.playerState !== PlayerStatus.ONWALL) {
-            if (this.weaponManager.isShooting()) {
-                this.playerState = PlayerStatus.SHOOTING;
-                if (this.facingRight === true) {
-                    this.weaponManager.shootRight(this.sprite);
-                }
-                else {
-                    this.weaponManager.shootLeft(this.sprite);
-                }
-                let shot = this.weaponManager.fireAction();
-                if (shot === true) {
-                    if (onTheGround === true) {
-                        if (lastState === PlayerStatus.RUNNING)
-                            this.animation.playAnimation('runshoot', 30, true);
-                        else
-                            this.animation.playAnimation('shoot', 60, false);
-                    }
-                    else
-                        this.animation.playAnimation('jumpshoot', 60, false);
-                }
-            } else {
-                this.playerState = PlayerStatus.RUNNING;
+    let lastState = this.playerState;
+        if (this.weaponManager.isShooting()) {
+            this.playerState = PlayerStatus.SHOOTING;
+            if (this.facingRight === true) {
+                this.weaponManager.shootRight(this.sprite);
             }
+            else {
+                this.weaponManager.shootLeft(this.sprite);
+            }
+            let shot = this.weaponManager.fireAction();
+            if (shot === true) {
+                if (onTheGround === true) {
+                    if (lastState === PlayerStatus.RUNNING)
+                        this.animation.playAnimation('runshoot', 30, true);
+                    else
+                        this.animation.playAnimation('shoot', 60, false);
+                }
+                else
+                    this.animation.playAnimation('jumpshoot', 60, false);
+            }
+        } else {
+            this.playerState = PlayerStatus.RUNNING;
         }
     };
-    isOnWall = function (onTheGround, isTouching) {
-        onTheGround = (this.sprite.body.touching.down && !this.sprite.body.touching.left && !this.sprite.body.touching.right);
-        if (onTheGround === true) {
-            if (this.playerState === PlayerStatus.ONWALL)
-                this.playerState = PlayerStatus.IDLE;
-        } else {
-            if (isTouching.none === false) {
-                if (this.sprite.body.velocity.y <= 0) {
-                    this.sprite.body.velocity.y += 1;
-                } else if (this.sprite.body.velocity.y > 100) {
-                    this.sprite.body.velocity.y = 200;
-                }
-
-                if (this.wallRight === true) {
-                    this.sprite.body.acceleration.x = -1;
-                    this.sprite.scale.x = -this.scale;
-                }
-                else if (this.wallRight === false) {
-                    this.sprite.body.acceleration.x = 1;
-                    this.sprite.scale.x = this.scale;
-                }
-            } else {
-                this.playerState = PlayerStatus.JUMPING;
-                this.animation.playAnimation('fall', 3);
-                this.facingRight = !this.facingRight;
-                if (this.facingRight === true)
-                    this.sprite.scale.x = this.scale;
-                else
-                    this.sprite.scale.x = -this.scale;
-            }
+    addJump = function () {
+        if (this.jumps === 0 && this.controls.upInputIsActive(50)) {
+            this.jumps = 1;
         }
     };
     setDefaultCollision = function () {
         this.sprite.body.setSize(80, 176, -16, 0);
     };
-    setOnWall = function (wallTouching, playerTouching) {
-        if (playerTouching.bottom === false) {
-            if (wallTouching.left === true && wallTouching.right === false) {
-                this.playerState = PlayerStatus.ONWALL;
-                this.sprite.body.acceleration.x = 1;
-                this.animation.playAnimation('wallclimb', 1);
-                this.wallRight = false;
-            }
-            else if (wallTouching.right === true && wallTouching.left === false) {
-                this.playerState = PlayerStatus.ONWALL;
-                this.sprite.body.acceleration.x = -1;
-                this.animation.playAnimation('wallclimb', 1);
-                this.wallRight = true;
-            }
-        } else {
-            this.playerState = PlayerStatus.DEFAULT;
-        }
-    };
 }
-
-/*
-// touch up
-     isActive = (isActive || (this.game.input.activePointer.justPressed(duration + 1000 / 60) &&
-     this.game.input.activePointer.x > this.game.width / 4 &&
-     this.game.input.activePointer.x < this.game.width / 2 + this.game.width / 4));
-// touch left
-     isActive = (isActive || (this.game.input.activePointer.isDown &&
-              this.game.input.activePointer.x < this.game.width / 4));
-// touch right
-     isActive = (isActive || (this.game.input.activePointer.isDown &&
-      this.game.input.activePointer.x > this.game.width / 2 + this.game.width / 4));
-*/

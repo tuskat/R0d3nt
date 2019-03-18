@@ -26,8 +26,10 @@ export default class EnemiesManager extends EnemiesFactory {
         });
     };
     enemieRoutine = function (enemy) {
-        if (enemy.status !== Status.DEAD
-            && enemy.wandering === false) {
+        if (enemy.status === Status.DEAD) {
+            return;
+        }
+        if (enemy.wandering === false) {
             let seek = 4000;
             if (enemy.status !== Status.IDLE)
                 seek = 300 + this.game.rnd.integerInRange(200, 500);
@@ -35,8 +37,10 @@ export default class EnemiesManager extends EnemiesFactory {
         }
     };
     wanderAroundAimlessly = function (enemy) {
-        if (enemy.status !== Status.DEAD
-            && enemy.status !== Status.CHASE
+        if (enemy.status === Status.DEAD) {
+            return;
+        }
+        if (enemy.status !== Status.CHASE
             && enemy.status !== Status.ATTACKING) {
             enemy.wandering = true;
             enemy.scale.x = -enemy.scale.x;

@@ -46,7 +46,7 @@ export default class WeaponManager {
         this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         this.weapon.bulletLifespan = 2000;
         this.weapon.bulletSpeed = 2000;
-        this.weapon.bulletGravity = new Phaser.Point(-100, -3000);
+        this.weapon.bulletGravity = new Phaser.Point(-100, -2500);
         this.weapon.bulletAngleVariance = 0;
         this.weapon.fireRate = 50;
         this.weapon.autoFire = false;
@@ -81,8 +81,7 @@ export default class WeaponManager {
     };
     shootLeft = function (playerSprite) {
         this.weapon.bulletSpeed = -1000;
-        this.weapon.fireAngle = Phaser.ANGLE_LEFT;
-        this.weapon.bulletAngleOffset = 180;
+        this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(false, playerSprite);
     };
     isShooting = function () {
@@ -104,7 +103,7 @@ export default class WeaponManager {
         if (right)
             this.weapon.trackSprite(playerSprite, 26, -8, true);
         else
-            this.weapon.trackSprite(playerSprite, -26, -8, true);
+            this.weapon.trackSprite(playerSprite, 26, 8, true);
     };
     restoreInterval = function () {
         this.canShoot = !this.canShoot;
