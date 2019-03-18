@@ -1,0 +1,188 @@
+{"frames": [
+
+{
+	"filename": "Death/Death1.png",
+	"frame": {"x":0,"y":0,"w":112,"h":172},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":172},
+	"sourceSize": {"w":112,"h":172}
+},
+{
+	"filename": "Death/Death2.png",
+	"frame": {"x":116,"y":0,"w":112,"h":172},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":172},
+	"sourceSize": {"w":112,"h":172}
+},
+{
+	"filename": "Death/Death3.png",
+	"frame": {"x":232,"y":0,"w":112,"h":172},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":172},
+	"sourceSize": {"w":112,"h":172}
+},
+{
+	"filename": "Death/Death4.png",
+	"frame": {"x":348,"y":0,"w":112,"h":172},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":172},
+	"sourceSize": {"w":112,"h":172}
+},
+{
+	"filename": "Death/Death5.png",
+	"frame": {"x":464,"y":0,"w":112,"h":172},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":172},
+	"sourceSize": {"w":112,"h":172}
+},
+{
+	"filename": "Idle/Idle1.png",
+	"frame": {"x":580,"y":0,"w":112,"h":180},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":180},
+	"sourceSize": {"w":112,"h":180}
+},
+{
+	"filename": "Idle/Idle2.png",
+	"frame": {"x":696,"y":0,"w":112,"h":180},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":180},
+	"sourceSize": {"w":112,"h":180}
+},
+{
+	"filename": "Idle/Idle3.png",
+	"frame": {"x":812,"y":0,"w":115,"h":180},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":115,"h":180},
+	"sourceSize": {"w":115,"h":180}
+},
+{
+	"filename": "Idle/Idle4.png",
+	"frame": {"x":0,"y":184,"w":112,"h":180},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":180},
+	"sourceSize": {"w":112,"h":180}
+},
+{
+	"filename": "Run/Run1.png",
+	"frame": {"x":116,"y":184,"w":112,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":176},
+	"sourceSize": {"w":112,"h":176}
+},
+{
+	"filename": "Run/Run2.png",
+	"frame": {"x":232,"y":184,"w":112,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":176},
+	"sourceSize": {"w":112,"h":176}
+},
+{
+	"filename": "Run/Run3.png",
+	"frame": {"x":348,"y":184,"w":112,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":176},
+	"sourceSize": {"w":112,"h":176}
+},
+{
+	"filename": "Run/Run4.png",
+	"frame": {"x":464,"y":184,"w":112,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":176},
+	"sourceSize": {"w":112,"h":176}
+},
+{
+	"filename": "Run/Run5.png",
+	"frame": {"x":580,"y":184,"w":112,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":176},
+	"sourceSize": {"w":112,"h":176}
+},
+{
+	"filename": "Run/Run6.png",
+	"frame": {"x":696,"y":184,"w":112,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":176},
+	"sourceSize": {"w":112,"h":176}
+},
+{
+	"filename": "Slash/Slash1.png",
+	"frame": {"x":812,"y":184,"w":112,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":176},
+	"sourceSize": {"w":112,"h":176}
+},
+{
+	"filename": "Slash/Slash2.png",
+	"frame": {"x":0,"y":368,"w":112,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":176},
+	"sourceSize": {"w":112,"h":176}
+},
+{
+	"filename": "Slash/Slash3.png",
+	"frame": {"x":116,"y":368,"w":104,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":104,"h":176},
+	"sourceSize": {"w":104,"h":176}
+},
+{
+	"filename": "Slash/Slash4.png",
+	"frame": {"x":224,"y":368,"w":104,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":104,"h":176},
+	"sourceSize": {"w":104,"h":176}
+},
+{
+	"filename": "Slash/Slash5.png",
+	"frame": {"x":332,"y":368,"w":232,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":232,"h":176},
+	"sourceSize": {"w":232,"h":176}
+},
+{
+	"filename": "Slash/Slash6.png",
+	"frame": {"x":568,"y":368,"w":232,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":232,"h":176},
+	"sourceSize": {"w":232,"h":176}
+},
+{
+	"filename": "Slash/Slash7.png",
+	"frame": {"x":804,"y":368,"w":200,"h":176},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":176},
+	"sourceSize": {"w":200,"h":176}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "enemy_ninja.png",
+	"format": "RGBA8888",
+	"size": {"w":1004,"h":544},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:647589dfa0e08a0a6ee6fbca391a3237:f576425f3e2c743367c864ad32012f82:1b3c4f7527c8a1b924e74424ac48c473$"
+}
+}

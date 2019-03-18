@@ -1,0 +1,35 @@
+export default class PlayerControls {
+
+    input: Phaser.Input = null;
+    game: Phaser.Game = null;
+
+    constructor(input, game) {
+        this.input = input;
+        this.game = game;
+    }
+    upInputIsActive = function (duration) {
+        let isActive = false;
+        isActive = this.input.keyboard.downDuration(Phaser.Keyboard.UP, duration);
+        return isActive;
+    };
+
+    leftInputIsActive = function () {
+        let isActive = false;
+        isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
+        return isActive;
+    };
+    rightInputIsActive = function () {
+        let isActive = false;
+        isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+        return isActive;
+    };
+
+    upInputReleased = function () {
+        let released = false;
+        released = this.input.keyboard.upDuration(Phaser.Keyboard.UP);
+        if (released)
+            this.game.input.activePointer.justReleased();
+        return released;
+    };
+
+}
