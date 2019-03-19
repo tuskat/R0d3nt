@@ -67,7 +67,6 @@ export default class EnemyAnimation {
         this.sprite.collisionChanged = false;
     };
        doneSlashing = function () {
-        this.sprite.status = Status.CHASE;
-        this.playAnimation('run');
+        this.playAnimation('idle');
     };
 }

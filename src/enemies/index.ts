@@ -16,109 +16,103 @@ export default class EnemiesManager extends EnemiesFactory {
     enemiesChase = function (player, walls) {
         let self = this;
         this.sprites.forEachAlive(function (enemy) {
-            if (enemy.state !== Status.DEAD) {
-                if (self.enemiesSight(enemy, player.sprite, walls)) {
-                    if (enemy.state !== Status.ATTACKING)
-                        self.runToPlayer(player.sprite, enemy);
-                }
-
+            if (enemy.state === Status.DEAD) {
+                return;
+            } else {
+                self.seekPlayer(enemy, player, walls, self);
             }
+            self.act(enemy, player);
         });
     };
-    enemieRoutine = function (enemy) {
-        if (enemy.status === Status.DEAD) {
-            return;
-        }
-        if (enemy.wandering === false) {
-            let seek = 4000;
-            if (enemy.status !== Status.IDLE)
-                seek = 300 + this.game.rnd.integerInRange(200, 500);
-            this.state.timer.add(seek, this.wanderAroundAimlessly, this, enemy);
+    act = function(enemy, player) {
+        switch (enemy.state) {
+            case Status.CHASE: {
+                this.runToPlayer(player.sprite, enemy);
+                break;
+            }
+            case Status.CONFUSED: {
+                this.idle(enemy);
+                break;
+            }
+            case Status.ATTACKING: {
+                this.attack(enemy);
+                break;
+            }
+            default: {
+                this.idle(enemy);
+                break;
+            }
         }
     };
-    wanderAroundAimlessly = function (enemy) {
+    seekPlayer = function (enemy, player,  walls, self) {
+        if (self.enemiesSight(enemy, player.sprite, walls)) {
+            if (self.inAttackRange(enemy, player.sprite)) {
+                enemy.state = Status.ATTACKING;
+            } else {
+                enemy.state = Status.CHASE;
+            }
+        } else {
+            enemy.state = Status.CONFUSED;
+        }
+    };
+    idle = function (enemy) {
         if (enemy.status === Status.DEAD) {
             return;
         }
-        if (enemy.status !== Status.CHASE
-            && enemy.status !== Status.ATTACKING) {
-            enemy.wandering = true;
-            enemy.scale.x = -enemy.scale.x;
-            enemy.facingRight = !enemy.facingRight;
-            if (enemy.facingRight === true)
-                enemy.body.velocity.x = this.ACCELERATION;
-            else
-                enemy.body.velocity.x = -this.ACCELERATION;
-
+        else {
+            enemy.body.velocity.x = 0;
             if (enemy.animation !== undefined) {
-                enemy.animation.playAnimation('run');
+                enemy.animation.playAnimation('idle', 4);
             }
-            let seek = 2000 + this.game.rnd.integerInRange(2000, 5000);
-            this.state.timer.add(seek, this.wanderAroundAimlessly, this, enemy);
         }
     };
     runToPlayer = function (player, enemy) {
-        if (enemy.status !== Status.ATTACKING) {
-            enemy.wandering = false;
-            if (enemy.x > player.x) {
-                enemy.body.velocity.x = - this.ACCELERATION;
-                enemy.scale.x = -this.scale;
-                enemy.facingRight = false;
-            }
-            else {
-                enemy.body.velocity.x = this.ACCELERATION;
-                enemy.scale.x = this.scale;
-                enemy.facingRight = true;
-            }
-            if (enemy.animation !== undefined) {
-                enemy.animation.playAnimation('run');
+        if (enemy.x > player.x) {
+            enemy.body.velocity.x = - this.ACCELERATION;
+            enemy.scale.x = -this.scale;
+            enemy.facingRight = false;
+        }
+        else {
+            enemy.body.velocity.x = this.ACCELERATION;
+            enemy.scale.x = this.scale;
+            enemy.facingRight = true;
+        }
+        if (enemy.animation !== undefined) {
+            enemy.animation.playAnimation('run');
+        }
+    };
+    inAttackRange = function(enemy, player) {
+        let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
+        return this.shouldAttack(ray);
+    };
+    enemiesSight = function (enemy, player, walls) {
+        if (enemy.status === Status.DEAD) {
+            return false;
+        } else {
+            let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
+            let intersect = this.getWallIntersection(ray, walls, enemy.sight.x);
+            if (intersect !== null) {
+                return false;
+            } else if (ray.height > enemy.sight.y
+                && ray.width > enemy.sight.x)  {
+                return false;
+            } else {
+                return true;
             }
         }
     };
-    enemiesSight = function (enemy, player, walls) {
-        if (enemy.status !== Status.DEAD) {
-            let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
-            let intersect = this.getWallIntersection(ray, walls, enemy.sight.x);
-            if (intersect) {
-                return false;
-            } else {
-                if (ray.height < enemy.sight.y
-                    && ray.width < enemy.sight.x) {
-                    if (enemy.x > player.x) {
-                        // enemy.status = Status.CHASE;
-                        return this.handleAttack(enemy, ray);
-                    }
-                    else if (enemy.x < player.x) {
-                        // enemy.status = Status.CHASE;
-                        return this.handleAttack(enemy, ray);
-                    }
-                    enemy.status = Status.CONFUSED;
-                    return false;
-                }
-            }
+
+    shouldAttack = function (ray) {
+        let distance = 35;
+        if (ray.width <= distance) {
+            return true;
         }
         return false;
     };
 
-    handleAttack = function (enemy, ray) {
-        let distance = 35;
-        if (enemy.type === EnemyType.MOB) {
-            enemy.status = Status.CHASE;
-            return true;
-        } else {
-            if (ray.width <= distance && enemy.status !== Status.ATTACKING) {
-                this.Attack(enemy);
-                return false;
-            }
-            return true;
-        }
-    };
-
-    Attack = function (enemy) {
-        enemy.status = Status.ATTACKING;
+    attack = function (enemy) {
         enemy.body.velocity.x = 0;
-        enemy.animation.playAnimation('slash', 10, false);
-
+        enemy.animation.playAnimation('slash', false);
     };
     getWallIntersection = function (ray, walls, sight) {
         let distanceToWall = sight;

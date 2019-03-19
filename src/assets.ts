@@ -588,41 +588,6 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/levels/hub.json'); };
     }
-    export class LevelsLevel1 {
-        static getName(): string { return 'level1'; };
-
-        static getJSON(): string { return require('assets/levels/level1.json'); };
-    }
-    export class LevelsLevel2 {
-        static getName(): string { return 'level2'; };
-
-        static getJSON(): string { return require('assets/levels/level2.json'); };
-    }
-    export class LevelsLevel3 {
-        static getName(): string { return 'level3'; };
-
-        static getJSON(): string { return require('assets/levels/level3.json'); };
-    }
-    export class LevelsLevel4 {
-        static getName(): string { return 'level4'; };
-
-        static getJSON(): string { return require('assets/levels/level4.json'); };
-    }
-    export class LevelsLevel5 {
-        static getName(): string { return 'level5'; };
-
-        static getJSON(): string { return require('assets/levels/level5.json'); };
-    }
-    export class LevelsMap1 {
-        static getName(): string { return 'map1'; };
-
-        static getJSON(): string { return require('assets/levels/map1.json'); };
-    }
-    export class LevelsMap2 {
-        static getName(): string { return 'map2'; };
-
-        static getJSON(): string { return require('assets/levels/map2.json'); };
-    }
 }
 
 export namespace XML {

@@ -49,11 +49,10 @@ export default class EnemiesFactory {
         enemy.body.enableBody = true;
         enemy.body.setSize(20, 32, 6, 0);
         enemy.anchor.setTo(0.5, 0.5);
-        enemy.wandering = false;
         enemy.body.allowGravity = true;
         enemy.life = this.MAX_LIFE;
         enemy.type = EnemyType.MOB;
-        enemy.sight = { x: 400, y: 100 };
+        enemy.sight = { x: 100, y: 50 };
         enemy.facingRight = false;
         enemy.status = Status.IDLE;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);

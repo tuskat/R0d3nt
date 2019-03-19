@@ -14,7 +14,7 @@ const enum Status {
 };
 
 const enum Tiles {
-    FLOOR = 11,
+    FLOOR = 1,
     WALL,
     TOP,
     BOTTOM,
@@ -158,7 +158,7 @@ export default class LevelManager extends GameLogic {
                         break;
                     }
                     case Tiles.SPAWN: {
-                        this.enemiesManager.initEnemySpawn(hX, hY, level.enemies, levelTileSize);
+                        this.enemiesManager.initBoss(hX, hY, level.enemies, levelTileSize);
 
                         break;
                     }
