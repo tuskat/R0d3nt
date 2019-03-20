@@ -1,6 +1,6 @@
 import EnemyAnimation from './animations';
 
-const enum Status {
+const enum State {
     IDLE = 1,
     CHASE,
     CONFUSED,
@@ -54,7 +54,7 @@ export default class EnemiesFactory {
         enemy.type = EnemyType.MOB;
         enemy.sight = { x: 100, y: 50 };
         enemy.facingRight = false;
-        enemy.status = Status.IDLE;
+        enemy.status = State.IDLE;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 
@@ -81,7 +81,7 @@ export default class EnemiesFactory {
         enemy.sight = { x: 400, y: 100 };
         enemy.type = EnemyType.BOSS;
         enemy.facingRight = false;
-        enemy.status = Status.IDLE;
+        enemy.status = State.IDLE;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 

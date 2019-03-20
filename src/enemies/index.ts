@@ -1,6 +1,7 @@
 import EnemiesFactory from './factory';
+import EnemyAnimation from './animations';
 
-const enum Status {
+const enum State {
     IDLE = 1,
     CHASE,
     CONFUSED,
@@ -16,25 +17,25 @@ export default class EnemiesManager extends EnemiesFactory {
     enemiesChase = function (player, walls) {
         let self = this;
         this.sprites.forEachAlive(function (enemy) {
-            if (enemy.state === Status.DEAD) {
-                return;
-            } else {
+            if (enemy.state !== State.DEAD) {
                 self.seekPlayer(enemy, player, walls, self);
+                self.act(enemy, player);
+            } else {
+                self.erase(enemy);
             }
-            self.act(enemy, player);
         });
     };
     act = function(enemy, player) {
         switch (enemy.state) {
-            case Status.CHASE: {
+            case State.CHASE: {
                 this.runToPlayer(player.sprite, enemy);
                 break;
             }
-            case Status.CONFUSED: {
+            case State.CONFUSED: {
                 this.idle(enemy);
                 break;
             }
-            case Status.ATTACKING: {
+            case State.ATTACKING: {
                 this.attack(enemy);
                 break;
             }
@@ -45,37 +46,41 @@ export default class EnemiesManager extends EnemiesFactory {
         }
     };
     seekPlayer = function (enemy, player,  walls, self) {
-        if (self.enemiesSight(enemy, player.sprite, walls)) {
+        if (enemy.onCooldown) {
+            return;
+        }
+        if (self.trackPlayer(enemy, player.sprite, walls)) {
             if (self.inAttackRange(enemy, player.sprite)) {
-                enemy.state = Status.ATTACKING;
+                enemy.state = State.ATTACKING;
             } else {
-                enemy.state = Status.CHASE;
+                enemy.state = State.CHASE;
             }
         } else {
-            enemy.state = Status.CONFUSED;
+            enemy.state = State.CONFUSED;
         }
     };
     idle = function (enemy) {
-        if (enemy.status === Status.DEAD) {
-            return;
-        }
-        else {
-            enemy.body.velocity.x = 0;
-            if (enemy.animation !== undefined) {
-                enemy.animation.playAnimation('idle', 4);
-            }
+        enemy.body.velocity.x = 0;
+        if (enemy.animation !== undefined) {
+            enemy.animation.playAnimation('idle', 4);
         }
     };
     runToPlayer = function (player, enemy) {
-        if (enemy.x > player.x) {
+        if (enemy.x >= (player.x + 15)) {
             enemy.body.velocity.x = - this.ACCELERATION;
             enemy.scale.x = -this.scale;
             enemy.facingRight = false;
         }
-        else {
+        else if (enemy.x <= (player.x - 15)) {
             enemy.body.velocity.x = this.ACCELERATION;
             enemy.scale.x = this.scale;
             enemy.facingRight = true;
+        } else {
+            enemy.body.velocity.x = 0;
+            if (enemy.animation !== undefined) {
+                enemy.animation.playAnimation('idle');
+            }
+            return;
         }
         if (enemy.animation !== undefined) {
             enemy.animation.playAnimation('run');
@@ -83,36 +88,53 @@ export default class EnemiesManager extends EnemiesFactory {
     };
     inAttackRange = function(enemy, player) {
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
+        if (enemy.onCooldown) {
+            return false;
+        }
         return this.shouldAttack(ray);
     };
-    enemiesSight = function (enemy, player, walls) {
-        if (enemy.status === Status.DEAD) {
+    trackPlayer = function (enemy, player, walls) {
+        let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
+        let intersect = this.getWallIntersection(ray, walls, enemy.sight.x);
+        if (intersect !== null) {
+            return false;
+        } else if (ray.height > enemy.sight.y
+            && ray.width > enemy.sight.x)  {
             return false;
         } else {
-            let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
-            let intersect = this.getWallIntersection(ray, walls, enemy.sight.x);
-            if (intersect !== null) {
-                return false;
-            } else if (ray.height > enemy.sight.y
-                && ray.width > enemy.sight.x)  {
-                return false;
-            } else {
-                return true;
-            }
+            return true;
         }
     };
-
+    erase = function (enemy) {
+        if (!enemy.dying) {
+            enemy.animation.playAnimation('idle', false);
+            enemy.dying = true;
+            let pos = { x: enemy.x, y: enemy.y };
+            enemy.reset(pos.x, pos.y);
+            enemy.angle = 180;
+            enemy.frame = 1;
+            enemy.body.velocity.y = -600;
+            this.game.add.tween(enemy).to({ alpha: 0 }, 800, Phaser.Easing.Linear.None, true);
+            this.game.camera.shake(0.01, 250);
+        }
+    };
     shouldAttack = function (ray) {
-        let distance = 35;
-        if (ray.width <= distance) {
+        let distance = 15;
+        if ((ray.width <= distance) && (ray.height <= distance)) {
             return true;
         }
         return false;
     };
-
     attack = function (enemy) {
-        enemy.body.velocity.x = 0;
-        enemy.animation.playAnimation('slash', false);
+        if (!enemy.onCooldown) {
+            enemy.body.velocity.x = 0;
+            enemy.animation.playAnimation('slash', 20, false);
+            this.state.timer.add(1000, this.recharge , this, enemy);
+            enemy.onCooldown = true;
+        }
+    };
+    recharge = function(enemy) {
+        enemy.onCooldown = false;
     };
     getWallIntersection = function (ray, walls, sight) {
         let distanceToWall = sight;

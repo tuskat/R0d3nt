@@ -15,10 +15,10 @@ const enum PlayerStatus {
 export default class Player {
     public MAX_SPEED = 400; // pixels/second
     public MAX_LIFE = 3;
-    public ACCELERATION = 500; // pixels/second/second
+    public SPEED = 350; // pixels/second/second
     public DRAG = 2500; // pixels/second
-    public GRAVITY = 2500; // pixels/second/second
-    public JUMP_SPEED = -700; // pixels/second (negative y is up)
+    public GRAVITY = 1150; // pixels/second/second
+    public JUMP_SPEED = -450; // pixels/second (negative y is up)
     public jumps = 2;
     public scale = 0.25;
     public sprite: Phaser.Sprite = null;
@@ -111,7 +111,7 @@ export default class Player {
                 && this.controls.upInputIsActive(50)) {
                 this.jumping = false;
                 this.sprite.body.velocity.y = this.JUMP_SPEED;
-                this.sprite.body.acceleration.y = this.JUMP_SPEED;
+                // this.sprite.body.acceleration.y = this.JUMP_SPEED;
                 this.animation.playAnimation('jump', 3);
                 this.playerState = PlayerStatus.JUMPING;
             } else if (this.controls.upInputIsActive(150)) {
@@ -146,7 +146,7 @@ export default class Player {
             }
             this.sprite.scale.x = -this.scale;
             this.facingRight = false;
-            this.sprite.body.acceleration.x = -this.ACCELERATION;
+            this.sprite.body.velocity.x = -this.SPEED;
 
         } else if (this.controls.rightInputIsActive()) {
 
@@ -157,7 +157,7 @@ export default class Player {
             }
             this.sprite.scale.x = this.scale;
             this.facingRight = true;
-            this.sprite.body.acceleration.x = this.ACCELERATION;
+            this.sprite.body.velocity.x = this.SPEED;
 
         } else {
             if (onTheGround === true) {
@@ -165,7 +165,7 @@ export default class Player {
                     this.playerState = PlayerStatus.IDLE;
                     this.animation.playAnimation('idle', 4);
                 }
-                this.sprite.body.acceleration.x = 0;
+                this.sprite.body.velocity.x = 0;
             }
         }
     };
@@ -185,10 +185,10 @@ export default class Player {
                     if (lastState === PlayerStatus.RUNNING)
                         this.animation.playAnimation('runshoot', 30, true);
                     else
-                        this.animation.playAnimation('shoot', 60, false);
+                        this.animation.playAnimation('shoot', 30, false);
                 }
                 else
-                    this.animation.playAnimation('jumpshoot', 60, false);
+                    this.animation.playAnimation('jumpshoot', 30, false);
             }
         } else {
             this.playerState = PlayerStatus.RUNNING;

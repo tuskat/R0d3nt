@@ -5,10 +5,11 @@ import EnemiesManager from '../enemies';
 import LightManager from '../levels/light/';
 import TextManager from '../text/';
 
-const enum Status {
+const enum State {
     IDLE = 1,
     CHASE,
     CONFUSED,
+    ATTACKING,
     DEAD
 };
 const enum EnemyType {
@@ -53,7 +54,7 @@ export default class GameLogic {
         this.game.physics.arcade.overlap(this.player.sprite, this.walls, this.wallHandler, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
         this.game.physics.arcade.overlap(this.player.weaponManager.getBullets(), this.enemiesManager.getSprites(), this.damageEnemies, null, this);
-        this.game.physics.arcade.overlap(this.player.weaponManager.getBullets(), this.walls, this.killBullets, null, this.state);
+        this.game.physics.arcade.overlap(this.player.weaponManager.getBullets(), this.walls, this.killEntity, null, this.state);
     };
     updateEnemies = function () {
         this.enemiesManager.enemiesChase(this.player, this.walls);
@@ -68,43 +69,30 @@ export default class GameLogic {
         this.textManager.textUpdate(this.player.life, this.levelManager.score);
     };
     damageEnemies = function (bullet, enemy) {
-        if (enemy.status !== Status.DEAD) {
+        if (enemy.status !== State.DEAD) {
             enemy.body.velocity.x += bullet.data.bulletManager.bulletSpeed / 2;
             enemy.life--;
             this.showEnemyDamage(enemy);
-            if (enemy.life === 0) {
-                this.killEnemies(enemy, bullet);
-            }
             bullet.kill();
             this.score += 25;
             this.state.textManager.textUpdate(this.player.life, this.score);
         }
+        if (enemy.life <= 0) {
+            enemy.state = State.DEAD;
+            this.state.timer.add(800, this.killEntity, this, enemy);
+        }
     };
-    killEnemies = function (enemy, bullet) {
-        let pos = { x: enemy.x, y: enemy.y };
-        enemy.reset(pos.x, pos.y);
-        enemy.angle = 180;
-        enemy.status = Status.DEAD;
-        enemy.frame = 1;
-        enemy.body.velocity.y = - Math.abs(bullet.data.bulletManager.bulletSpeed);
-        this.game.add.tween(enemy).to({ alpha: 0 }, 800, Phaser.Easing.Linear.None, true);
-        this.state.timer.add(800, this.eraseEnemies, this, enemy);
-        this.game.camera.shake(0.01, 250);
-    };
-
-    eraseEnemies = function (enemy) {
-        enemy.kill();
-    };
-
-    killBullets = function (bullets) {
-        bullets.kill();
+    killEntity = function (entity) {
+        entity.kill();
     };
     // LOGIC BINDED TO LEVEL
     takeDamage = function (player, enemy) {
-
-        if (this.player.invincibility === false
-            && enemy.status !== Status.DEAD) {
-            if (enemy.type === EnemyType.MOB) {
+        if (enemy.state === State.DEAD) {
+            return;
+        }
+        if (!this.player.invincibility) {
+            if (enemy.animations.currentAnim.name === 'slash'
+                && enemy.animations.currentAnim.currentFrame.index >= 19) {
                 this.player.life -= 1;
                 this.player.invincibility = true;
                 this.state.timer.add(1000, this.updateInvincibility, this);
@@ -127,13 +115,11 @@ export default class GameLogic {
     };
     showEnemyDamage = function (enemy) {
         let damageColor = 0xc51b10;
-        if (enemy.status !== Status.DEAD) {
-            if (enemy.tint === damageColor)
-                enemy.tint = 0xffffff;
-            else {
-                enemy.tint = damageColor;
-                this.state.timer.add(250, this.showEnemyDamage, this, enemy);
-            }
+        if (enemy.tint === damageColor)
+            enemy.tint = 0xffffff;
+        else {
+            enemy.tint = damageColor;
+            this.state.timer.add(250, this.showEnemyDamage, this, enemy);
         }
     };
     wallHandler = function () {

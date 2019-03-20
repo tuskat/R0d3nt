@@ -37,19 +37,15 @@ export default class PlayerAnimation {
 
     };
     initShoot = function () {
-        let shoot = this.sprite.animations.add('shoot', [Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot1,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot2,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot3,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot4,
+        let shoot = this.sprite.animations.add('shoot', [
         Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot6,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot7,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot8,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot9]);
+        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot7]);
 
         shoot.onComplete.add(this.doneShooting, this);
 
-        let runshoot = this.sprite.animations.add('runshoot', [Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot1,
+        let runshoot = this.sprite.animations.add('runshoot', [
+        Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot3,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot4,
@@ -58,9 +54,7 @@ export default class PlayerAnimation {
 
         shoot.onComplete.add(this.doneShooting, this);
 
-        let airshot = this.sprite.animations.add('jumpshoot', [Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot1,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot2,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot3,
+        let airshot = this.sprite.animations.add('jumpshoot', [
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot4,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot6,
@@ -72,7 +66,8 @@ export default class PlayerAnimation {
     };
 
     initSlash = function () {
-        this.sprite.animations.add('slash', [Assets.Atlases.AtlasesPlayerNinja.Frames.SlashSlash1,
+        this.sprite.animations.add('slash', [
+        Assets.Atlases.AtlasesPlayerNinja.Frames.SlashSlash1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.SlashSlash2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.SlashSlash3,
         Assets.Atlases.AtlasesPlayerNinja.Frames.SlashSlash4,
@@ -81,7 +76,8 @@ export default class PlayerAnimation {
         Assets.Atlases.AtlasesPlayerNinja.Frames.SlashSlash7,
         ]);
 
-        this.sprite.animations.add('jumpslash', [Assets.Atlases.AtlasesPlayerNinja.Frames.JumpSlashJumpSlash1,
+        this.sprite.animations.add('jumpslash', [
+        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpSlashJumpSlash1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpSlashJumpSlash2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpSlashJumpSlash3,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpSlashJumpSlash4,

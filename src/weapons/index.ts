@@ -30,7 +30,7 @@ export default class WeaponManager {
         this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         this.weapon.bulletLifespan = 1000;
         this.weapon.bulletSpeed = 3000;
-        this.weapon.bulletGravity = new Phaser.Point(-100, -3000);
+        this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.weapon.bulletAngleVariance = 10;
         this.weapon.fireRate = 0;
         this.weapon.autoFire = false;
@@ -46,7 +46,7 @@ export default class WeaponManager {
         this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         this.weapon.bulletLifespan = 2000;
         this.weapon.bulletSpeed = 2000;
-        this.weapon.bulletGravity = new Phaser.Point(-100, -2500);
+        this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.weapon.bulletAngleVariance = 0;
         this.weapon.fireRate = 50;
         this.weapon.autoFire = false;

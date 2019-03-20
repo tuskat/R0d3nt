@@ -6,7 +6,7 @@ import LightManager from './light/';
 import TextManager from '../text/';
 import GameLogic from '../gamelogic/';
 
-const enum Status {
+const enum State {
     IDLE = 1,
     CHASE,
     CONFUSED,

@@ -1,13 +1,5 @@
 import * as Assets from '../assets';
 
-const enum Status {
-    IDLE = 1,
-    CHASE,
-    CONFUSED,
-    ATTACKING,
-    DEAD
-};
-
 export default class EnemyAnimation {
     public sprite: Phaser.Sprite = null;
     private lastAnimation: string = null;
@@ -34,7 +26,7 @@ export default class EnemyAnimation {
 
 
     initSlash = function () {
-      let slash = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash1,
+      let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash1,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash2,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash3,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash4,
@@ -42,8 +34,9 @@ export default class EnemyAnimation {
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash6,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash7,
         ]);
-
-        slash.onComplete.add(this.doneSlashing, this);
+        // anim.enableUpdate = true;
+        // anim.onUpdate.add(this.slashing, this)
+        anim.onComplete.add(this.doneSlashing, this);
     };
 
     initAnimation = function () {
@@ -66,7 +59,12 @@ export default class EnemyAnimation {
         this.sprite.body.setSize(width, height, 0, 0);
         this.sprite.collisionChanged = false;
     };
-       doneSlashing = function () {
-        this.playAnimation('idle');
+    doneSlashing = function () {
+        this.playAnimation('idle', 4, true);
     };
+    // slashing = function (anim, frame) {
+    //    if (frame.index == 20) {
+    //        this.sprite.
+    //    }
+    // };
 }
