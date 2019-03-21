@@ -130,4 +130,8 @@ export default class GameLogic {
         return this.enemiesManager.getEnemiesCount();
     };
 
+    enemiesSprite = function () {
+        return this.enemiesManager.getSprites();
+    };
+
 }

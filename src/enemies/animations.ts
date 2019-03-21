@@ -34,8 +34,8 @@ export default class EnemyAnimation {
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash6,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash7,
         ]);
-        // anim.enableUpdate = true;
-        // anim.onUpdate.add(this.slashing, this)
+        anim.enableUpdate = true;
+        anim.onUpdate.add(this.slashing, this);
         anim.onComplete.add(this.doneSlashing, this);
     };
 
@@ -62,9 +62,9 @@ export default class EnemyAnimation {
     doneSlashing = function () {
         this.playAnimation('idle', 4, true);
     };
-    // slashing = function (anim, frame) {
-    //    if (frame.index == 20) {
-    //        this.sprite.
-    //    }
-    // };
+    slashing = function (anim, frame) {
+       if (frame.index >= 19) {
+            this.setCollision(frame.sourceSizeW);
+       }
+    };
 }

@@ -66,12 +66,12 @@ export default class EnemiesManager extends EnemiesFactory {
         }
     };
     runToPlayer = function (player, enemy) {
-        if (enemy.x >= (player.x + 15)) {
+        if (enemy.x >= (player.x + 30)) {
             enemy.body.velocity.x = - this.ACCELERATION;
             enemy.scale.x = -this.scale;
             enemy.facingRight = false;
         }
-        else if (enemy.x <= (player.x - 15)) {
+        else if (enemy.x <= (player.x - 30)) {
             enemy.body.velocity.x = this.ACCELERATION;
             enemy.scale.x = this.scale;
             enemy.facingRight = true;
@@ -87,10 +87,10 @@ export default class EnemiesManager extends EnemiesFactory {
         }
     };
     inAttackRange = function(enemy, player) {
-        let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
         if (enemy.onCooldown) {
             return false;
         }
+        let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
         return this.shouldAttack(ray);
     };
     trackPlayer = function (enemy, player, walls) {
@@ -99,7 +99,7 @@ export default class EnemiesManager extends EnemiesFactory {
         if (intersect !== null) {
             return false;
         } else if (ray.height > enemy.sight.y
-            && ray.width > enemy.sight.x)  {
+            || ray.width > enemy.sight.x)  {
             return false;
         } else {
             return true;
@@ -119,7 +119,7 @@ export default class EnemiesManager extends EnemiesFactory {
         }
     };
     shouldAttack = function (ray) {
-        let distance = 15;
+        let distance = 30;
         if ((ray.width <= distance) && (ray.height <= distance)) {
             return true;
         }
@@ -128,7 +128,7 @@ export default class EnemiesManager extends EnemiesFactory {
     attack = function (enemy) {
         if (!enemy.onCooldown) {
             enemy.body.velocity.x = 0;
-            enemy.animation.playAnimation('slash', 20, false);
+            enemy.animation.playAnimation('slash', 15, false);
             this.state.timer.add(1000, this.recharge , this, enemy);
             enemy.onCooldown = true;
         }

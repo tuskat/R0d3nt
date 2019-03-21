@@ -52,7 +52,7 @@ export default class EnemiesFactory {
         enemy.body.allowGravity = true;
         enemy.life = this.MAX_LIFE;
         enemy.type = EnemyType.MOB;
-        enemy.sight = { x: 100, y: 50 };
+        enemy.sight = { x: 50, y: 50 };
         enemy.facingRight = false;
         enemy.status = State.IDLE;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
@@ -78,7 +78,7 @@ export default class EnemiesFactory {
         enemy.animation.initAnimation();
         enemy.body.allowGravity = true;
         enemy.life = this.MAX_LIFE * 3;
-        enemy.sight = { x: 400, y: 100 };
+        enemy.sight = { x: 300, y: 100 };
         enemy.type = EnemyType.BOSS;
         enemy.facingRight = false;
         enemy.status = State.IDLE;
