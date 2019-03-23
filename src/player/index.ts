@@ -1,8 +1,7 @@
-import * as Assets from '../assets';
+// import * as Assets from '../assets';
 import WeaponManager from '../weapons';
 import PlayerAnimation from './animations';
 import PlayerControls from './controls';
-
 
 const enum PlayerStatus {
     IDLE = 1,
@@ -37,7 +36,6 @@ export default class Player {
     animation: PlayerAnimation = null;
 
     constructor(input, game, state) {
-
         this.life = this.MAX_LIFE;
         this.game = game;
         this.input = input;
@@ -46,12 +44,11 @@ export default class Player {
         this.playerState = PlayerStatus.IDLE;
         this.weaponManager = new WeaponManager(state);
     }
-
     initPlayer = function () {
-
         this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
         this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
         this.sprite.body.collideWorldBounds = true;
+        this.stopVelocityOnCollide = false;
         this.setDefaultCollision();
 
         this.sprite.scale.y = this.scale;
@@ -61,8 +58,6 @@ export default class Player {
         this.sprite.body.drag.setTo(this.DRAG, 0);
         this.sprite.shooting = false;
 
-        this.stopVelocityOnCollide = true;
-
         this.game.physics.arcade.gravity.y = this.GRAVITY;
         this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
@@ -70,10 +65,8 @@ export default class Player {
         this.controls = new PlayerControls(this.input, this.game);
         this.animation.initPlayerAnimation();
 
-
         this.weaponManager.initWeapon();
     };
-
     playerControl = function () {
         let onTheGround = this.sprite.body.touching.down;
 
@@ -101,72 +94,57 @@ export default class Player {
         }
         this.isShooting(onTheGround);
         this.isJumping(onTheGround);
-        this.isOnFloor(onTheGround);
+        if (onTheGround) {
+            this.isOnFloor();
+        }
     };
-
+    jump = function () {
+        this.sprite.body.velocity.y = this.JUMP_SPEED;
+        this.animation.playAnimation('jump', 3);
+        this.playerState = PlayerStatus.JUMPING;
+    };
     isJumping = function (onTheGround) {
         if (this.jumps > 0) {
-            if (onTheGround === false
-                && this.jumping === false
-                && this.controls.upInputIsActive(50)) {
+            if (!onTheGround && this.controls.upInputIsActive(50)) {
                 this.jumping = false;
-                this.sprite.body.velocity.y = this.JUMP_SPEED;
-                // this.sprite.body.acceleration.y = this.JUMP_SPEED;
-                this.animation.playAnimation('jump', 3);
-                this.playerState = PlayerStatus.JUMPING;
-            } else if (this.controls.upInputIsActive(150)) {
-                this.sprite.body.velocity.y = this.JUMP_SPEED;
+                this.jump();
+            }
+            else if (this.controls.upInputIsActive(150)) {
                 this.jumping = true;
-                this.animation.playAnimation('jump', 3);
-                this.playerState = PlayerStatus.JUMPING;
-
+                this.jump();
             }
         }
         if (this.jumping && this.controls.upInputReleased()) {
             this.jumping = false;
             this.jumps--;
-
         }
     };
-    isOnFloor = function (onTheGround) {
-        if (onTheGround === true) {
-            this.jumps = 2;
-            this.jumping = false;
-            this.sprite.body.acceleration.y = 0;
-        }
-    };
-    isRunning = function (onTheGround) {
+    isOnFloor = function () {
+        this.jumps = 2;
+        this.jumping = false;
         let previousState = this.playerState;
-        if (this.controls.leftInputIsActive()) {
-
-            if (onTheGround === true) {
-                this.playerState = PlayerStatus.RUNNING;
-                if (previousState !== PlayerStatus.SHOOTING)
-                    this.animation.playAnimation('run');
+        if (this.controls.leftInputIsActive() || this.controls.rightInputIsActive()) {
+            this.playerState = PlayerStatus.RUNNING;
+            if (previousState !== PlayerStatus.SHOOTING) {
+                this.animation.playAnimation('run');
             }
+        } else {
+            if (this.playerState !== PlayerStatus.SHOOTING) {
+                this.playerState = PlayerStatus.IDLE;
+                this.animation.playAnimation('idle', 4);
+            }
+        }
+    };
+    isRunning = function () {
+        if (this.controls.leftInputIsActive()) {
             this.sprite.scale.x = -this.scale;
             this.facingRight = false;
             this.sprite.body.velocity.x = -this.SPEED;
-
-        } else if (this.controls.rightInputIsActive()) {
-
-            if (onTheGround === true) {
-                this.playerState = PlayerStatus.RUNNING;
-                if (previousState !== PlayerStatus.SHOOTING)
-                    this.animation.playAnimation('run');
-            }
+        }
+        else if (this.controls.rightInputIsActive()) {
             this.sprite.scale.x = this.scale;
             this.facingRight = true;
             this.sprite.body.velocity.x = this.SPEED;
-
-        } else {
-            if (onTheGround === true) {
-                if (this.playerState !== PlayerStatus.SHOOTING) {
-                    this.playerState = PlayerStatus.IDLE;
-                    this.animation.playAnimation('idle', 4);
-                }
-                this.sprite.body.velocity.x = 0;
-            }
         }
     };
     isShooting = function (onTheGround) {
@@ -193,6 +171,25 @@ export default class Player {
         } else {
             this.playerState = PlayerStatus.RUNNING;
         }
+    };
+    takeDamage = function (enemy) {
+        this.life -= 1;
+        this.invincibility = true;
+        this.sprite.body.velocity.x = enemy.facingRight ? 1500 : -1500;
+        this.state.timer.add(1000, this.updateInvincibility, this);
+        this.state.timer.add(250, this.showDamage, this);
+    };
+    showDamage = function () {
+        let damageColor = 0xc51b10;
+        if (this.sprite.tint === damageColor)
+            this.sprite.tint = 0xffffff;
+        else
+            this.sprite.tint = damageColor;
+        if (this.invincibility === true)
+            this.state.timer.add(250, this.showDamage, this);
+    };
+    updateInvincibility = function () {
+        this.invincibility = false;
     };
     addJump = function () {
         if (this.jumps === 0 && this.controls.upInputIsActive(50)) {

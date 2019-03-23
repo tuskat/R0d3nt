@@ -49,7 +49,7 @@ export default class GameLogic {
     };
     updateOverlap = function () {
 
-        this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.takeDamage, null, this);
+        this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.playerIsAttacked, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this.state);
         this.game.physics.arcade.overlap(this.player.sprite, this.walls, this.wallHandler, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
@@ -60,9 +60,6 @@ export default class GameLogic {
         this.enemiesManager.enemiesChase(this.player, this.walls);
     };
 
-    updateInvincibility = function () {
-        this.player.invincibility = false;
-    };
     takeCoin = function (player, coin, score) {
         coin.kill();
         this.levelManager.score += 100;
@@ -86,17 +83,14 @@ export default class GameLogic {
         entity.kill();
     };
     // LOGIC BINDED TO LEVEL
-    takeDamage = function (player, enemy) {
+    playerIsAttacked = function (player, enemy) {
         if (enemy.state === State.DEAD) {
             return;
         }
         if (!this.player.invincibility) {
             if (enemy.animations.currentAnim.name === 'slash'
                 && enemy.animations.currentAnim.currentFrame.index >= 19) {
-                this.player.life -= 1;
-                this.player.invincibility = true;
-                this.state.timer.add(1000, this.updateInvincibility, this);
-                this.state.timer.add(250, this.showDamage, this);
+                this.player.takeDamage(enemy);
                 this.state.textManager.textUpdate(this.player.life, this.score);
             }
             if (this.player.life <= 0) {
@@ -104,15 +98,7 @@ export default class GameLogic {
             }
         }
     };
-    showDamage = function () {
-        let damageColor = 0xc51b10;
-        if (this.player.sprite.tint === damageColor)
-            this.player.sprite.tint = 0xffffff;
-        else
-            this.player.sprite.tint = damageColor;
-        if (this.player.invincibility === true)
-            this.state.timer.add(250, this.showDamage, this);
-    };
+
     showEnemyDamage = function (enemy) {
         let damageColor = 0xc51b10;
         if (enemy.tint === damageColor)

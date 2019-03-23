@@ -27,9 +27,9 @@ export default class WeaponManager {
         this.pellet = 15;
         this.fireInterval = 400;
         this.weapon = this.state.game.add.weapon(30, 'my_bullet');
-        this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        this.weapon.bulletLifespan = 1000;
-        this.weapon.bulletSpeed = 3000;
+        this.weapon.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
+        this.weapon.bulletLifespan = 100;
+        this.weapon.bulletSpeed = 2000;
         this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.weapon.bulletAngleVariance = 10;
         this.weapon.fireRate = 0;
@@ -43,8 +43,8 @@ export default class WeaponManager {
         this.pellet = 3;
         this.fireInterval = 500;
         this.weapon = this.state.game.add.weapon(30, 'my_bullet');
-        this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        this.weapon.bulletLifespan = 2000;
+        this.weapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
+        this.weapon.bulletLifespan = 500;
         this.weapon.bulletSpeed = 2000;
         this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.weapon.bulletAngleVariance = 0;
