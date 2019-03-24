@@ -8,18 +8,7 @@ import * as WebFontLoader from 'webfontloader';
 
 import Boot from './states/boot';
 import Preloader from './states/preloader';
-import Title from './states/title';
 import Scene from './states/scene';
-import LevelManager from './levels/';
-import GameLogic from './gamelogic/';
-import TextManager from './text';
-import WeaponManager from './weapons';
-import EnemyManager from './enemies';
-import EnemyFactory from './enemies/factory';
-import EnemyAnimation from './enemies/animations';
-import Player from './player';
-import PlayerAnimation from './player/animations';
-import PlayerControls from './player/controls';
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
 

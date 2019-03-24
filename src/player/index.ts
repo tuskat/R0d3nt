@@ -68,7 +68,7 @@ export default class Player {
     };
     playerControl() {
         let onTheGround = this.sprite.body.touching.down;
-        this.isRunning(onTheGround);
+        this.isRunning();
         this.isShooting(onTheGround);
         this.isJumping(onTheGround);
         if (onTheGround) {
