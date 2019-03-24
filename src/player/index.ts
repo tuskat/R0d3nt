@@ -1,4 +1,3 @@
-// import * as Assets from '../assets';
 import WeaponManager from '../weapons';
 import PlayerAnimation from './animations';
 import PlayerControls from './controls';
@@ -44,7 +43,7 @@ export default class Player {
         this.playerState = PlayerStatus.IDLE;
         this.weaponManager = new WeaponManager(state);
     }
-    initPlayer = function () {
+    initPlayer() {
         this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
         this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
         this.sprite.body.collideWorldBounds = true;
@@ -67,43 +66,24 @@ export default class Player {
 
         this.weaponManager.initWeapon();
     };
-    playerControl = function () {
+    playerControl() {
         let onTheGround = this.sprite.body.touching.down;
-
-        switch (this.playerState) {
-            case PlayerStatus.IDLE: {
-                this.isRunning(onTheGround);
-                break;
-            }
-            case PlayerStatus.RUNNING: {
-                this.isRunning(onTheGround);
-                break;
-            }
-            case PlayerStatus.JUMPING: {
-                this.isRunning(onTheGround);
-                break;
-            }
-            case PlayerStatus.SHOOTING: {
-                this.isRunning(onTheGround);
-                break;
-            }
-            default: {
-                this.isRunning(onTheGround);
-                break;
-            }
-        }
+        this.isRunning(onTheGround);
         this.isShooting(onTheGround);
         this.isJumping(onTheGround);
         if (onTheGround) {
             this.isOnFloor();
         }
     };
-    jump = function () {
+    updateOverlap() {
+
+    }
+    jump() {
         this.sprite.body.velocity.y = this.JUMP_SPEED;
         this.animation.playAnimation('jump', 3);
         this.playerState = PlayerStatus.JUMPING;
     };
-    isJumping = function (onTheGround) {
+    isJumping(onTheGround) {
         if (this.jumps > 0) {
             if (!onTheGround && this.controls.upInputIsActive(50)) {
                 this.jumping = false;
@@ -119,7 +99,7 @@ export default class Player {
             this.jumps--;
         }
     };
-    isOnFloor = function () {
+    isOnFloor() {
         this.jumps = 2;
         this.jumping = false;
         let previousState = this.playerState;
@@ -135,7 +115,7 @@ export default class Player {
             }
         }
     };
-    isRunning = function () {
+    isRunning() {
         if (this.controls.leftInputIsActive()) {
             this.sprite.scale.x = -this.scale;
             this.facingRight = false;
@@ -147,8 +127,8 @@ export default class Player {
             this.sprite.body.velocity.x = this.SPEED;
         }
     };
-    isShooting = function (onTheGround) {
-    let lastState = this.playerState;
+    isShooting(onTheGround) {
+        let lastState = this.playerState;
         if (this.weaponManager.isShooting()) {
             this.playerState = PlayerStatus.SHOOTING;
             if (this.facingRight === true) {
@@ -172,14 +152,14 @@ export default class Player {
             this.playerState = PlayerStatus.RUNNING;
         }
     };
-    takeDamage = function (enemy) {
+    takeDamage(enemy) {
         this.life -= 1;
         this.invincibility = true;
         this.sprite.body.velocity.x = enemy.facingRight ? 1500 : -1500;
         this.state.timer.add(1000, this.updateInvincibility, this);
         this.state.timer.add(250, this.showDamage, this);
     };
-    showDamage = function () {
+    showDamage() {
         let damageColor = 0xc51b10;
         if (this.sprite.tint === damageColor)
             this.sprite.tint = 0xffffff;
@@ -188,15 +168,39 @@ export default class Player {
         if (this.invincibility === true)
             this.state.timer.add(250, this.showDamage, this);
     };
-    updateInvincibility = function () {
+    updateInvincibility() {
         this.invincibility = false;
     };
-    addJump = function () {
+    addJump() {
         if (this.jumps === 0 && this.controls.upInputIsActive(50)) {
             this.jumps = 1;
         }
     };
-    setDefaultCollision = function () {
+    setDefaultCollision() {
         this.sprite.body.setSize(80, 176, -16, 0);
     };
 }
+
+// Always use isRunning in the end...
+// switch (this.playerState) {
+//     case PlayerStatus.IDLE: {
+//         this.isRunning(onTheGround);
+//         break;
+//     }
+//     case PlayerStatus.RUNNING: {
+//         this.isRunning(onTheGround);
+//         break;
+//     }
+//     case PlayerStatus.JUMPING: {
+//         this.isRunning(onTheGround);
+//         break;
+//     }
+//     case PlayerStatus.SHOOTING: {
+//         this.isRunning(onTheGround);
+//         break;
+//     }
+//     default: {
+//         this.isRunning(onTheGround);
+//         break;
+//     }
+// }

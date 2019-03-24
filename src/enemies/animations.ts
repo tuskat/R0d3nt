@@ -6,7 +6,7 @@ export default class EnemyAnimation {
     constructor(sprite) {
         this.sprite = sprite;
     }
-    initIdle = function () {
+    initIdle() {
         this.sprite.animations.add('idle', [Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle1,
         Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle2,
         Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle3,
@@ -15,7 +15,7 @@ export default class EnemyAnimation {
 
 
 
-    initRun = function () {
+    initRun() {
         this.sprite.animations.add('run', [Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun1,
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun2,
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun3,
@@ -25,7 +25,7 @@ export default class EnemyAnimation {
     };
 
 
-    initSlash = function () {
+    initSlash() {
       let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash1,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash2,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash3,
@@ -39,14 +39,14 @@ export default class EnemyAnimation {
         anim.onComplete.add(this.doneSlashing, this);
     };
 
-    initAnimation = function () {
+    initAnimation() {
         this.initIdle();
         this.initRun();
         this.initSlash();
 
         this.sprite.animations.play('idle', 4, true);
     };
-    playAnimation = function (animation, framerate = 30, loop = true) {
+    playAnimation(animation, framerate = 30, loop = true) {
         if (animation !== this.lastAnimation) {
             this.sprite.animations.play(animation, framerate, loop);
             this.lastAnimation = animation;
@@ -55,14 +55,14 @@ export default class EnemyAnimation {
         }
     };
 
-    setCollision = function (width, height = 178) {
+    setCollision(width, height = 178) {
         this.sprite.body.setSize(width, height, 0, 0);
         this.sprite.collisionChanged = false;
     };
-    doneSlashing = function () {
+    doneSlashing() {
         this.playAnimation('idle', 4, true);
     };
-    slashing = function (anim, frame) {
+    slashing(anim, frame) {
        if (frame.index >= 19) {
             this.setCollision(frame.sourceSizeW);
        }

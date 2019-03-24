@@ -41,13 +41,13 @@ export default class GameLogic {
     }
 
     // GAME LOGIC
-    updateCollision = function () {
+    updateCollision() {
         this.game.physics.arcade.collide(this.player.sprite, this.walls);
         this.game.physics.arcade.collide(this.player.weaponManager.getBullets(), this.walls);
         this.game.physics.arcade.collide(this.enemiesManager.getSprites(), this.walls);
         this.game.physics.arcade.collide(this.exit, this.walls);
     };
-    updateOverlap = function () {
+    updateOverlap() {
 
         this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.playerIsAttacked, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this.state);
@@ -56,16 +56,16 @@ export default class GameLogic {
         this.game.physics.arcade.overlap(this.player.weaponManager.getBullets(), this.enemiesManager.getSprites(), this.damageEnemies, null, this);
         this.game.physics.arcade.overlap(this.player.weaponManager.getBullets(), this.walls, this.killEntity, null, this.state);
     };
-    updateEnemies = function () {
+    updateEnemies() {
         this.enemiesManager.enemiesChase(this.player, this.walls);
     };
 
-    takeCoin = function (player, coin, score) {
+    takeCoin(player, coin, score) {
         coin.kill();
         this.levelManager.score += 100;
         this.textManager.textUpdate(this.player.life, this.levelManager.score);
     };
-    damageEnemies = function (bullet, enemy) {
+    damageEnemies(bullet, enemy) {
         if (enemy.status !== State.DEAD) {
             enemy.body.velocity.x += bullet.data.bulletManager.bulletSpeed / 2;
             enemy.life--;
@@ -79,11 +79,11 @@ export default class GameLogic {
             this.state.timer.add(800, this.killEntity, this, enemy);
         }
     };
-    killEntity = function (entity) {
+    killEntity(entity) {
         entity.kill();
     };
     // LOGIC BINDED TO LEVEL
-    playerIsAttacked = function (player, enemy) {
+    playerIsAttacked(player, enemy) {
         if (enemy.state === State.DEAD) {
             return;
         }
@@ -99,7 +99,7 @@ export default class GameLogic {
         }
     };
 
-    showEnemyDamage = function (enemy) {
+    showEnemyDamage(enemy) {
         let damageColor = 0xc51b10;
         if (enemy.tint === damageColor)
             enemy.tint = 0xffffff;
@@ -108,15 +108,15 @@ export default class GameLogic {
             this.state.timer.add(250, this.showEnemyDamage, this, enemy);
         }
     };
-    wallHandler = function () {
+    wallHandler() {
         this.player.addJump();
     };
 
-    enemiesCount = function () {
+    enemiesCount() {
         return this.enemiesManager.getEnemiesCount();
     };
 
-    enemiesSprite = function () {
+    enemiesSprite() {
         return this.enemiesManager.getSprites();
     };
 

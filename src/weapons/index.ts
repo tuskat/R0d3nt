@@ -9,13 +9,13 @@ export default class WeaponManager {
         this.state = state;
     }
 
-    initWeapon = function (shootKey = Phaser.KeyCode.SPACEBAR) {
+    initWeapon(shootKey = Phaser.KeyCode.SPACEBAR) {
         this.initSmg();
         // this.initShotGun();
         this.fireButton = this.state.input.keyboard.addKey(shootKey);
     };
 
-    fireAction = function () {
+    fireAction() {
         if (this.canShoot) {
             this.Fire();
             return true;
@@ -23,7 +23,7 @@ export default class WeaponManager {
         return false;
     };
 
-    initShotGun = function () {
+    initShotGun() {
         this.pellet = 15;
         this.fireInterval = 400;
         this.weapon = this.state.game.add.weapon(30, 'my_bullet');
@@ -39,7 +39,7 @@ export default class WeaponManager {
         this.weapon.trackRotation = true;
 
     };
-    initSmg = function () {
+    initSmg() {
         this.pellet = 3;
         this.fireInterval = 500;
         this.weapon = this.state.game.add.weapon(30, 'my_bullet');
@@ -56,7 +56,7 @@ export default class WeaponManager {
 
 
     };
-    Fire = function () {
+    Fire() {
         for (let i = 0; i <= this.pellet; i++) {
             if (this.weapon.fireRate > 0)
                 this.state.timer.add(this.weapon.fireRate * i, this.Shoot, this);
@@ -66,31 +66,31 @@ export default class WeaponManager {
         this.canShoot = false;
         this.state.timer.add(this.fireInterval, this.restoreInterval, this);
     };
-    Shoot = function () {
+    Shoot() {
         this.weapon.fire();
     };
 
-    getBullets = function () {
+    getBullets() {
         return this.weapon.bullets;
     };
 
-    shootRight = function (playerSprite) {
+    shootRight(playerSprite) {
         this.weapon.bulletSpeed = 1000;
         this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(true, playerSprite);
     };
-    shootLeft = function (playerSprite) {
+    shootLeft(playerSprite) {
         this.weapon.bulletSpeed = -1000;
         this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(false, playerSprite);
     };
-    isShooting = function () {
+    isShooting() {
         if (this.fireButton.isDown)
             return true;
         else
             return false;
     };
-    isShotReleased = function () {
+    isShotReleased() {
         let released = false;
         released = this.state.input.keyboard.upDuration(this.fireButton);
         if (released)
@@ -99,13 +99,13 @@ export default class WeaponManager {
     };
 
 
-    weaponTracking = function (right, playerSprite) {
+    weaponTracking(right, playerSprite) {
         if (right)
             this.weapon.trackSprite(playerSprite, 26, -8, true);
         else
             this.weapon.trackSprite(playerSprite, 26, 8, true);
     };
-    restoreInterval = function () {
+    restoreInterval() {
         this.canShoot = !this.canShoot;
 
     };

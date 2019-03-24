@@ -13,7 +13,7 @@ export default class LightManager {
         this.state = state;
         this.walls = walls;
     }
-    createLight = function (lightSource, worldSize) {
+    createLight(lightSource, worldSize) {
         this.light = this.game.add.sprite(lightSource.x, lightSource.y, 'light');
 
 
@@ -44,7 +44,7 @@ export default class LightManager {
         // generally won't look nearly as cool. So use a browser with WebGL.
         lightBitmap.blendMode = PIXI.blendModes.MULTIPLY;
     };
-    updateLight = function () {
+    updateLight() {
         // Move the light to the pointer/touch location
         //   this.bitmap.context.clearRect(0, 0, this.game.width, this.game.height);
 
@@ -226,7 +226,7 @@ export default class LightManager {
 
     };
 
-    getWallIntersection = function (ray) {
+    getWallIntersection(ray) {
         let distanceToWall = this.game.world.width;
         // Number.POSITIVE_INFINITY;
         let closestIntersection = null;

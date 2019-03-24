@@ -81,7 +81,7 @@ export default class Scene extends Phaser.State {
         // this.game.debug.body(this.player.sprite);
     }
     //
-    public initGradientBackground = function () {
+    public initGradientBackground() {
         let margin = 50;
         let padding = 200;
 
@@ -110,7 +110,7 @@ export default class Scene extends Phaser.State {
 
 
     };
-    public uploadBackground = function () {
+    public uploadBackground() {
         let slide = 0.2;
         this.background.forEachAlive(background => {
             if (background.tilePosition) {

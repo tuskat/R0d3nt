@@ -14,7 +14,7 @@ const enum EnemyType {
 }
 export default class EnemiesManager extends EnemiesFactory {
 
-    enemiesChase = function (player, walls) {
+    enemiesChase(player, walls) {
         let self = this;
         this.sprites.forEachAlive(function (enemy) {
             if (enemy.state !== State.DEAD) {
@@ -45,7 +45,7 @@ export default class EnemiesManager extends EnemiesFactory {
             }
         }
     };
-    seekPlayer = function (enemy, player,  walls, self) {
+    seekPlayer(enemy, player,  walls, self) {
         if (enemy.onCooldown) {
             return;
         }
@@ -59,13 +59,13 @@ export default class EnemiesManager extends EnemiesFactory {
             enemy.state = State.CONFUSED;
         }
     };
-    idle = function (enemy) {
+    idle(enemy) {
         enemy.body.velocity.x = 0;
         if (enemy.animation !== undefined) {
             enemy.animation.playAnimation('idle', 4);
         }
     };
-    runToPlayer = function (player, enemy) {
+    runToPlayer(player, enemy) {
         if (enemy.x >= (player.x + 30)) {
             enemy.body.velocity.x = - this.ACCELERATION;
             enemy.scale.x = -this.scale;
@@ -93,7 +93,7 @@ export default class EnemiesManager extends EnemiesFactory {
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
         return this.shouldAttack(ray);
     };
-    trackPlayer = function (enemy, player, walls) {
+    trackPlayer(enemy, player, walls) {
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
         let intersect = this.getWallIntersection(ray, walls, enemy.sight.x);
         if (intersect !== null) {
@@ -105,7 +105,7 @@ export default class EnemiesManager extends EnemiesFactory {
             return true;
         }
     };
-    erase = function (enemy) {
+    erase(enemy) {
         if (!enemy.dying) {
             enemy.animation.playAnimation('idle', false);
             enemy.dying = true;
@@ -118,14 +118,14 @@ export default class EnemiesManager extends EnemiesFactory {
             this.game.camera.shake(0.01, 250);
         }
     };
-    shouldAttack = function (ray) {
+    shouldAttack(ray) {
         let distance = 30;
         if ((ray.width <= distance) && (ray.height <= distance)) {
             return true;
         }
         return false;
     };
-    attack = function (enemy) {
+    attack(enemy) {
         if (!enemy.onCooldown) {
             enemy.body.velocity.x = 0;
             enemy.animation.playAnimation('slash', 15, false);
@@ -136,7 +136,7 @@ export default class EnemiesManager extends EnemiesFactory {
     recharge = function(enemy) {
         enemy.onCooldown = false;
     };
-    getWallIntersection = function (ray, walls, sight) {
+    getWallIntersection(ray, walls, sight) {
         let distanceToWall = sight;
         let closestIntersection = null;
 

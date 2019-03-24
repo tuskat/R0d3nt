@@ -49,7 +49,7 @@ export default class LevelManager extends GameLogic {
     }
 
 
-    initLevel = function () {
+    initLevel() {
         this.enemiesManager = new EnemiesManager(this.game, this.state);
         this.walls = this.game.add.group();
         this.platforms = this.game.add.group();
@@ -58,37 +58,37 @@ export default class LevelManager extends GameLogic {
     };
 
 
-    initLightManager = function (lightSource, worldSize) {
+    initLightManager(lightSource, worldSize) {
         this.light = new LightManager(this.walls, this.game, this.state);
         this.light.createLight(lightSource, worldSize);
         this.light.updateLight();
         this.state.initGradientBackground();
     };
 
-    nextStage = function (player, exit) {
+    nextStage(player, exit) {
         let enemiesNbr = + this.enemiesCount();
         if (enemiesNbr === 0) {
             this.state.level = this.state.level + 1;
             this.game.state.start('scene');
         }
     };
-    restart = function () {
+    restart() {
         this.player.life = 3;
         this.player.invincibility = false;
         this.game.state.start('scene');
     };
-    recursiveDeletion = function (x) {
+    recursiveDeletion(x) {
         if (x <= 100)
             return x;
         else
             return this.recursiveDeletion(x - 100);
     };
-    setScale = function (item) {
+    setScale(item) {
         item.scale.y = this.scale;
         item.scale.x = this.scale;
     };
 
-    createLevel = function (player) {
+    createLevel(player) {
         let levelTileSize = 32 * this.scale;
         let lightSource = { x: 0, y: 0 };
         let worldSize = { x: 0, y: 0 };

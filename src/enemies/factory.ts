@@ -29,7 +29,7 @@ export default class EnemiesFactory {
         this.sprites = this.game.add.group();
         this.spawns = this.game.add.group();
     }
-    initEnemySpawn = function (x, y, nbr, tilesize) {
+    initEnemySpawn(x, y, nbr, tilesize) {
         this.tilesize = tilesize;
         let spawn = this.game.add.sprite(this.tilesize * x, (this.tilesize * y) + 20, 'my_spawn');
         this.spawns.add(spawn);
@@ -41,7 +41,7 @@ export default class EnemiesFactory {
             this.state.timer.add(spawnRate, this.initEnemy, this, pos);
         }
     };
-    initEnemy = function (pos) {
+    initEnemy(pos) {
         let enemy = this.game.add.sprite(this.tilesize * pos.x, this.tilesize * pos.y, 'cyclops');
         this.sprites.add(enemy);
         enemy.body.gravity.y = this.GRAVITY;
@@ -58,7 +58,7 @@ export default class EnemiesFactory {
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 
-    initBoss = function (x, y, tilesize) {
+    initBoss(x, y, tilesize) {
         this.tilesize = tilesize;
 
         let enemy = this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 64, 'enemy_ninja');
@@ -86,10 +86,10 @@ export default class EnemiesFactory {
     };
 
 
-    public getEnemiesCount = function () {
+    public getEnemiesCount() {
         return this.sprites.countLiving().toString();
     };
-    public getSprites = function () {
+    public getSprites() {
         return this.sprites;
     };
 }

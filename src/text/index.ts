@@ -6,26 +6,26 @@ export default class TextManager {
 
     }
 
-    createText = function (game, score, life) {
+    createText(game, score, life) {
         this.scoreText = game.add.text(10, 0, 'Score : ' + score, this.style);
         this.scoreText.fixedToCamera = true;
         this.lifeText = game.add.text(10, game.height - 30, 'Hp : ' + life, this.style);
         this.lifeText.fixedToCamera = true;
     };
-    updateShadows = function () {
+    updateShadows() {
         this.textShadow(this.scoreText);
         this.textShadow(this.lifeText);
     };
 
-    textUpdate = function (life, score) {
+    textUpdate(life, score) {
         this.lifeText.setText('Hp :' + life);
         this.scoreText.setText('Score :' + score);
     };
-    textShadow = function (text) {
+    textShadow(text) {
         text.setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 1);
     };
 
-    levelTitle = function (levelName, game) {
+    levelTitle(levelName, game) {
         let posX = game.width / 4;
         let posY = game.height / 4;
         let style = { font: '70px Havana', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
