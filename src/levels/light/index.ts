@@ -6,6 +6,7 @@ export default class LightManager {
     public shadows;
     public bitmap;
     public lightCanvas;
+    public light;
     public darkCanvas;
     public state;
     constructor(walls, game, state) {

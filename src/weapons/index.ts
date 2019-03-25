@@ -1,5 +1,7 @@
+import Scene from '../states/scene';
+
 export default class WeaponManager {
-    state: Phaser.State = null;
+    state: Scene = null;
     pellet: number = 0;
     weapon = null;
     fireButton = null;

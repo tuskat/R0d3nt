@@ -1,10 +1,13 @@
 import * as Assets from '../assets';
+import Player from './';
 
 export default class PlayerAnimation {
     public sprite: Phaser.Sprite = null;
+    public player: Player = null;
     private lastAnimation: string = null;
-    constructor(sprite) {
+    constructor(sprite, player) {
         this.sprite = sprite;
+        this.player = player;
     }
     initIdle() {
         this.sprite.animations.add('idle', [Assets.Atlases.AtlasesPlayerNinja.Frames.IdleIdle1,
@@ -32,10 +35,8 @@ export default class PlayerAnimation {
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun4,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun6]);
-
-
-
     };
+
     initShoot() {
         let shoot = this.sprite.animations.add('shoot', [
         Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot5,
@@ -117,14 +118,13 @@ export default class PlayerAnimation {
     };
     setCollision(width, height = 178) {
         this.sprite.body.setSize(width, height, 0, 0);
-        this.sprite.collisionChanged = true;
     };
     doneShooting() {
-        this.sprite.shooting = false;
+        this.player.shooting = false;
         this.playAnimation('idle', 4);
     };
     doneAirShooting() {
-        this.sprite.shooting = false;
+        this.player.shooting = false;
         this.playAnimation('jump', 2);
     };
     doneDoubleJump() {

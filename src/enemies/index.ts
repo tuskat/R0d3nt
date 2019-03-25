@@ -1,5 +1,4 @@
 import EnemiesFactory from './factory';
-import EnemyAnimation from './animations';
 
 const enum State {
     IDLE = 1,
@@ -8,10 +7,6 @@ const enum State {
     ATTACKING,
     DEAD
 };
-const enum EnemyType {
-    MOB = 1,
-    BOSS
-}
 export default class EnemiesManager extends EnemiesFactory {
 
     enemiesChase(player, walls) {

@@ -1,3 +1,4 @@
+import Scene from '../states/scene';
 import WeaponManager from '../weapons';
 import PlayerAnimation from './animations';
 import PlayerControls from './controls';
@@ -23,14 +24,14 @@ export default class Player {
     public playerState: number = PlayerStatus.IDLE;
     public life = 0;
     public jumping = false;
-
+    public shooting = false;
     public weaponManager: WeaponManager;
     public fireButton;
     public invincibility = false;
     public facingRight = true;
     game: Phaser.Game = null;
     input: Phaser.Input = null;
-    state: Phaser.State = null;
+    state: Scene = null;
     controls: PlayerControls = null;
     animation: PlayerAnimation = null;
 
@@ -47,7 +48,6 @@ export default class Player {
         this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
         this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
         this.sprite.body.collideWorldBounds = true;
-        this.stopVelocityOnCollide = false;
         this.setDefaultCollision();
 
         this.sprite.scale.y = this.scale;
@@ -55,12 +55,12 @@ export default class Player {
         this.sprite.anchor.setTo(0.5, 0.5);
         this.sprite.body.maxVelocity.setTo(this.MAX_SPEED, this.MAX_SPEED * 5);
         this.sprite.body.drag.setTo(this.DRAG, 0);
-        this.sprite.shooting = false;
+        this.shooting = false;
 
         this.game.physics.arcade.gravity.y = this.GRAVITY;
         this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
-        this.animation = new PlayerAnimation(this.sprite);
+        this.animation = new PlayerAnimation(this.sprite, this);
         this.controls = new PlayerControls(this.input, this.game);
         this.animation.initPlayerAnimation();
 

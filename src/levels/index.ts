@@ -1,17 +1,6 @@
-import * as Assets from '../assets';
-import Player from '../player/';
-import Scene from '../states/scene';
 import EnemiesManager from '../enemies';
 import LightManager from './light/';
-import TextManager from '../text/';
 import GameLogic from '../gamelogic/';
-
-const enum State {
-    IDLE = 1,
-    CHASE,
-    CONFUSED,
-    DEAD
-};
 
 const enum Tiles {
     FLOOR = 1,
@@ -29,7 +18,7 @@ const enum Tiles {
 export default class LevelManager extends GameLogic {
     private scale: number = 1.5;
 
-    GetJsonLevel(lvlIndex) {
+    getJsonData(lvlIndex) {
         let levelJson = this.game.cache.getJSON('map' + lvlIndex);
 
         if (levelJson === null) {
@@ -39,13 +28,12 @@ export default class LevelManager extends GameLogic {
             return level;
         } else {
             let level = levelJson;
-
             return level;
         }
     }
 
-    getLevel(lvlIndex): string[] {
-        return this.GetJsonLevel(lvlIndex);
+    getLevel(lvlIndex) {
+        return this.getJsonData(lvlIndex);
     }
 
 
@@ -77,6 +65,11 @@ export default class LevelManager extends GameLogic {
         this.player.invincibility = false;
         this.game.state.start('scene');
     };
+    update() {
+        this.updateEnemies();
+        this.updateOverlap();
+        this.updateCollision();
+    }
     recursiveDeletion(x) {
         if (x <= 100)
             return x;
@@ -158,7 +151,7 @@ export default class LevelManager extends GameLogic {
                         break;
                     }
                     case Tiles.SPAWN: {
-                        this.enemiesManager.initBoss(hX, hY, level.enemies, levelTileSize);
+                        this.enemiesManager.initBoss(hX, hY, levelTileSize);
 
                         break;
                     }
@@ -195,7 +188,7 @@ export default class LevelManager extends GameLogic {
         }
 
         this.initLightManager(lightSource, worldSize);
-        this.textManager.levelTitle(level.title, this.game);
+        // this.textManager.levelTitle(level.title, this.game);
         return level.new;
     };
 }

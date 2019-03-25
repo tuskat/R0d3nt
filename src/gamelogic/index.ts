@@ -1,4 +1,3 @@
-import * as Assets from '../assets';
 import Player from '../player/';
 import Scene from '../states/scene';
 import EnemiesManager from '../enemies';
@@ -27,8 +26,8 @@ export default class GameLogic {
 
     public game: Phaser.Game = null;
     public state: Scene = null;
-    private enemiesManager: EnemiesManager;
-    private textManager: TextManager = new TextManager();
+    public enemiesManager: EnemiesManager;
+    public textManager: TextManager = new TextManager();
     public light: LightManager = null;
     public score: number = 0;
     public player: Player;
@@ -48,9 +47,8 @@ export default class GameLogic {
         this.game.physics.arcade.collide(this.exit, this.walls);
     };
     updateOverlap() {
-
         this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.playerIsAttacked, null, this);
-        this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this.state);
+        this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.walls, this.wallHandler, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
         this.game.physics.arcade.overlap(this.player.weaponManager.getBullets(), this.enemiesManager.getSprites(), this.damageEnemies, null, this);
@@ -62,8 +60,8 @@ export default class GameLogic {
 
     takeCoin(player, coin, score) {
         coin.kill();
-        this.levelManager.score += 100;
-        this.textManager.textUpdate(this.player.life, this.levelManager.score);
+        this.score += 100;
+        this.state.textManager.textUpdate(this.player.life, this.score);
     };
     damageEnemies(bullet, enemy) {
         if (enemy.status !== State.DEAD) {

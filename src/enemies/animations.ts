@@ -13,8 +13,6 @@ export default class EnemyAnimation {
         Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle4]);
     };
 
-
-
     initRun() {
         this.sprite.animations.add('run', [Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun1,
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun2,
@@ -24,9 +22,8 @@ export default class EnemyAnimation {
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun6]);
     };
 
-
     initSlash() {
-      let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash1,
+        let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash1,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash2,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash3,
         Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash4,
@@ -46,6 +43,7 @@ export default class EnemyAnimation {
 
         this.sprite.animations.play('idle', 4, true);
     };
+
     playAnimation(animation, framerate = 30, loop = true) {
         if (animation !== this.lastAnimation) {
             this.sprite.animations.play(animation, framerate, loop);
@@ -57,14 +55,15 @@ export default class EnemyAnimation {
 
     setCollision(width, height = 178) {
         this.sprite.body.setSize(width, height, 0, 0);
-        this.sprite.collisionChanged = false;
     };
+
     doneSlashing() {
         this.playAnimation('idle', 4, true);
     };
+
     slashing(anim, frame) {
-       if (frame.index >= 19) {
+        if (frame.index >= 19) {
             this.setCollision(frame.sourceSizeW);
-       }
+        }
     };
 }

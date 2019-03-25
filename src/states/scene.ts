@@ -12,8 +12,8 @@ import Player from '../player/';
 //   this.game.load.json('level', Assets.JSON['LevelsLevel1'].getJSON());
 
 export default class Scene extends Phaser.State {
-    private levelManager: LevelManager;
-    private textManager: TextManager;
+    public levelManager: LevelManager;
+    public textManager: TextManager;
     private player: Player;
     public level: number = 1;
     public background: Phaser.Group = null;
@@ -65,9 +65,7 @@ export default class Scene extends Phaser.State {
 
     }
     public update(): void {
-        this.levelManager.updateEnemies();
-        this.levelManager.updateOverlap();
-        this.levelManager.updateCollision();
+        this.levelManager.update();
         this.player.playerControl();
         this.textManager.updateShadows();
         this.uploadBackground();
@@ -106,9 +104,6 @@ export default class Scene extends Phaser.State {
         this.background.add(grad);
         this.background.add(bg1);
         this.background.add(bg2);
-
-
-
     };
     public uploadBackground() {
         let slide = 0.2;
