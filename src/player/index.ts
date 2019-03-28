@@ -8,7 +8,8 @@ const enum PlayerStatus {
     RUNNING,
     SHOOTING,
     JUMPING,
-    DEFAULT
+    DEFAULT,
+    DEAD
 };
 
 export default class Player {
@@ -30,19 +31,19 @@ export default class Player {
     public invincibility = false;
     public facingRight = true;
     game: Phaser.Game = null;
-    input: Phaser.Input = null;
-    state: Scene = null;
+    scene: Scene = null;
     controls: PlayerControls = null;
+
     animation: PlayerAnimation = null;
 
-    constructor(input, game, state) {
+    constructor(controls, game, scene) {
         this.life = this.MAX_LIFE;
         this.game = game;
-        this.input = input;
-        this.state = state;
+        this.scene = scene;
+        this.controls = controls;
         this.jumping = false;
         this.playerState = PlayerStatus.IDLE;
-        this.weaponManager = new WeaponManager(state);
+        this.weaponManager = new WeaponManager(scene);
     }
     initPlayer() {
         this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
@@ -61,12 +62,15 @@ export default class Player {
         this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
         this.animation = new PlayerAnimation(this.sprite, this);
-        this.controls = new PlayerControls(this.input, this.game);
+
         this.animation.initPlayerAnimation();
 
         this.weaponManager.initWeapon();
     };
     playerControl() {
+        if (this.isDead()) {
+            return;
+        }
         let onTheGround = this.sprite.body.touching.down;
         this.isRunning();
         this.isShooting(onTheGround);
@@ -75,8 +79,12 @@ export default class Player {
             this.isOnFloor();
         }
     };
-    updateOverlap() {
-
+    die() {
+        this.playerState = PlayerStatus.DEAD;
+        this.sprite.kill();
+    };
+    isDead() {
+        return this.playerState === PlayerStatus.DEAD;
     }
     jump() {
         this.sprite.body.velocity.y = this.JUMP_SPEED;
@@ -152,12 +160,13 @@ export default class Player {
             this.playerState = PlayerStatus.RUNNING;
         }
     };
+
     takeDamage(enemy) {
         this.life -= 1;
         this.invincibility = true;
         this.sprite.body.velocity.x = enemy.facingRight ? 1500 : -1500;
-        this.state.timer.add(1000, this.updateInvincibility, this);
-        this.state.timer.add(250, this.showDamage, this);
+        this.scene.timer.add(1000, this.updateInvincibility, this);
+        this.scene.timer.add(250, this.showDamage, this);
     };
     showDamage() {
         let damageColor = 0xc51b10;
@@ -166,7 +175,7 @@ export default class Player {
         else
             this.sprite.tint = damageColor;
         if (this.invincibility === true)
-            this.state.timer.add(250, this.showDamage, this);
+            this.scene.timer.add(250, this.showDamage, this);
     };
     updateInvincibility() {
         this.invincibility = false;

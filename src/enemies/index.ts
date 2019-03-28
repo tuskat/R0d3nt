@@ -9,11 +9,15 @@ const enum State {
 };
 export default class EnemiesManager extends EnemiesFactory {
 
-    enemiesChase(player, walls) {
+    update(player, walls) {
         let self = this;
-        this.sprites.forEachAlive(function (enemy) {
+        this.enemyGroup.forEachAlive(function (enemy) {
             if (enemy.state !== State.DEAD) {
-                self.seekPlayer(enemy, player, walls, self);
+                if (!player.isDead()) {
+                    self.seekPlayer(enemy, player, walls, self);
+                } else {
+                    enemy.state = State.CONFUSED;
+                }
                 self.act(enemy, player);
             } else {
                 self.erase(enemy);
@@ -81,6 +85,49 @@ export default class EnemiesManager extends EnemiesFactory {
             enemy.animation.playAnimation('run');
         }
     };
+
+    enemiesOverlap(player) {
+        this.game.physics.arcade.overlap(player.weaponManager.getBullets(), this.enemyGroup, this.damageEnemies, null, this);
+    }
+
+    damageEnemies(bullet, enemy) {
+        let collided = false;
+        if (enemy.status !== State.DEAD) {
+            enemy.body.velocity.x = this.getKnockBack(enemy, bullet);
+            enemy.life--;
+            this.showEnemyDamage(enemy);
+            bullet.kill();
+            collided = true;
+            this.scene.score += 25;
+            this.scene.textManager.textUpdate(null, this.scene.score);
+        }
+        if (enemy.life <= 0) {
+            enemy.state = State.DEAD;
+            this.scene.timer.add(800, this.killEnemy, this, enemy);
+        }
+        return collided;
+    };
+    killEnemy(enemy) {
+        enemy.kill();
+    };
+    showEnemyDamage(enemy) {
+        let damageColor = 0xc51b10;
+        if (enemy.tint === damageColor)
+            enemy.tint = 0xffffff;
+        else {
+            enemy.tint = damageColor;
+            this.scene.timer.add(250, this.showEnemyDamage, this, enemy);
+        }
+    };
+
+    getKnockBack(enemy, bullet) {
+        let knockback = bullet.position.x > enemy.body.x ? -1400 : 1400;
+        if (enemy.body.velocity.x >= -140 && enemy.body.velocity.x <= 140) {
+            knockback = knockback / 10;
+        }
+        return knockback;
+    };
+
     inAttackRange = function(enemy, player) {
         if (enemy.onCooldown) {
             return false;
@@ -124,7 +171,7 @@ export default class EnemiesManager extends EnemiesFactory {
         if (!enemy.onCooldown) {
             enemy.body.velocity.x = 0;
             enemy.animation.playAnimation('slash', 15, false);
-            this.state.timer.add(1000, this.recharge , this, enemy);
+            this.scene.timer.add(1000, this.recharge , this, enemy);
             enemy.onCooldown = true;
         }
     };

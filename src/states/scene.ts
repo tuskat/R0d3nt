@@ -3,6 +3,7 @@ import * as AssetUtils from '../utils/assetUtils';
 import LevelManager from '../levels/';
 import TextManager from '../text';
 import Player from '../player/';
+import PlayerControls from '../player/controls';
 
 //   this.game.load.tilemap('tilemap', Assets.JSON.Level.getJSON(), null, Phaser.Tilemap.TILED_JSON);
 //   this.game.load.image('tiles', Assets.Atlases.TilesetsTilesSpritesheet.getPNG());
@@ -15,9 +16,11 @@ export default class Scene extends Phaser.State {
     public levelManager: LevelManager;
     public textManager: TextManager;
     private player: Player;
+    controls: PlayerControls = null;
     public level: number = 1;
     public background: Phaser.Group = null;
     public sky: Phaser.Sprite = null;
+    public score = 0;
     // enemies;
     light;
     bitmap;
@@ -26,7 +29,8 @@ export default class Scene extends Phaser.State {
 
     // GAME CYCLE
     public preload(): void {
-        this.player = new Player(this.input, this.game, this);
+        this.controls = new PlayerControls(this.input, this.game);
+        this.player = new Player(this.controls, this.game, this);
         this.levelManager = new LevelManager(this.game, this.player, this);
         this.textManager = new TextManager();
         this.game.load.spritesheet('cyclops', Assets.Images.MyAssetsMyMonster.getPNG(), 32, 32);
@@ -43,12 +47,10 @@ export default class Scene extends Phaser.State {
         this.game.stage.backgroundColor = 0x4488cc;
         this.background = this.game.add.group();
 
-
-
         this.timer = this.game.time.create(false);
         this.timer.start();
 
-        this.levelManager.score = 0;
+        this.score = 0;
         this.player.initPlayer();
 
         this.game.world.enableBody = true;
@@ -61,7 +63,7 @@ export default class Scene extends Phaser.State {
         ]);
 
         this.levelManager.createLevel(this.player);
-        this.textManager.createText(this.game, this.levelManager.score, this.player.life);
+        this.textManager.createText(this.game, this.score, this.player.life);
 
     }
     public update(): void {

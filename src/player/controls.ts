@@ -32,4 +32,10 @@ export default class PlayerControls {
         return released;
     };
 
+    RetryInputIsActive() {
+        let isActive = false;
+        isActive = this.input.keyboard.isDown(Phaser.Keyboard.X);
+        return isActive;
+    };
+
 }
