@@ -1,6 +1,6 @@
 import EnemyAnimation from './animations';
 import EnemySprite from './sprite';
-import Scene from '../states/scene';
+import Scene from '../states/gameScreenScene';
 
 const enum State {
     IDLE = 1,

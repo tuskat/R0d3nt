@@ -1,5 +1,5 @@
 import * as Assets from '../assets';
-import Player from './';
+import Player from './player';
 
 export default class PlayerAnimation {
     public sprite: Phaser.Sprite = null;

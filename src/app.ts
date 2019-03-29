@@ -6,9 +6,9 @@
 
 import * as WebFontLoader from 'webfontloader';
 
-import Boot from './states/boot';
-import Preloader from './states/preloader';
-import Scene from './states/scene';
+import Boot from './states/bootScene';
+import Preloader from './states/preloaderScene';
+import Scene from './states/gameScreenScene';
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
 

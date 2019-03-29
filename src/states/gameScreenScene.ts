@@ -1,8 +1,8 @@
 import * as Assets from '../assets';
 import * as AssetUtils from '../utils/assetUtils';
-import LevelManager from '../levels/';
-import TextManager from '../text';
-import Player from '../player/';
+import LevelManager from '../levels/levelManager';
+import TextManager from '../text/textManager';
+import Player from '../player/player';
 import PlayerControls from '../player/controls';
 
 //   this.game.load.tilemap('tilemap', Assets.JSON.Level.getJSON(), null, Phaser.Tilemap.TILED_JSON);

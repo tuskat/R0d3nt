@@ -1,4 +1,4 @@
-import Scene from '../states/scene';
+import Scene from '../states/gameScreenScene';
 
 export default class WeaponManager {
     state: Scene = null;

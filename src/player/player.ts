@@ -1,5 +1,5 @@
-import Scene from '../states/scene';
-import WeaponManager from '../weapons';
+import Scene from '../states/gameScreenScene';
+import WeaponManager from '../weapons/weaponManager';
 import PlayerAnimation from './animations';
 import PlayerControls from './controls';
 

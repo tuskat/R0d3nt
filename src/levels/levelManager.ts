@@ -1,8 +1,8 @@
-import Player from '../player/';
-import Scene from '../states/scene';
-import EnemiesManager from '../enemies';
-import LightManager from '../levels/light/';
-import TextManager from '../text/';
+import Player from '../player/player';
+import Scene from '../states/gameScreenScene';
+import EnemiesManager from '../enemies/enemiesManager';
+import LightManager from './light';
+import TextManager from '../text/textManager';
 
 const enum Tiles {
     FLOOR = 1,
