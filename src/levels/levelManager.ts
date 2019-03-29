@@ -1,7 +1,7 @@
 import Player from '../player/player';
 import Scene from '../states/gameScreenScene';
 import EnemiesManager from '../enemies/enemiesManager';
-import LightManager from './light';
+import LightManager from './light/lightManager';
 import TextManager from '../text/textManager';
 
 const enum Tiles {
@@ -75,7 +75,7 @@ export default class LevelManager {
     updateDeadMenu() {
         if (this.player.controls.RetryInputIsActive()) {
             this.restart();
-        }
+        } 
     }
 
     update() {
@@ -108,7 +108,6 @@ export default class LevelManager {
             }
             if (this.player.life <= 0) {
                 this.player.die();
-                this.scene.textManager.showRetryText(this.game);
             }
         }
     };

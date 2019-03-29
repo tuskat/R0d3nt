@@ -108,7 +108,7 @@ export default class PlayerAnimation {
             this.lastAnimation = animation;
         }
         let frame = this.sprite.animations.currentFrame;
-        this.setCollision(frame.sourceSizeW);
+        this.setCollision();
     };
     swapRun(animation, previousframe) {
         if (animation === 'run') {
@@ -116,7 +116,7 @@ export default class PlayerAnimation {
             this.sprite.animations.currentAnim.setFrame(swapFrame, true);
         }
     };
-    setCollision(width, height = 178) {
+    setCollision(width = 88, height = 178) {
         this.sprite.body.setSize(width, height, 0, 0);
     };
     doneShooting() {

@@ -33,7 +33,6 @@ export default class Player {
     game: Phaser.Game = null;
     scene: Scene = null;
     controls: PlayerControls = null;
-
     animation: PlayerAnimation = null;
 
     constructor(controls, game, scene) {
@@ -48,7 +47,8 @@ export default class Player {
     initPlayer() {
         this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
         this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-        this.sprite.body.collideWorldBounds = true;
+        this.sprite.body.collideWorldBounds = false;
+        this.sprite.body.checkWorldBounds = true;
         this.setDefaultCollision();
 
         this.sprite.scale.y = this.scale;
@@ -62,29 +62,43 @@ export default class Player {
         this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
         this.animation = new PlayerAnimation(this.sprite, this);
-
         this.animation.initPlayerAnimation();
 
         this.weaponManager.initWeapon();
     };
-    playerControl() {
-        if (this.isDead()) {
+    updatePlayer() {
+        let onTheGround = this.sprite.body.touching.down;
+        if (this.isDead() || this.isOutBound()) {
             return;
         }
-        let onTheGround = this.sprite.body.touching.down;
-        this.isRunning();
-        this.isShooting(onTheGround);
-        this.isJumping(onTheGround);
+
         if (onTheGround) {
             this.isOnFloor();
         }
+        this.isRunning();
+        this.isShooting(onTheGround);
+        this.isJumping(onTheGround);
+
     };
-    die() {
+    die() {;
         this.playerState = PlayerStatus.DEAD;
+        this.life = 0;
+        this.sprite.body.immovable = true;
+        this.sprite.body.velocity.y = 0;
+        this.sprite.body.allowGravity = false;
+        this.sprite.body.y = 0;
+        this.scene.textManager.showRetryText(this.game);
         this.sprite.kill();
     };
     isDead() {
         return this.playerState === PlayerStatus.DEAD;
+    }
+    isOutBound() {
+        if (this.sprite.body.y > this.game.world.height) {
+            this.die();
+            return true;
+        }
+        return false;
     }
     jump() {
         this.sprite.body.velocity.y = this.JUMP_SPEED;
@@ -94,9 +108,9 @@ export default class Player {
     isJumping(onTheGround) {
         if (this.jumps > 0) {
             if (!onTheGround && this.controls.upInputIsActive(50)) {
-                this.jumping = false;
-                this.jump();
-            }
+                    this.jumping = false;
+                    this.jump();
+                }
             else if (this.controls.upInputIsActive(150)) {
                 this.jumping = true;
                 this.jump();
