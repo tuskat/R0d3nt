@@ -1,23 +1,17 @@
-import * as Assets from '../assets';
-import * as AssetUtils from '../utils/assetUtils';
-import LevelManager from '../levels/';
-import TextManager from '../text';
-import Player from '../player/';
-
-//   this.game.load.tilemap('tilemap', Assets.JSON.Level.getJSON(), null, Phaser.Tilemap.TILED_JSON);
-//   this.game.load.image('tiles', Assets.Atlases.TilesetsTilesSpritesheet.getPNG());
-//   this.game.load.image('flag', Assets.Images.GfxFlag.getPNG());
-//   this.game.load.image('rocket', Assets.Images.GfxRocket.getPNG());
-//   this.game.load.image('light', Assets.Images.GfxLight.getPNG());
-//   this.game.load.json('level', Assets.JSON['LevelsLevel1'].getJSON());
+import LevelManager from '../levels/levelManager';
+import TextManager from '../text/textManager';
+import Player from '../player/player';
+import PlayerControls from '../player/controls';
 
 export default class Scene extends Phaser.State {
-    private levelManager: LevelManager;
-    private textManager: TextManager;
+    public levelManager: LevelManager;
+    public textManager: TextManager;
     private player: Player;
+    controls: PlayerControls = null;
     public level: number = 1;
     public background: Phaser.Group = null;
     public sky: Phaser.Sprite = null;
+    public score = 0;
     // enemies;
     light;
     bitmap;
@@ -26,49 +20,36 @@ export default class Scene extends Phaser.State {
 
     // GAME CYCLE
     public preload(): void {
-        this.player = new Player(this.input, this.game, this);
+        this.controls = new PlayerControls(this.input, this.game);
+        this.player = new Player(this.controls, this.game, this);
         this.levelManager = new LevelManager(this.game, this.player, this);
         this.textManager = new TextManager();
-        this.game.load.spritesheet('cyclops', Assets.Images.MyAssetsMyMonster.getPNG(), 32, 32);
-        this.game.load.spritesheet('big_cyclops', Assets.Images.MyAssetsMyBoss2.getPNG(), 64, 128);
-
-        AssetUtils.Loader.loadAllAssets(this.game, null, this);
     }
 
     public create(): void {
         this.game.camera.flash(0x000000);
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        this.game.physics.arcade.OVERLAP_BIAS = 8;
         this.game.time.advancedTiming = true;
+
+        this.game.world.enableBody = true;
+        this.game.world.updateOnlyExistingChildren = true;
+        this.game.physics.setBoundsToWorld();
 
         this.game.stage.smoothed = false;
         this.game.stage.backgroundColor = 0x4488cc;
         this.background = this.game.add.group();
 
-
-
         this.timer = this.game.time.create(false);
         this.timer.start();
-
-        this.levelManager.score = 0;
         this.player.initPlayer();
 
-        this.game.world.enableBody = true;
-
-        this.game.input.keyboard.addKeyCapture([
-            Phaser.Keyboard.LEFT,
-            Phaser.Keyboard.RIGHT,
-            Phaser.Keyboard.UP,
-            Phaser.Keyboard.DOWN
-        ]);
-
         this.levelManager.createLevel(this.player);
-        this.textManager.createText(this.game, this.levelManager.score, this.player.life);
-
+        this.textManager.createText(this.game, this.score, this.player.life);
     }
     public update(): void {
-        this.levelManager.updateEnemies();
-        this.levelManager.updateOverlap();
-        this.levelManager.updateCollision();
-        this.player.playerControl();
+        this.levelManager.update();
+        this.player.updatePlayer();
         this.textManager.updateShadows();
         this.uploadBackground();
     }
@@ -78,10 +59,10 @@ export default class Scene extends Phaser.State {
         this.game.debug.text(this.levelManager.enemiesCount(), this.game.width - 32, 32, '#FFFFFF');
         // let enemies = this.levelManager.enemiesSprite();
         // this.game.debug.physicsGroup(enemies);
-        // this.game.debug.body(this.player.sprite);
+        this.game.debug.body(this.player.sprite);
     }
     //
-    public initGradientBackground = function () {
+    public initGradientBackground() {
         let margin = 50;
         let padding = 200;
 
@@ -106,11 +87,8 @@ export default class Scene extends Phaser.State {
         this.background.add(grad);
         this.background.add(bg1);
         this.background.add(bg2);
-
-
-
     };
-    public uploadBackground = function () {
+    public uploadBackground() {
         let slide = 0.2;
         this.background.forEachAlive(background => {
             if (background.tilePosition) {

@@ -1,4 +1,6 @@
 import EnemyAnimation from './animations';
+import EnemySprite from './sprite';
+import Scene from '../states/gameScreenScene';
 
 const enum State {
     IDLE = 1,
@@ -19,31 +21,31 @@ export default class EnemiesFactory {
     public JUMP_SPEED = -700; // pixels/second (negative y is up)
     private tilesize = 32;
     public scale = 0.25;
-    public sprites: Phaser.Group = null;
-    public spawns: Phaser.Group = null;
+    public enemyGroup: Phaser.Group = null;
+    public spawnDoor: Phaser.Group = null;
     public game: Phaser.Game = null;
-    state: Phaser.State = null;
-    constructor(game, state) {
+    public scene: Scene = null;
+    constructor(game, scene) {
         this.game = game;
-        this.state = state;
-        this.sprites = this.game.add.group();
-        this.spawns = this.game.add.group();
+        this.scene = scene;
+        this.enemyGroup = this.game.add.group();
+        this.spawnDoor = this.game.add.group();
     }
-    initEnemySpawn = function (x, y, nbr, tilesize) {
+    initEnemySpawn(x, y, nbr, tilesize) {
         this.tilesize = tilesize;
-        let spawn = this.game.add.sprite(this.tilesize * x, (this.tilesize * y) + 20, 'my_spawn');
-        this.spawns.add(spawn);
+        let spawn = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) + 20, 'my_spawn');
+        this.spawnDoor.add(spawn);
         spawn.body.immovable = true;
         spawn.body.allowGravity = false;
         for (let i = 0; i < nbr; i++) {
             let pos = { x: x, y: y };
             let spawnRate = (100 * i) + this.game.rnd.integerInRange(2000, 5000);
-            this.state.timer.add(spawnRate, this.initEnemy, this, pos);
+            this.scene.timer.add(spawnRate, this.initMob, this, pos);
         }
     };
-    initEnemy = function (pos) {
-        let enemy = this.game.add.sprite(this.tilesize * pos.x, this.tilesize * pos.y, 'cyclops');
-        this.sprites.add(enemy);
+    initMob(pos) {
+        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * pos.x, this.tilesize * pos.y, 'cyclops');
+        this.enemyGroup.add(enemy);
         enemy.body.gravity.y = this.GRAVITY;
         enemy.body.collideWorldBounds = true;
         enemy.body.enableBody = true;
@@ -54,20 +56,20 @@ export default class EnemiesFactory {
         enemy.type = EnemyType.MOB;
         enemy.sight = { x: 50, y: 50 };
         enemy.facingRight = false;
-        enemy.status = State.IDLE;
+        enemy.state = State.IDLE;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 
-    initBoss = function (x, y, tilesize) {
+    initSlasher(x, y, tilesize) {
         this.tilesize = tilesize;
 
-        let enemy = this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 64, 'enemy_ninja');
+        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 64, 'enemy_ninja');
         enemy.scale.x = this.scale;
         enemy.scale.y = this.scale;
         enemy.body.collideWorldBounds = true;
 
 
-        this.sprites.add(enemy);
+        this.enemyGroup.add(enemy);
         enemy.body.gravity.y = this.GRAVITY;
 
         enemy.body.enableBody = true;
@@ -81,15 +83,15 @@ export default class EnemiesFactory {
         enemy.sight = { x: 300, y: 100 };
         enemy.type = EnemyType.BOSS;
         enemy.facingRight = false;
-        enemy.status = State.IDLE;
+        enemy.state = State.IDLE;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 
 
-    public getEnemiesCount = function () {
-        return this.sprites.countLiving().toString();
+    public getEnemiesCount() {
+        return this.enemyGroup.countLiving().toString();
     };
-    public getSprites = function () {
-        return this.sprites;
+    public getSprites() {
+        return this.enemyGroup;
     };
 }

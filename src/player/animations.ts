@@ -1,42 +1,43 @@
 import * as Assets from '../assets';
+import Player from './player';
 
 export default class PlayerAnimation {
     public sprite: Phaser.Sprite = null;
+    public player: Player = null;
     private lastAnimation: string = null;
-    constructor(sprite) {
+    constructor(sprite, player) {
         this.sprite = sprite;
+        this.player = player;
     }
-    initIdle = function () {
+    initIdle() {
         this.sprite.animations.add('idle', [Assets.Atlases.AtlasesPlayerNinja.Frames.IdleIdle1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.IdleIdle2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.IdleIdle3,
         Assets.Atlases.AtlasesPlayerNinja.Frames.IdleIdle4]);
     };
 
-    initJump = function () {
+    initJump() {
         this.sprite.animations.add('jump', [Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump3]);
     };
-    initFall = function () {
+    initFall() {
         let fall = this.sprite.animations.add('fall', [Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall3]);
 
         //   fall.onComplete.add(this.doneDoubleJump, this);
     };
-    initRun = function () {
+    initRun() {
         this.sprite.animations.add('run', [Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun3,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun4,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun6]);
-
-
-
     };
-    initShoot = function () {
+
+    initShoot() {
         let shoot = this.sprite.animations.add('shoot', [
         Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot6,
@@ -65,7 +66,7 @@ export default class PlayerAnimation {
         airshot.onComplete.add(this.doneAirShooting, this);
     };
 
-    initSlash = function () {
+    initSlash() {
         this.sprite.animations.add('slash', [
         Assets.Atlases.AtlasesPlayerNinja.Frames.SlashSlash1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.SlashSlash2,
@@ -86,10 +87,10 @@ export default class PlayerAnimation {
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpSlashJumpSlash7,
         ]);
     };
-    initWallClimb = function () {
+    initWallClimb() {
         this.sprite.animations.add('wallclimb', [Assets.Atlases.AtlasesPlayerNinja.Frames.WallClimbWallClimb1]);
     };
-    initPlayerAnimation = function () {
+    initPlayerAnimation() {
         this.initIdle();
         this.initJump();
         this.initFall();
@@ -99,35 +100,33 @@ export default class PlayerAnimation {
         this.initWallClimb();
         this.sprite.animations.play('idle', 4, true);
     };
-    playAnimation = function (animation, framerate = 30, loop = true) {
+    playAnimation(animation, framerate = 30, loop = true) {
+        this.setCollision();
         if (animation !== this.lastAnimation) {
             let previousframe = this.sprite.animations.currentFrame;
             this.sprite.animations.play(animation, framerate, loop);
             this.swapRun(animation, previousframe);
             this.lastAnimation = animation;
-            let frame = this.sprite.animations.currentFrame;
-            this.setCollision(frame.sourceSizeW);
         }
     };
-    swapRun = function (animation, previousframe) {
+    swapRun(animation, previousframe) {
         if (animation === 'run') {
             let swapFrame = previousframe.name.match(/\d+/)[0];
             this.sprite.animations.currentAnim.setFrame(swapFrame, true);
         }
     };
-    setCollision = function (width, height = 178) {
-        this.sprite.body.setSize(width, height, 0, 0);
-        this.sprite.collisionChanged = false;
+    setCollision(width = 80, height = 176) {
+        this.sprite.body.setSize(width, height, 8, 0);
     };
-    doneShooting = function () {
-        this.sprite.shooting = false;
+    doneShooting() {
+        this.player.shooting = false;
         this.playAnimation('idle', 4);
     };
-    doneAirShooting = function () {
-        this.sprite.shooting = false;
+    doneAirShooting() {
+        this.player.shooting = false;
         this.playAnimation('jump', 2);
     };
-    doneDoubleJump = function () {
+    doneDoubleJump() {
         this.playAnimation('jump', 2);
     };
 }

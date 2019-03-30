@@ -1,22 +1,28 @@
-{
-"frames": [
-	{
-		"filename": "preload_bar.png",
-		"frame": {"x":0, "y":51, "w":200, "h":50},
-		"spriteSourceSize": {"x":0,"y":0,"w":200,"h":50},
-		"sourceSize": {"w":200,"h":50}
-	},
-	{
-		"filename": "preload_frame.png",
-		"frame": {"x":0, "y":0, "w":200, "h":50},
-		"spriteSourceSize": {"x":0,"y":0,"w":200,"h":50},
-		"sourceSize": {"w":200,"h":50}
-	}
+{"frames": [
 
-],
+{
+	"filename": "preload_bar.png",
+	"frame": {"x":0,"y":0,"w":200,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":50},
+	"sourceSize": {"w":200,"h":50}
+},
+{
+	"filename": "preload_frame.png",
+	"frame": {"x":200,"y":0,"w":200,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":50},
+	"sourceSize": {"w":200,"h":50}
+}],
 "meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
 	"image": "preload_sprites_array.png",
-	"size": {"w": 256, "h": 128},
-	"scale": "1"
+	"format": "RGBA8888",
+	"size": {"w":400,"h":50},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e1a58ec5803498e48b470deb21bde525:09d02604fb36c79ed01269499f7c394c:759f62823074a4aa4367c4461577ad51$"
 }
 }

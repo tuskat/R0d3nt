@@ -1,17 +1,8 @@
-import * as Assets from '../assets';
-import Player from '../player/';
-import Scene from '../states/scene';
-import EnemiesManager from '../enemies';
-import LightManager from './light/';
-import TextManager from '../text/';
-import GameLogic from '../gamelogic/';
-
-const enum State {
-    IDLE = 1,
-    CHASE,
-    CONFUSED,
-    DEAD
-};
+import Player from '../player/player';
+import Scene from '../states/gameScreenScene';
+import EnemiesManager from '../enemies/enemiesManager';
+import LightManager from './light/lightManager';
+import TextManager from '../text/textManager';
 
 const enum Tiles {
     FLOOR = 1,
@@ -20,79 +11,182 @@ const enum Tiles {
     BOTTOM,
     PLAYER,
     SPAWN,
-    BOSS,
+    SLASHER,
     FLAG,
     COINS,
     LIGHT
 };
 
-export default class LevelManager extends GameLogic {
+const enum State {
+    IDLE = 1,
+    CHASE,
+    CONFUSED,
+    ATTACKING,
+    DEAD
+};
+const enum EnemyType {
+    SLASHER = 1,
+    REAPER,
+    SHOOTER
+}
+
+export default class LevelManager {
     private scale: number = 1.5;
 
-    GetJsonLevel(lvlIndex) {
-        let levelJson = this.game.cache.getJSON('map' + lvlIndex);
+    public ground: Phaser.Group = null;
+    public map: Phaser.Tilemap = null;
+    public exit: Phaser.Group = null;
+    public walls: Phaser.Group = null;
+    public coins: Phaser.Group = null;
+    public layer: Phaser.TilemapLayer = null;
 
-        if (levelJson === null) {
-            levelJson = this.game.cache.getJSON('hub');
-            let level = levelJson;
-            this.state.level = 0;
-            return level;
-        } else {
-            let level = levelJson;
+    public game: Phaser.Game = null;
+    public scene: Scene = null;
+    public enemiesManager: EnemiesManager;
+    public textManager: TextManager = new TextManager();
+    public light: LightManager = null;
+    public player: Player;
 
-            return level;
+    constructor(game, player, scene) {
+        this.game = game;
+        this.scene = scene;
+        this.player = player;
+    }
+
+    // Update
+
+    updateCollision() {
+        this.game.physics.arcade.collide(this.player.sprite, this.walls);
+        this.game.physics.arcade.collide(this.enemiesSprite(), this.walls);
+        this.game.physics.arcade.collide(this.exit, this.walls);
+        this.game.physics.arcade.collide(this.player.weaponManager.getPistolBullets(), this.walls);
+    };
+    updateOverlap() {
+        this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.playerIsAttacked, null, this);
+        this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
+        this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
+        this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.walls, this.killEntity, null, this.scene);
+        this.enemiesManager.enemiesOverlap(this.player);
+    };
+    updateEnemies() {
+        this.enemiesManager.update(this.player, this.walls);
+    };
+    updateDeadMenu() {
+        if (this.player.controls.RetryInputIsActive()) {
+            this.restart();
         }
     }
 
-    getLevel(lvlIndex): string[] {
-        return this.GetJsonLevel(lvlIndex);
+    update() {
+        this.updateOverlap();
+        this.updateCollision();
+        this.updateEnemies();
+        if (this.player.isDead()) {
+            this.updateDeadMenu();
+            return;
+        }
+        // this.light.updateLight();
     }
 
-
-    initLevel = function () {
-        this.enemiesManager = new EnemiesManager(this.game, this.state);
-        this.walls = this.game.add.group();
-        this.platforms = this.game.add.group();
-        this.coins = this.game.add.group();
-        this.exit = this.game.add.group();
+    // Should Absolutely be not here
+    takeCoin(player, coin, score) {
+        coin.kill();
+        this.scene.score += 100;
+        this.scene.textManager.textUpdate(null, this.scene.score);
+    };
+    // LOGIC BINDED TO LEVEL
+    playerIsAttacked(player, enemy) {
+        if (enemy.state === State.DEAD) {
+            return;
+        }
+        if (!this.player.invincibility) {
+            if (enemy.animations.currentAnim.name === 'slash'
+                && enemy.animations.currentAnim.currentFrame.index >= 19) {
+                this.player.takeDamage(enemy);
+                this.scene.textManager.textUpdate(this.player.life, this.scene.score);
+            }
+            if (this.player.life <= 0) {
+                this.player.die();
+            }
+        }
     };
 
-
-    initLightManager = function (lightSource, worldSize) {
-        this.light = new LightManager(this.walls, this.game, this.state);
-        this.light.createLight(lightSource, worldSize);
-        this.light.updateLight();
-        this.state.initGradientBackground();
+    killEntity(entity) {
+        entity.kill();
     };
 
-    nextStage = function (player, exit) {
+    enemiesCount() {
+        return this.enemiesManager.getEnemiesCount();
+    };
+
+    enemiesSprite() {
+        return this.enemiesManager.getSprites();
+    };
+
+    nextStage(player, exit) {
         let enemiesNbr = + this.enemiesCount();
         if (enemiesNbr === 0) {
-            this.state.level = this.state.level + 1;
+            this.scene.level = this.scene.level + 1;
             this.game.state.start('scene');
         }
     };
-    restart = function () {
+    restart() {
         this.player.life = 3;
         this.player.invincibility = false;
         this.game.state.start('scene');
     };
-    recursiveDeletion = function (x) {
+    // Level Creation
+    recursiveDeletion(x) {
         if (x <= 100)
             return x;
         else
             return this.recursiveDeletion(x - 100);
     };
-    setScale = function (item) {
+
+    setScale(item) {
         item.scale.y = this.scale;
         item.scale.x = this.scale;
     };
 
-    createLevel = function (player) {
+    getJsonData(lvlIndex) {
+        let levelJson = this.game.cache.getJSON('map' + lvlIndex);
+
+        if (levelJson === null) {
+            levelJson = this.game.cache.getJSON('hub');
+            let level = levelJson;
+            this.scene.level = 0;
+            return level;
+        } else {
+            let level = levelJson;
+            return level;
+        }
+    }
+
+    getLevel(lvlIndex) {
+        return this.getJsonData(lvlIndex);
+    }
+
+
+    initLevel() {
+        this.enemiesManager = new EnemiesManager(this.game, this.scene);
+        this.walls = this.game.add.group();
+        this.coins = this.game.add.group();
+        this.exit = this.game.add.group();
+    };
+
+
+    initLightManager(lightSource, worldSize) {
+        this.light = new LightManager(this.walls, this.game, this.scene);
+        this.light.createLight(lightSource, worldSize);
+        this.light.updateLight();
+        this.scene.initGradientBackground();
+    };
+
+    createLevel(player) {
         let levelTileSize = 32 * this.scale;
         let lightSource = { x: 0, y: 0 };
         let worldSize = { x: 0, y: 0 };
-        let level = this.getLevel(this.state.level);
+        let level = this.getLevel(this.scene.level);
         level.enemies = 5;
         // console.log(level);
         let layout = level.layers[0].data;
@@ -158,12 +252,12 @@ export default class LevelManager extends GameLogic {
                         break;
                     }
                     case Tiles.SPAWN: {
-                        this.enemiesManager.initBoss(hX, hY, level.enemies, levelTileSize);
+                        this.enemiesManager.initSlasher(hX, hY, levelTileSize);
 
                         break;
                     }
-                    case Tiles.BOSS: {
-                        this.enemiesManager.initBoss(hX, hY, levelTileSize);
+                    case Tiles.SLASHER: {
+                        this.enemiesManager.initSlasher(hX, hY, levelTileSize);
 
                         break;
                     }
@@ -195,7 +289,7 @@ export default class LevelManager extends GameLogic {
         }
 
         this.initLightManager(lightSource, worldSize);
-        this.textManager.levelTitle(level.title, this.game);
+        this.textManager.levelTitle(level.title, this.game, player);
         return level.new;
     };
 }

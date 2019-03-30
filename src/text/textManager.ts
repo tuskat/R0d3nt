@@ -1,40 +1,39 @@
 export default class TextManager {
     style = { font: '16px Havana', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    titleStyle = { font: '70px Havana', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
     scoreText;
     lifeText;
     constructor() {
 
     }
 
-    createText = function (game, score, life) {
+    createText(game, score, life) {
         this.scoreText = game.add.text(10, 0, 'Score : ' + score, this.style);
         this.scoreText.fixedToCamera = true;
         this.lifeText = game.add.text(10, game.height - 30, 'Hp : ' + life, this.style);
         this.lifeText.fixedToCamera = true;
     };
-    updateShadows = function () {
+    updateShadows() {
         this.textShadow(this.scoreText);
         this.textShadow(this.lifeText);
     };
 
-    textUpdate = function (life, score) {
-        this.lifeText.setText('Hp :' + life);
+    textUpdate(life, score) {
+        if (life !== null) {
+            this.lifeText.setText('Hp :' + life);
+        }
         this.scoreText.setText('Score :' + score);
     };
-    textShadow = function (text) {
+    textShadow(text) {
         text.setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 1);
     };
 
-    levelTitle = function (levelName, game) {
-        let posX = game.width / 4;
-        let posY = game.height / 4;
-        let style = { font: '70px Havana', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    levelTitle(levelName, game, player) {
+        let posX = player.sprite.x - (game.width / 2.5);
+        let posY = game.height / 2;
 
-
-
-        let text = game.add.text(posX, posY, levelName, style);
-        let textReflect = game.add.text(posX, posY + 50, levelName, style);
-
+        let text = game.add.text(posX, posY, levelName, this.titleStyle);
+        let textReflect = game.add.text(posX, posY + 50, levelName, this.titleStyle);
 
         text.body.allowGravity = false;
         textReflect.body.allowGravity = false;
@@ -47,4 +46,11 @@ export default class TextManager {
         game.add.tween(textReflect).to({ alpha: 1 }, 1500, Phaser.Easing.Linear.None, true);
         game.add.tween(textReflect).to({ alpha: 0 }, 5000, Phaser.Easing.Linear.None, true);
     };
+
+    showRetryText(game) {
+        let text = game.add.text(game.width * .125, game.height * 0.125, 'Press X to retry', this.titleStyle);
+        text.fixedToCamera = true;
+        text.alpha = 0;
+        game.add.tween(text).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
+    }
 }

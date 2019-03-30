@@ -1,5 +1,4 @@
 import EnemiesFactory from './factory';
-import EnemyAnimation from './animations';
 
 const enum State {
     IDLE = 1,
@@ -8,24 +7,24 @@ const enum State {
     ATTACKING,
     DEAD
 };
-const enum EnemyType {
-    MOB = 1,
-    BOSS
-}
 export default class EnemiesManager extends EnemiesFactory {
 
-    enemiesChase = function (player, walls) {
+    update(player, walls) {
         let self = this;
-        this.sprites.forEachAlive(function (enemy) {
+        this.enemyGroup.forEachAlive(function (enemy) {
             if (enemy.state !== State.DEAD) {
-                self.seekPlayer(enemy, player, walls, self);
+                if (!player.isDead()) {
+                    self.seekPlayer(enemy, player, walls, self);
+                } else {
+                    enemy.state = State.CONFUSED;
+                }
                 self.act(enemy, player);
             } else {
                 self.erase(enemy);
             }
         });
     };
-    act = function(enemy, player) {
+    act = function (enemy, player) {
         switch (enemy.state) {
             case State.CHASE: {
                 this.runToPlayer(player.sprite, enemy);
@@ -45,7 +44,7 @@ export default class EnemiesManager extends EnemiesFactory {
             }
         }
     };
-    seekPlayer = function (enemy, player,  walls, self) {
+    seekPlayer(enemy, player, walls, self) {
         if (enemy.onCooldown) {
             return;
         }
@@ -59,13 +58,13 @@ export default class EnemiesManager extends EnemiesFactory {
             enemy.state = State.CONFUSED;
         }
     };
-    idle = function (enemy) {
+    idle(enemy) {
         enemy.body.velocity.x = 0;
         if (enemy.animation !== undefined) {
             enemy.animation.playAnimation('idle', 4);
         }
     };
-    runToPlayer = function (player, enemy) {
+    runToPlayer(player, enemy) {
         if (enemy.x >= (player.x + 30)) {
             enemy.body.velocity.x = - this.ACCELERATION;
             enemy.scale.x = -this.scale;
@@ -86,26 +85,70 @@ export default class EnemiesManager extends EnemiesFactory {
             enemy.animation.playAnimation('run');
         }
     };
-    inAttackRange = function(enemy, player) {
+
+    enemiesOverlap(player) {
+        this.game.physics.arcade.overlap(player.weaponManager.getPistolBullets(), this.enemyGroup, this.damageEnemies, null, this);
+    }
+
+    damageEnemies(bullet, enemy) {
+        let damage = bullet.key === 'my_bullet' ? 1 : 3;
+        let collided = false;
+        if (enemy.status !== State.DEAD) {
+            enemy.body.velocity.x = this.getKnockBack(enemy, bullet);
+            enemy.life -= damage;
+            this.showEnemyDamage(enemy);
+            bullet.kill();
+            collided = true;
+            this.scene.score += 25;
+            this.scene.textManager.textUpdate(null, this.scene.score);
+        }
+        if (enemy.life <= 0) {
+            enemy.state = State.DEAD;
+            this.scene.timer.add(800, this.killEnemy, this, enemy);
+        }
+        return collided;
+    };
+    killEnemy(enemy) {
+        enemy.kill();
+    };
+    showEnemyDamage(enemy) {
+        let damageColor = 0xc51b10;
+        if (enemy.tint === damageColor)
+            enemy.tint = 0xffffff;
+        else {
+            enemy.tint = damageColor;
+            this.scene.timer.add(250, this.showEnemyDamage, this, enemy);
+        }
+    };
+
+    getKnockBack(enemy, bullet) {
+        let knockback = bullet.position.x > enemy.body.x ? -1400 : 1400;
+        if (enemy.body.velocity.x >= -140 && enemy.body.velocity.x <= 140) {
+            knockback = knockback / 10;
+        }
+        return knockback;
+    };
+
+    inAttackRange = function (enemy, player) {
         if (enemy.onCooldown) {
             return false;
         }
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
         return this.shouldAttack(ray);
     };
-    trackPlayer = function (enemy, player, walls) {
+    trackPlayer(enemy, player, walls) {
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
         let intersect = this.getWallIntersection(ray, walls, enemy.sight.x);
         if (intersect !== null) {
             return false;
         } else if (ray.height > enemy.sight.y
-            || ray.width > enemy.sight.x)  {
+            || ray.width > enemy.sight.x) {
             return false;
         } else {
             return true;
         }
     };
-    erase = function (enemy) {
+    erase(enemy) {
         if (!enemy.dying) {
             enemy.animation.playAnimation('idle', false);
             enemy.dying = true;
@@ -118,25 +161,25 @@ export default class EnemiesManager extends EnemiesFactory {
             this.game.camera.shake(0.01, 250);
         }
     };
-    shouldAttack = function (ray) {
+    shouldAttack(ray) {
         let distance = 30;
         if ((ray.width <= distance) && (ray.height <= distance)) {
             return true;
         }
         return false;
     };
-    attack = function (enemy) {
+    attack(enemy) {
         if (!enemy.onCooldown) {
             enemy.body.velocity.x = 0;
             enemy.animation.playAnimation('slash', 15, false);
-            this.state.timer.add(1000, this.recharge , this, enemy);
+            this.scene.timer.add(1000, this.recharge, this, enemy);
             enemy.onCooldown = true;
         }
     };
-    recharge = function(enemy) {
+    recharge = function (enemy) {
         enemy.onCooldown = false;
     };
-    getWallIntersection = function (ray, walls, sight) {
+    getWallIntersection(ray, walls, sight) {
         let distanceToWall = sight;
         let closestIntersection = null;
 
