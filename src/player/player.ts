@@ -2,7 +2,6 @@ import Scene from '../states/gameScreenScene';
 import WeaponManager from '../weapons/weaponManager';
 import PlayerAnimation from './animations';
 import PlayerControls from './controls';
-import { on } from 'cluster';
 
 const enum PlayerStatus {
     IDLE = 1,
@@ -48,13 +47,9 @@ export default class Player {
     initPlayer() {
         this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
         this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-        this.sprite.body.setSize(80, 176, -16, 0);
-        this.animation = new PlayerAnimation(this.sprite, this);
-        this.animation.initPlayerAnimation();
-
-
         this.sprite.body.collideWorldBounds = false;
         this.sprite.body.checkWorldBounds = true;
+        this.sprite.body.setSize(80, 176, -16, 0);
 
         this.sprite.scale.y = this.scale;
         this.sprite.scale.x = this.scale;
@@ -65,6 +60,9 @@ export default class Player {
 
         this.game.physics.arcade.gravity.y = this.GRAVITY;
         this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+
+        this.animation = new PlayerAnimation(this.sprite, this);
+        this.animation.initPlayerAnimation();
 
         this.weaponManager.initWeapon();
     };
@@ -81,7 +79,7 @@ export default class Player {
         this.isShooting(onTheGround);
         this.isJumping(onTheGround);
     };
-    die() {
+    die() {;
         this.playerState = PlayerStatus.DEAD;
         this.life = 0;
         this.sprite.body.immovable = true;
@@ -151,33 +149,31 @@ export default class Player {
         }
     };
     isShooting(onTheGround) {
+        let lastState = this.playerState;
         if (this.weaponManager.isShooting()) {
+            this.playerState = PlayerStatus.SHOOTING;
+            if (this.facingRight === true) {
+                this.weaponManager.shootRight(this.sprite);
+            }
+            else {
+                this.weaponManager.shootLeft(this.sprite);
+            }
             let shot = this.weaponManager.fireAction();
-            this.shoot(onTheGround, shot);
+            if (shot === true) {
+                if (onTheGround === true) {
+                    if (lastState === PlayerStatus.RUNNING)
+                        this.animation.playAnimation('runshoot', 30, true);
+                    else
+                        this.animation.playAnimation('shoot', 30, false);
+                }
+                else
+                    this.animation.playAnimation('jumpshoot', 30, false);
+            }
         } else {
             this.playerState = PlayerStatus.RUNNING;
         }
     };
-    shoot(onTheGround, shot) {
-        let lastState = this.playerState;
-        this.playerState = PlayerStatus.SHOOTING;
-        if (this.facingRight === true) {
-            this.weaponManager.shootRight(this.sprite);
-        }
-        else {
-            this.weaponManager.shootLeft(this.sprite);
-        }
-        if (shot === true) {
-            if (onTheGround === true) {
-                if (lastState === PlayerStatus.RUNNING)
-                    this.animation.playAnimation('runshoot', 30, true);
-                else
-                    this.animation.playAnimation('shoot', 30, false);
-            }
-            else
-                this.animation.playAnimation('jumpshoot', 30, false);
-        }
-    };
+
     takeDamage(enemy) {
         this.life -= 1;
         this.invincibility = true;
@@ -196,5 +192,10 @@ export default class Player {
     };
     updateInvincibility() {
         this.invincibility = false;
+    };
+    addJump() {
+        if (this.jumps === 0 && this.controls.upInputIsActive(50)) {
+            this.jumps = 1;
+        }
     };
 }

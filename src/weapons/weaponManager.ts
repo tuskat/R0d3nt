@@ -2,8 +2,8 @@ import Scene from '../states/gameScreenScene';
 
 export default class WeaponManager {
     state: Scene = null;
-    pellet: number = 0;
-    pistol = null;
+    magazine: number = 3;
+    weapon = null;
     fireButton = null;
     canShoot = true;
     fireInterval: number = 0;
@@ -17,8 +17,7 @@ export default class WeaponManager {
     };
 
     fireAction() {
-        if (this.canShoot && this.pistol !== undefined) {
-            console.log('shoot');
+        if (this.canShoot) {
             this.fire();
             return true;
         }
@@ -26,52 +25,64 @@ export default class WeaponManager {
     };
 
     initSmg() {
-        this.pellet = 3;
+        this.magazine = 3;
         this.fireInterval = 500;
-        this.pistol = this.state.game.add.weapon(30, 'my_bullet');
-        this.pistol.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
-        this.pistol.bulletLifespan = 500;
-        this.pistol.bulletSpeed = 1000;
-        this.pistol.bulletGravity = new Phaser.Point(-100, -1150);
-        this.pistol.bulletAngleOffset = 0;
-        this.pistol.bulletAngleVariance = 0;
-        this.pistol.fireRate = 50;
-        this.pistol.autoFire = false;
-        this.pistol.bulletWorldWrap = false;
-        this.pistol.enableBody = true;
-        this.pistol.trackRotation = true;
+        this.weapon = this.state.game.add.weapon(30, 'my_bullet');
+        this.weapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
+        this.weapon.bulletLifespan = 500;
+        this.weapon.bulletSpeed = 1000;
+        this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
+        this.weapon.bulletAngleOffset = 0;
+        this.weapon.bulletAngleVariance = 1;
+        this.weapon.fireRate = 50;
+        this.weapon.autoFire = false;
+        this.weapon.bulletWorldWrap = false;
+        this.weapon.enableBody = true;
+        this.weapon.trackRotation = true;
     };
     fire() {
-        console.log(this);
-        this.pistol.fire();
+        for (let i = 0; i <= this.magazine; i++) {
+            if (this.weapon.fireRate > 0) {
+                this.state.timer.add(this.weapon.fireRate * i, this.shoot, this);
+            } else {
+               this.shoot(); 
+            }
+        }
         this.canShoot = false;
-        this.state.timer.add(this.fireInterval, this.restoreInterval, this);
+        this.state.timer.add(this.fireInterval, this.reload, this);
     };
 
+    shoot() {
+        this.weapon.fire();
+    };
 
     getPistolBullets() {
-        return this.pistol.bullets;
+        return this.weapon.bullets;
     };
 
     shootRight(playerSprite) {
-        this.pistol.bulletSpeed = 1000;
-        this.pistol.bulletAngleOffset = 0;
+        this.weapon.bulletSpeed = 1000;
+        this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(true, playerSprite);
     };
     shootLeft(playerSprite) {
-        this.pistol.bulletSpeed = -1000;
-        this.pistol.bulletAngleOffset = 0;
+        this.weapon.bulletSpeed = -1000;
+        this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(false, playerSprite);
     };
     isShooting() {
-        if (this.fireButton.isDown)
+        if (this.fireButton.isDown) {
+            if (this.isShotReleased()) {
+                return false;
+            }
             return true;
+        }
         else
             return false;
     };
     isShotReleased() {
         let released = false;
-        released = this.state.input.keyboard.upDuration(this.fireButton);
+        released = this.state.input.keyboard.upDuration(this.fireButton, 1000);
         if (released)
             this.state.input.activePointer.justReleased();
         return released;
@@ -79,11 +90,11 @@ export default class WeaponManager {
 
     weaponTracking(right, playerSprite) {
         if (right)
-            this.pistol.trackSprite(playerSprite, 26, -8, true);
+            this.weapon.trackSprite(playerSprite, 26, -8, true);
         else
-            this.pistol.trackSprite(playerSprite, 26, 8, true);
+            this.weapon.trackSprite(playerSprite, 26, 8, true);
     };
-    restoreInterval() {
-        this.canShoot = !this.canShoot;
+    reload() {
+            this.canShoot = !this.canShoot;
     };
 }
