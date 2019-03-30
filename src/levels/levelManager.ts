@@ -11,7 +11,7 @@ const enum Tiles {
     BOTTOM,
     PLAYER,
     SPAWN,
-    BOSS,
+    SLASHER,
     FLAG,
     COINS,
     LIGHT
@@ -25,8 +25,9 @@ const enum State {
     DEAD
 };
 const enum EnemyType {
-    MOB = 1,
-    BOSS
+    SLASHER = 1,
+    REAPER,
+    SHOOTER
 }
 
 export default class LevelManager {
@@ -59,15 +60,12 @@ export default class LevelManager {
         this.game.physics.arcade.collide(this.enemiesSprite(), this.walls);
         this.game.physics.arcade.collide(this.exit, this.walls);
         this.game.physics.arcade.collide(this.player.weaponManager.getPistolBullets(), this.walls);
-        this.game.physics.arcade.collide(this.player.weaponManager.getCanonBullets(), this.walls);
     };
     updateOverlap() {
         this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.playerIsAttacked, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
-        this.game.physics.arcade.overlap(this.player.sprite, this.walls, this.wallHandler, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
         this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.walls, this.killEntity, null, this.scene);
-        this.game.physics.arcade.overlap(this.player.weaponManager.getCanonBullets(), this.walls, this.killEntity, null, this.scene);
         this.enemiesManager.enemiesOverlap(this.player);
     };
     updateEnemies() {
@@ -115,11 +113,6 @@ export default class LevelManager {
 
     killEntity(entity) {
         entity.kill();
-    };
-
-
-    wallHandler() {
-        this.player.addJump();
     };
 
     enemiesCount() {
@@ -259,12 +252,12 @@ export default class LevelManager {
                         break;
                     }
                     case Tiles.SPAWN: {
-                        this.enemiesManager.initBoss(hX, hY, levelTileSize);
+                        this.enemiesManager.initSlasher(hX, hY, levelTileSize);
 
                         break;
                     }
-                    case Tiles.BOSS: {
-                        this.enemiesManager.initBoss(hX, hY, levelTileSize);
+                    case Tiles.SLASHER: {
+                        this.enemiesManager.initSlasher(hX, hY, levelTileSize);
 
                         break;
                     }

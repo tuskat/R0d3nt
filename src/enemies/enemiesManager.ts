@@ -88,7 +88,6 @@ export default class EnemiesManager extends EnemiesFactory {
 
     enemiesOverlap(player) {
         this.game.physics.arcade.overlap(player.weaponManager.getPistolBullets(), this.enemyGroup, this.damageEnemies, null, this);
-        this.game.physics.arcade.overlap(player.weaponManager.getCanonBullets(), this.enemyGroup, this.damageEnemies, null, this);
     }
 
     damageEnemies(bullet, enemy) {

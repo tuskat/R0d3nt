@@ -60,7 +60,7 @@ export default class EnemiesFactory {
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 
-    initBoss(x, y, tilesize) {
+    initSlasher(x, y, tilesize) {
         this.tilesize = tilesize;
 
         let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 64, 'enemy_ninja');

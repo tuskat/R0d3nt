@@ -47,11 +47,12 @@ export default class Player {
     }
     initPlayer() {
         this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
+        this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
         this.sprite.body.setSize(80, 176, -16, 0);
         this.animation = new PlayerAnimation(this.sprite, this);
         this.animation.initPlayerAnimation();
 
-        this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+
         this.sprite.body.collideWorldBounds = false;
         this.sprite.body.checkWorldBounds = true;
 
@@ -79,7 +80,6 @@ export default class Player {
         this.isRunning();
         this.isShooting(onTheGround);
         this.isJumping(onTheGround);
-
     };
     die() {
         this.playerState = PlayerStatus.DEAD;
@@ -152,26 +152,20 @@ export default class Player {
     };
     isShooting(onTheGround) {
         if (this.weaponManager.isShooting()) {
-            let weapon = this.weaponManager.pistol;
-            let shot = this.weaponManager.fireAction(weapon);
-            this.shoot(onTheGround, shot, weapon);
-        } else if (this.weaponManager.isChargedShotting()) {
-            let weapon = this.weaponManager.cannon;
-            let shot = this.weaponManager.fireAction(weapon);
-            this.shoot(onTheGround, shot, weapon);
-        }
-         else {
+            let shot = this.weaponManager.fireAction();
+            this.shoot(onTheGround, shot);
+        } else {
             this.playerState = PlayerStatus.RUNNING;
         }
     };
-    shoot(onTheGround, shot, weapon) {
+    shoot(onTheGround, shot) {
         let lastState = this.playerState;
         this.playerState = PlayerStatus.SHOOTING;
         if (this.facingRight === true) {
-            this.weaponManager.shootRight(this.sprite, weapon);
+            this.weaponManager.shootRight(this.sprite);
         }
         else {
-            this.weaponManager.shootLeft(this.sprite, weapon);
+            this.weaponManager.shootLeft(this.sprite);
         }
         if (shot === true) {
             if (onTheGround === true) {
@@ -203,33 +197,4 @@ export default class Player {
     updateInvincibility() {
         this.invincibility = false;
     };
-    addJump() {
-        if (this.jumps === 0 && this.controls.upInputIsActive(50)) {
-            this.jumps = 1;
-        }
-    };
 }
-
-// Always use isRunning in the end...
-// switch (this.playerState) {
-//     case PlayerStatus.IDLE: {
-//         this.isRunning(onTheGround);
-//         break;
-//     }
-//     case PlayerStatus.RUNNING: {
-//         this.isRunning(onTheGround);
-//         break;
-//     }
-//     case PlayerStatus.JUMPING: {
-//         this.isRunning(onTheGround);
-//         break;
-//     }
-//     case PlayerStatus.SHOOTING: {
-//         this.isRunning(onTheGround);
-//         break;
-//     }
-//     default: {
-//         this.isRunning(onTheGround);
-//         break;
-//     }
-// }
