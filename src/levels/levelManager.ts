@@ -31,7 +31,6 @@ const enum EnemyType {
 
 export default class LevelManager {
     private scale: number = 1.5;
-    private platforms;
 
     public ground: Phaser.Group = null;
     public map: Phaser.Tilemap = null;
@@ -54,19 +53,21 @@ export default class LevelManager {
     }
 
     // Update
+
     updateCollision() {
         this.game.physics.arcade.collide(this.player.sprite, this.walls);
-        this.game.physics.arcade.collide(this.player.weaponManager.getBullets(), this.walls);
         this.game.physics.arcade.collide(this.enemiesSprite(), this.walls);
         this.game.physics.arcade.collide(this.exit, this.walls);
+        this.game.physics.arcade.collide(this.player.weaponManager.getPistolBullets(), this.walls);
+        this.game.physics.arcade.collide(this.player.weaponManager.getCanonBullets(), this.walls);
     };
     updateOverlap() {
         this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.playerIsAttacked, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.walls, this.wallHandler, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
-
-        this.game.physics.arcade.overlap(this.player.weaponManager.getBullets(), this.walls, this.killEntity, null, this.scene);
+        this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.walls, this.killEntity, null, this.scene);
+        this.game.physics.arcade.overlap(this.player.weaponManager.getCanonBullets(), this.walls, this.killEntity, null, this.scene);
         this.enemiesManager.enemiesOverlap(this.player);
     };
     updateEnemies() {
@@ -75,7 +76,7 @@ export default class LevelManager {
     updateDeadMenu() {
         if (this.player.controls.RetryInputIsActive()) {
             this.restart();
-        } 
+        }
     }
 
     update() {
@@ -176,7 +177,6 @@ export default class LevelManager {
     initLevel() {
         this.enemiesManager = new EnemiesManager(this.game, this.scene);
         this.walls = this.game.add.group();
-        this.platforms = this.game.add.group();
         this.coins = this.game.add.group();
         this.exit = this.game.add.group();
     };

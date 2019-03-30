@@ -24,7 +24,7 @@ export default class EnemiesManager extends EnemiesFactory {
             }
         });
     };
-    act = function(enemy, player) {
+    act = function (enemy, player) {
         switch (enemy.state) {
             case State.CHASE: {
                 this.runToPlayer(player.sprite, enemy);
@@ -44,7 +44,7 @@ export default class EnemiesManager extends EnemiesFactory {
             }
         }
     };
-    seekPlayer(enemy, player,  walls, self) {
+    seekPlayer(enemy, player, walls, self) {
         if (enemy.onCooldown) {
             return;
         }
@@ -87,14 +87,16 @@ export default class EnemiesManager extends EnemiesFactory {
     };
 
     enemiesOverlap(player) {
-        this.game.physics.arcade.overlap(player.weaponManager.getBullets(), this.enemyGroup, this.damageEnemies, null, this);
+        this.game.physics.arcade.overlap(player.weaponManager.getPistolBullets(), this.enemyGroup, this.damageEnemies, null, this);
+        this.game.physics.arcade.overlap(player.weaponManager.getCanonBullets(), this.enemyGroup, this.damageEnemies, null, this);
     }
 
     damageEnemies(bullet, enemy) {
+        let damage = bullet.key === 'my_bullet' ? 1 : 3;
         let collided = false;
         if (enemy.status !== State.DEAD) {
             enemy.body.velocity.x = this.getKnockBack(enemy, bullet);
-            enemy.life--;
+            enemy.life -= damage;
             this.showEnemyDamage(enemy);
             bullet.kill();
             collided = true;
@@ -128,7 +130,7 @@ export default class EnemiesManager extends EnemiesFactory {
         return knockback;
     };
 
-    inAttackRange = function(enemy, player) {
+    inAttackRange = function (enemy, player) {
         if (enemy.onCooldown) {
             return false;
         }
@@ -141,7 +143,7 @@ export default class EnemiesManager extends EnemiesFactory {
         if (intersect !== null) {
             return false;
         } else if (ray.height > enemy.sight.y
-            || ray.width > enemy.sight.x)  {
+            || ray.width > enemy.sight.x) {
             return false;
         } else {
             return true;
@@ -171,11 +173,11 @@ export default class EnemiesManager extends EnemiesFactory {
         if (!enemy.onCooldown) {
             enemy.body.velocity.x = 0;
             enemy.animation.playAnimation('slash', 15, false);
-            this.scene.timer.add(1000, this.recharge , this, enemy);
+            this.scene.timer.add(1000, this.recharge, this, enemy);
             enemy.onCooldown = true;
         }
     };
-    recharge = function(enemy) {
+    recharge = function (enemy) {
         enemy.onCooldown = false;
     };
     getWallIntersection(ray, walls, sight) {

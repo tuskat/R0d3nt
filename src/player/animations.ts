@@ -101,14 +101,13 @@ export default class PlayerAnimation {
         this.sprite.animations.play('idle', 4, true);
     };
     playAnimation(animation, framerate = 30, loop = true) {
+        this.setCollision();
         if (animation !== this.lastAnimation) {
             let previousframe = this.sprite.animations.currentFrame;
             this.sprite.animations.play(animation, framerate, loop);
             this.swapRun(animation, previousframe);
             this.lastAnimation = animation;
         }
-        let frame = this.sprite.animations.currentFrame;
-        this.setCollision();
     };
     swapRun(animation, previousframe) {
         if (animation === 'run') {
@@ -116,8 +115,8 @@ export default class PlayerAnimation {
             this.sprite.animations.currentAnim.setFrame(swapFrame, true);
         }
     };
-    setCollision(width = 88, height = 178) {
-        this.sprite.body.setSize(width, height, 0, 0);
+    setCollision(width = 80, height = 176) {
+        this.sprite.body.setSize(width, height, 8, 0);
     };
     doneShooting() {
         this.player.shooting = false;

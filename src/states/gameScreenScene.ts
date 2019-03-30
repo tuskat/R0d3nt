@@ -28,7 +28,13 @@ export default class Scene extends Phaser.State {
 
     public create(): void {
         this.game.camera.flash(0x000000);
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        this.game.physics.arcade.OVERLAP_BIAS = 8;
         this.game.time.advancedTiming = true;
+
+        this.game.world.enableBody = true;
+        this.game.world.updateOnlyExistingChildren = true;
+        this.game.physics.setBoundsToWorld();
 
         this.game.stage.smoothed = false;
         this.game.stage.backgroundColor = 0x4488cc;
@@ -38,12 +44,8 @@ export default class Scene extends Phaser.State {
         this.timer.start();
         this.player.initPlayer();
 
-        this.game.world.enableBody = true;
-        this.game.world.updateOnlyExistingChildren = true;
-        this.game.physics.setBoundsToWorld();
         this.levelManager.createLevel(this.player);
         this.textManager.createText(this.game, this.score, this.player.life);
-
     }
     public update(): void {
         this.levelManager.update();
