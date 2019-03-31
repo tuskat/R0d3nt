@@ -21,13 +21,7 @@ export default class PlayerAnimation {
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump3]);
     };
-    initFall() {
-        let fall = this.sprite.animations.add('fall', [Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall1,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall2,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall3]);
 
-        //   fall.onComplete.add(this.doneDoubleJump, this);
-    };
     initRun() {
         this.sprite.animations.add('run', [Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun2,
@@ -93,7 +87,6 @@ export default class PlayerAnimation {
     initPlayerAnimation() {
         this.initIdle();
         this.initJump();
-        this.initFall();
         this.initRun();
         this.initShoot();
         this.initSlash();

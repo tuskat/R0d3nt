@@ -68,12 +68,12 @@ export default class EnemiesManager extends EnemiesFactory {
     };
     runToPlayer(player, enemy) {
         if (enemy.x >= (player.x + 30)) {
-            enemy.body.velocity.x = - this.ACCELERATION;
+            enemy.body.velocity.x = - this.ACCELERATION + enemy.speed;
             enemy.scale.x = -this.scale;
             enemy.facingRight = false;
         }
         else if (enemy.x <= (player.x - 30)) {
-            enemy.body.velocity.x = this.ACCELERATION;
+            enemy.body.velocity.x = this.ACCELERATION +  enemy.speed;
             enemy.scale.x = this.scale;
             enemy.facingRight = true;
         } else {

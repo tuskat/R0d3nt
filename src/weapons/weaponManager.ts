@@ -33,7 +33,7 @@ export default class WeaponManager {
         this.weapon.bulletSpeed = 1000;
         this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.weapon.bulletAngleOffset = 0;
-        this.weapon.bulletAngleVariance = 1;
+        this.weapon.bulletAngleVariance = 0;
         this.weapon.fireRate = 50;
         this.weapon.autoFire = false;
         this.weapon.bulletWorldWrap = false;

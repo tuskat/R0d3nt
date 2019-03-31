@@ -59,6 +59,7 @@ export default class EnemiesFactory {
         enemy.body.setSize(112, 176, -16, 0);
         enemy.anchor.setTo(0.5, 0.5);
         enemy.wandering = false;
+        enemy.speed = this.game.rnd.integerInRange(-50, 50);
         enemy.animation = new EnemyAnimation(enemy);
         enemy.animation.initAnimation();
         enemy.body.allowGravity = true;
