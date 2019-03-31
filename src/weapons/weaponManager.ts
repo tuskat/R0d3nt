@@ -45,7 +45,7 @@ export default class WeaponManager {
             if (this.weapon.fireRate > 0) {
                 this.state.timer.add(this.weapon.fireRate * i, this.shoot, this);
             } else {
-               this.shoot(); 
+               this.shoot();
             }
         }
         this.canShoot = false;

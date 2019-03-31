@@ -57,6 +57,7 @@ export default class LevelManager {
 
     updateCollision() {
         this.game.physics.arcade.collide(this.player.sprite, this.walls);
+        this.game.physics.arcade.collide(this.enemiesSprite());
         this.game.physics.arcade.collide(this.enemiesSprite(), this.walls);
         this.game.physics.arcade.collide(this.exit, this.walls);
         this.game.physics.arcade.collide(this.player.weaponManager.getPistolBullets(), this.walls);
@@ -252,7 +253,7 @@ export default class LevelManager {
                         break;
                     }
                     case Tiles.SPAWN: {
-                        this.enemiesManager.initSlasher(hX, hY, levelTileSize);
+                        this.enemiesManager.initEnemySpawn(hX, hY, 20, levelTileSize);
 
                         break;
                     }
@@ -289,7 +290,7 @@ export default class LevelManager {
         }
 
         this.initLightManager(lightSource, worldSize);
-        this.textManager.levelTitle(level.title, this.game, player);
+        this.textManager.levelTitle(level.layers[0].properties[0].value, this.game, player);
         return level.new;
     };
 }

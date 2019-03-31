@@ -44,12 +44,18 @@ export default class EnemyAnimation {
         this.sprite.animations.play('idle', 4, true);
     };
 
-    playAnimation(animation, framerate = 30, loop = true) {
+    playAnimation(animation, framerate = 30, loop = true, immovable = false) {
         if (animation !== this.lastAnimation) {
             this.sprite.animations.play(animation, framerate, loop);
             this.lastAnimation = animation;
             let frame = this.sprite.animations.currentFrame;
             this.setCollision(frame.sourceSizeW);
+            if (immovable) {
+                this.sprite.body.allowGravity = false;
+            } else {
+                this.sprite.body.allowGravity = true;
+            }
+            this.sprite.body.immovable = immovable;
         }
     };
 

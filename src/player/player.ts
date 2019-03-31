@@ -93,7 +93,7 @@ export default class Player {
         return this.playerState === PlayerStatus.DEAD;
     };
     isOutBound() {
-        if (this.sprite.body.y > this.game.world.height) {
+        if (this.sprite.body.y > this.game.world.height + 128) {
             this.die();
             return true;
         }
@@ -177,7 +177,7 @@ export default class Player {
     takeDamage(enemy) {
         this.life -= 1;
         this.invincibility = true;
-        this.sprite.body.velocity.x = enemy.facingRight ? 1500 : -1500;
+        this.sprite.body.velocity.x = enemy.facingRight ? 500 : -500;
         this.scene.timer.add(1000, this.updateInvincibility, this);
         this.scene.timer.add(250, this.showDamage, this);
     };
@@ -192,10 +192,5 @@ export default class Player {
     };
     updateInvincibility() {
         this.invincibility = false;
-    };
-    addJump() {
-        if (this.jumps === 0 && this.controls.upInputIsActive(50)) {
-            this.jumps = 1;
-        }
     };
 }

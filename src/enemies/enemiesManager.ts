@@ -10,17 +10,19 @@ const enum State {
 export default class EnemiesManager extends EnemiesFactory {
 
     update(player, walls) {
-        let self = this;
-        this.enemyGroup.forEachAlive(function (enemy) {
+        this.enemyGroup.forEachAlive((enemy) => {
+            if (this.isOutBound(enemy)) {
+                enemy.state = State.DEAD;
+            }
             if (enemy.state !== State.DEAD) {
                 if (!player.isDead()) {
-                    self.seekPlayer(enemy, player, walls, self);
+                    this.seekPlayer(enemy, player, walls, this);
                 } else {
                     enemy.state = State.CONFUSED;
                 }
-                self.act(enemy, player);
+                this.act(enemy, player);
             } else {
-                self.erase(enemy);
+                this.erase(enemy);
             }
         });
     };
@@ -75,10 +77,7 @@ export default class EnemiesManager extends EnemiesFactory {
             enemy.scale.x = this.scale;
             enemy.facingRight = true;
         } else {
-            enemy.body.velocity.x = 0;
-            if (enemy.animation !== undefined) {
-                enemy.animation.playAnimation('idle');
-            }
+            this.idle(enemy);
             return;
         }
         if (enemy.animation !== undefined) {
@@ -87,29 +86,35 @@ export default class EnemiesManager extends EnemiesFactory {
     };
 
     enemiesOverlap(player) {
-        this.game.physics.arcade.overlap(player.weaponManager.getPistolBullets(), this.enemyGroup, this.damageEnemies, null, this);
+        this.game.physics.arcade.overlap(this.enemyGroup, player.weaponManager.getPistolBullets(), this.damageEnemies, null, this);
     }
 
-    damageEnemies(bullet, enemy) {
-        let damage = bullet.key === 'my_bullet' ? 1 : 3;
+    damageEnemies(enemy, bullet) {
         let collided = false;
+        if (enemy.life <= 0) {
+            enemy.state = State.DEAD;
+            return;
+        }
         if (enemy.status !== State.DEAD) {
             enemy.body.velocity.x = this.getKnockBack(enemy, bullet);
-            enemy.life -= damage;
+            enemy.life--;
             this.showEnemyDamage(enemy);
             bullet.kill();
             collided = true;
             this.scene.score += 25;
             this.scene.textManager.textUpdate(null, this.scene.score);
         }
-        if (enemy.life <= 0) {
-            enemy.state = State.DEAD;
-            this.scene.timer.add(800, this.killEnemy, this, enemy);
-        }
+
         return collided;
     };
     killEnemy(enemy) {
         enemy.kill();
+    };
+    isOutBound(enemy) {
+        if (enemy.body.y > this.game.world.height) {
+            return true;
+        }
+        return false;
     };
     showEnemyDamage(enemy) {
         let damageColor = 0xc51b10;
@@ -159,6 +164,7 @@ export default class EnemiesManager extends EnemiesFactory {
             enemy.body.velocity.y = -600;
             this.game.add.tween(enemy).to({ alpha: 0 }, 800, Phaser.Easing.Linear.None, true);
             this.game.camera.shake(0.01, 250);
+            this.scene.timer.add(800, this.killEnemy, this, enemy);
         }
     };
     shouldAttack(ray) {
@@ -171,7 +177,8 @@ export default class EnemiesManager extends EnemiesFactory {
     attack(enemy) {
         if (!enemy.onCooldown) {
             enemy.body.velocity.x = 0;
-            enemy.animation.playAnimation('slash', 15, false);
+            enemy.body.velocity.y = 0;
+            enemy.animation.playAnimation('slash', 15, false, true);
             this.scene.timer.add(1000, this.recharge, this, enemy);
             enemy.onCooldown = true;
         }

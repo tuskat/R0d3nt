@@ -13,9 +13,9 @@ const enum EnemyType {
     BOSS
 }
 export default class EnemiesFactory {
-    public MAX_SPEED = 500; // pixels/second
+    public MAX_SPEED = 750; // pixels/second
     public MAX_LIFE = 1;
-    public ACCELERATION = 150; // pixels/second/second
+    public ACCELERATION = 300; // pixels/second/second
     public DRAG = 400; // pixels/second
     public GRAVITY = 30; // pixels/second/second
     public JUMP_SPEED = -700; // pixels/second (negative y is up)
@@ -33,31 +33,14 @@ export default class EnemiesFactory {
     }
     initEnemySpawn(x, y, nbr, tilesize) {
         this.tilesize = tilesize;
-        let spawn = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) + 20, 'my_spawn');
+        let spawn = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) , 'my_spawn');
         this.spawnDoor.add(spawn);
         spawn.body.immovable = true;
         spawn.body.allowGravity = false;
         for (let i = 0; i < nbr; i++) {
-            let pos = { x: x, y: y };
             let spawnRate = (100 * i) + this.game.rnd.integerInRange(2000, 5000);
-            this.scene.timer.add(spawnRate, this.initMob, this, pos);
+            this.scene.timer.add(spawnRate, this.initSlasher, this, x, y + 1 , tilesize);
         }
-    };
-    initMob(pos) {
-        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * pos.x, this.tilesize * pos.y, 'cyclops');
-        this.enemyGroup.add(enemy);
-        enemy.body.gravity.y = this.GRAVITY;
-        enemy.body.collideWorldBounds = true;
-        enemy.body.enableBody = true;
-        enemy.body.setSize(20, 32, 6, 0);
-        enemy.anchor.setTo(0.5, 0.5);
-        enemy.body.allowGravity = true;
-        enemy.life = this.MAX_LIFE;
-        enemy.type = EnemyType.MOB;
-        enemy.sight = { x: 50, y: 50 };
-        enemy.facingRight = false;
-        enemy.state = State.IDLE;
-        this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 
     initSlasher(x, y, tilesize) {
@@ -66,13 +49,13 @@ export default class EnemiesFactory {
         let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 64, 'enemy_ninja');
         enemy.scale.x = this.scale;
         enemy.scale.y = this.scale;
-        enemy.body.collideWorldBounds = true;
-
+        enemy.body.collideWorldBounds = false;
 
         this.enemyGroup.add(enemy);
         enemy.body.gravity.y = this.GRAVITY;
 
         enemy.body.enableBody = true;
+        enemy.body.checkCollision.up = false;
         enemy.body.setSize(112, 176, -16, 0);
         enemy.anchor.setTo(0.5, 0.5);
         enemy.wandering = false;
@@ -80,7 +63,7 @@ export default class EnemiesFactory {
         enemy.animation.initAnimation();
         enemy.body.allowGravity = true;
         enemy.life = this.MAX_LIFE * 3;
-        enemy.sight = { x: 300, y: 100 };
+        enemy.sight = { x: 500, y: 100 };
         enemy.type = EnemyType.BOSS;
         enemy.facingRight = false;
         enemy.state = State.IDLE;
