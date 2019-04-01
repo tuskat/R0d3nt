@@ -1,8 +1,6 @@
 (global as any).p2 = require('p2');
 (global as any).PIXI = require('pixi');
-
 (global as any).Phaser = require('phaser');
-
 
 import * as WebFontLoader from 'webfontloader';
 

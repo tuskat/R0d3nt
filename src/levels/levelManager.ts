@@ -54,6 +54,7 @@ export default class LevelManager extends LevelCreator  {
     takeCoin(player, coin, score) {
         coin.kill();
         this.scene.score += 100;
+        this.player.weaponManager.setGun(this.game.rnd.integerInRange(1,2));
         this.scene.textManager.textUpdate(null, this.scene.score);
     };
     // LOGIC BINDED TO LEVEL

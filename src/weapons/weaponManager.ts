@@ -1,8 +1,71 @@
 import Scene from '../states/gameScreenScene';
 
+const enum WeaponsType {
+    PISTOL = 0,
+    SHOTGUN,
+    SMG
+};
+
 export default class WeaponManager {
     state: Scene = null;
-    magazine: number = 3;
+    magazine: number = -1;
+    pellet: number = 3;
+    armory = [
+        {
+            magazine: 3,
+            pellet: 3,
+            fireInterval: 500,
+            weapon: {
+                type: WeaponsType.PISTOL,
+                bulletKillType: Phaser.Weapon.KILL_CAMERA_BOUNDS,
+                bulletLifespan: 500,
+                bulletSpeed: 1000,
+                bulletAngleOffset: 0,
+                bulletAngleVariance: 0,
+                fireRate: 50,
+                autoFire: false,
+                bulletWorldWrap: false,
+                enableBody: true,
+                trackRotation: true
+            }
+        },
+        {
+            magazine: 10,
+            pellet: 5,
+            fireInterval: 400,
+            weapon: {
+                type: WeaponsType.SHOTGUN,
+                bulletKillType: Phaser.Weapon.KILL_CAMERA_BOUNDS,
+                bulletLifespan: 100,
+                bulletSpeed: 2000,
+                bulletAngleOffset: 0,
+                bulletAngleVariance: 10,
+                fireRate: 0,
+                autoFire: false,
+                bulletWorldWrap: false,
+                enableBody: true,
+                trackRotation: true
+            }
+        },
+        {
+            magazine: 10,
+            pellet: 10,
+            fireInterval: 500,
+            weapon: {
+                type: WeaponsType.SMG,
+                bulletKillType: Phaser.Weapon.KILL_CAMERA_BOUNDS,
+                bulletLifespan: 500,
+                bulletSpeed: 1000,
+                bulletAngleOffset: 0,
+                bulletAngleVariance: 1,
+                fireRate: 75,
+                autoFire: true,
+                bulletWorldWrap: false,
+                enableBody: true,
+                trackRotation: true
+            }
+        }
+    ];
     weapon = null;
     fireButton = null;
     canShoot = true;
@@ -12,7 +75,7 @@ export default class WeaponManager {
     }
 
     initWeapon(shootKey = Phaser.KeyCode.SPACEBAR) {
-        this.initSmg();
+        this.initGun();
         this.fireButton = this.state.input.keyboard.addKey(shootKey);
     };
 
@@ -24,24 +87,23 @@ export default class WeaponManager {
         return false;
     };
 
-    initSmg() {
-        this.magazine = 3;
-        this.fireInterval = 500;
+    initGun() {
         this.weapon = this.state.game.add.weapon(30, 'my_bullet');
-        this.weapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
-        this.weapon.bulletLifespan = 500;
-        this.weapon.bulletSpeed = 1000;
         this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
-        this.weapon.bulletAngleOffset = 0;
-        this.weapon.bulletAngleVariance = 0;
-        this.weapon.fireRate = 50;
-        this.weapon.autoFire = false;
-        this.weapon.bulletWorldWrap = false;
-        this.weapon.enableBody = true;
-        this.weapon.trackRotation = true;
+        this.setGun(WeaponsType.PISTOL);
     };
+
+    setGun(index) {
+        this.magazine = this.armory[index].magazine;
+        this.fireInterval = this.armory[index].fireInterval;
+        let weapon = this.armory[index].weapon;
+        Object.keys(weapon).map((key, i) => {
+            this.weapon[key] = weapon[key];
+        });
+    }
+
     fire() {
-        for (let i = 0; i <= this.magazine; i++) {
+        for (let i = 0; i <= this.pellet; i++) {
             if (this.weapon.fireRate > 0) {
                 this.state.timer.add(this.weapon.fireRate * i, this.shoot, this);
             } else {
@@ -49,6 +111,13 @@ export default class WeaponManager {
             }
         }
         this.canShoot = false;
+        if (this.weapon.type !== WeaponsType.PISTOL) {
+            console.log(this.weapon);
+            this.magazine -= 1;
+            if (this.magazine === 0) {
+                this.setGun(WeaponsType.PISTOL);
+            }
+        }
         this.state.timer.add(this.fireInterval, this.reload, this);
     };
 
@@ -95,6 +164,6 @@ export default class WeaponManager {
             this.weapon.trackSprite(playerSprite, 26, 8, true);
     };
     reload() {
-            this.canShoot = !this.canShoot;
+        this.canShoot = !this.canShoot;
     };
 }

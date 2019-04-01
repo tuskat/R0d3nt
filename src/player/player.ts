@@ -164,10 +164,10 @@ export default class Player {
                     if (lastState === PlayerStatus.RUNNING)
                         this.animation.playAnimation('runshoot', 30, true);
                     else
-                        this.animation.playAnimation('shoot', 30, false);
+                        this.animation.playAnimation('shoot', 25, false);
                 }
                 else
-                    this.animation.playAnimation('jumpshoot', 30, false);
+                    this.animation.playAnimation('jumpshoot', 25, false);
             }
         } else {
             this.playerState = PlayerStatus.RUNNING;

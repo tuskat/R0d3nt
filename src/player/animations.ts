@@ -50,7 +50,6 @@ export default class PlayerAnimation {
         shoot.onComplete.add(this.doneShooting, this);
 
         let airshot = this.sprite.animations.add('jumpshoot', [
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot4,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot6,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot7,
