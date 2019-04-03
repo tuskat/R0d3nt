@@ -3,12 +3,12 @@ import WeaponManager from '../weapons/weaponManager';
 import PlayerAnimation from './animations';
 import PlayerControls from './controls';
 
-const enum PlayerStatus {
+const enum PlayerState {
     IDLE = 1,
     RUNNING,
     SHOOTING,
     JUMPING,
-    DEFAULT,
+    DASHING,
     DEAD
 };
 
@@ -20,9 +20,10 @@ export default class Player {
     public GRAVITY = 1150; // pixels/second/second
     public JUMP_SPEED = -450; // pixels/second (negative y is up)
     public jumps = 2;
+    public dash = 1;
     public scale = 0.25;
     public sprite: Phaser.Sprite = null;
-    public playerState: number = PlayerStatus.IDLE;
+    public playerState: number = PlayerState.IDLE;
     public life = 0;
     public jumping = false;
     public shooting = false;
@@ -41,7 +42,7 @@ export default class Player {
         this.scene = scene;
         this.controls = controls;
         this.jumping = false;
-        this.playerState = PlayerStatus.IDLE;
+        this.playerState = PlayerState.IDLE;
         this.weaponManager = new WeaponManager(scene);
     }
     initPlayer() {
@@ -68,19 +69,21 @@ export default class Player {
     };
     updatePlayer() {
         let onTheGround = this.sprite.body.touching.down;
-        if (this.isDead() || this.isOutBound()) {
+        if (this.isDead() ||
+            this.isOutBound()) {
             return;
         }
-
-        if (onTheGround) {
-            this.isOnFloor();
+        else if (!this.isDashing()) {
+            if (onTheGround) {
+                this.isOnFloor();
+            }    
+            this.isRunning();
+            this.isShooting(onTheGround);
+            this.isJumping(onTheGround);
         }
-        this.isRunning();
-        this.isShooting(onTheGround);
-        this.isJumping(onTheGround);
     };
     die() {;
-        this.playerState = PlayerStatus.DEAD;
+        this.playerState = PlayerState.DEAD;
         this.life = 0;
         this.sprite.body.immovable = true;
         this.sprite.body.velocity.y = 0;
@@ -90,7 +93,7 @@ export default class Player {
         this.sprite.kill();
     };
     isDead() {
-        return this.playerState === PlayerStatus.DEAD;
+        return this.playerState === PlayerState.DEAD;
     };
     isOutBound() {
         if (this.sprite.body.y > this.game.world.height + 128) {
@@ -102,7 +105,7 @@ export default class Player {
     jump() {
         this.sprite.body.velocity.y = this.JUMP_SPEED;
         this.animation.playAnimation('jump', 3);
-        this.playerState = PlayerStatus.JUMPING;
+        this.playerState = PlayerState.JUMPING;
     };
     isJumping(onTheGround) {
         if (this.jumps > 0) {
@@ -125,13 +128,14 @@ export default class Player {
         this.jumping = false;
         let previousState = this.playerState;
         if (this.controls.leftInputIsActive() || this.controls.rightInputIsActive()) {
-            this.playerState = PlayerStatus.RUNNING;
-            if (previousState !== PlayerStatus.SHOOTING) {
+            this.playerState = PlayerState.RUNNING;
+            if (previousState !== PlayerState.SHOOTING) {
                 this.animation.playAnimation('run');
             }
         } else {
-            if (this.playerState !== PlayerStatus.SHOOTING) {
-                this.playerState = PlayerStatus.IDLE;
+            if (this.playerState !== PlayerState.SHOOTING &&
+                this.playerState !== PlayerState.DASHING) {
+                this.playerState = PlayerState.IDLE;
                 this.animation.playAnimation('idle', 4);
             }
         }
@@ -151,7 +155,7 @@ export default class Player {
     isShooting(onTheGround) {
         let lastState = this.playerState;
         if (this.weaponManager.isShooting()) {
-            this.playerState = PlayerStatus.SHOOTING;
+            this.playerState = PlayerState.SHOOTING;
             if (this.facingRight === true) {
                 this.weaponManager.shootRight(this.sprite);
             }
@@ -161,7 +165,7 @@ export default class Player {
             let shot = this.weaponManager.fireAction();
             if (shot === true) {
                 if (onTheGround === true) {
-                    if (lastState === PlayerStatus.RUNNING)
+                    if (lastState === PlayerState.RUNNING)
                         this.animation.playAnimation('runshoot', 30, true);
                     else
                         this.animation.playAnimation('shoot', 25, false);
@@ -170,7 +174,30 @@ export default class Player {
                     this.animation.playAnimation('jumpshoot', 25, false);
             }
         } else {
-            this.playerState = PlayerStatus.RUNNING;
+            this.playerState = PlayerState.RUNNING;
+        }
+    };
+
+    isDashing() {
+        if (this.dash > 0 && (this.controls.dashInputIsActive(50))) {
+            this.playerState = PlayerState.DASHING;
+            this.sprite.body.velocity.x += this.facingRight ? this.MAX_SPEED : - this.MAX_SPEED;
+            this.sprite.body.velocity.y = 0;
+            this.animation.playAnimation('dash', 25, false);
+            this.dash--;
+            this.scene.timer.add(400, this.endDash, this);
+        }
+        return this.playerState === PlayerState.DASHING;
+    };
+
+    restoreDash() {
+        this.dash = 1;
+    };
+
+    endDash() {
+        if (!this.isDead()) {
+            this.playerState = PlayerState.IDLE;
+            this.scene.timer.add(400, this.restoreDash, this);
         }
     };
 

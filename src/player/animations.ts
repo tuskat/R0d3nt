@@ -31,6 +31,16 @@ export default class PlayerAnimation {
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun6]);
     };
 
+    initDash() {
+        let dash = this.sprite.animations.add('dash', [Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash1,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash2,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash3,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash4,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash5,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash6]);
+        dash.onComplete.add(this.doneDashing, this);
+    };
+
     initShoot() {
         let shoot = this.sprite.animations.add('shoot', [
         Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot5,
@@ -88,6 +98,7 @@ export default class PlayerAnimation {
         this.initJump();
         this.initRun();
         this.initShoot();
+        this.initDash();
         this.initSlash();
         this.initWallClimb();
         this.sprite.animations.play('idle', 4, true);
@@ -109,6 +120,13 @@ export default class PlayerAnimation {
     };
     setCollision(width = 80, height = 176) {
         this.sprite.body.setSize(width, height, 8, 0);
+    };
+    doneDashing() {
+        if (this.sprite.body.touching.down) {
+            this.playAnimation('run');
+        } else {
+            this.playAnimation('jump', 3);
+        }
     };
     doneShooting() {
         this.player.shooting = false;

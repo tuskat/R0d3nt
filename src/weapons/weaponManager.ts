@@ -74,7 +74,7 @@ export default class WeaponManager {
         this.state = state;
     }
 
-    initWeapon(shootKey = Phaser.KeyCode.SPACEBAR) {
+    initWeapon(shootKey = Phaser.KeyCode.X) {
         this.initGun();
         this.fireButton = this.state.input.keyboard.addKey(shootKey);
     };
@@ -112,7 +112,6 @@ export default class WeaponManager {
         }
         this.canShoot = false;
         if (this.weapon.type !== WeaponsType.PISTOL) {
-            console.log(this.weapon);
             this.magazine -= 1;
             if (this.magazine === 0) {
                 this.setGun(WeaponsType.PISTOL);

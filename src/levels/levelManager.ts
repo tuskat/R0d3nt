@@ -8,11 +8,12 @@ const enum State {
     ATTACKING,
     DEAD
 };
+
 const enum EnemyType {
     SLASHER = 1,
     REAPER,
     SHOOTER
-}
+};
 
 export default class LevelManager extends LevelCreator  {
     // Update
@@ -34,7 +35,7 @@ export default class LevelManager extends LevelCreator  {
         this.enemiesManager.update(this.player, this.walls);
     };
     updateDeadMenu() {
-        if (this.player.controls.RetryInputIsActive()) {
+        if (this.player.controls.retryInputIsActive()) {
             this.restart();
         }
     }
