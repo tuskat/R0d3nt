@@ -19,30 +19,37 @@ export default class LevelManager extends LevelCreator  {
     // Update
     updateCollision() {
         this.game.physics.arcade.collide(this.player.sprite, this.walls);
+        this.game.physics.arcade.collide(this.player.sprite, this.trap);
         this.game.physics.arcade.collide(this.enemiesSprite());
         this.game.physics.arcade.collide(this.enemiesSprite(), this.walls);
+        this.game.physics.arcade.collide(this.enemiesSprite(), this.trap);
         this.game.physics.arcade.collide(this.exit, this.walls);
-        this.game.physics.arcade.collide(this.player.weaponManager.getPistolBullets(), this.walls);
     };
     updateOverlap() {
         this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.playerIsAttacked, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
+        this.game.physics.arcade.overlap(this.player.sprite, this.interuptor, this.activateTrap, null, this);
+        this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.interuptor, this.activateTrap, null, this);
         this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.walls, this.killEntity, null, this.scene);
-        this.enemiesManager.enemiesOverlap(this.player);
+        this.trapWeapon.forEach(element => {
+            this.game.physics.arcade.overlap(this.enemiesManager.enemyGroup, element.bullets, this.enemiesManager.damageEnemies, null, this.enemiesManager);
+            this.game.physics.arcade.overlap(this.player.sprite, element.bullets, this.player.takeDamage, null, this.player);
+        });
     };
     updateEnemies() {
+        this.enemiesManager.enemiesOverlap(this.player);
         this.enemiesManager.update(this.player, this.walls);
     };
     updateDeadMenu() {
         if (this.player.controls.retryInputIsActive()) {
             this.restart();
         }
-    }
+    };
 
     update() {
-        this.updateOverlap();
         this.updateCollision();
+        this.updateOverlap();
         this.updateEnemies();
         if (this.player.isDead()) {
             this.updateDeadMenu();
@@ -50,7 +57,11 @@ export default class LevelManager extends LevelCreator  {
         }
         // this.light.updateLight();
     }
-
+    activateTrap(player, interuptor) {
+        this.trapWeapon.forEach(element => {
+           element.fire();
+        });
+    };
     // Should Absolutely be not here
     takeCoin(player, coin, score) {
         coin.kill();
@@ -63,15 +74,9 @@ export default class LevelManager extends LevelCreator  {
         if (enemy.state === State.DEAD) {
             return;
         }
-        if (!this.player.invincibility) {
-            if (enemy.animations.currentAnim.name === 'slash'
-                && enemy.animations.currentAnim.currentFrame.index >= 19) {
-                this.player.takeDamage(enemy);
-                this.scene.textManager.textUpdate(this.player.life, this.scene.score);
-            }
-            if (this.player.life <= 0) {
-                this.player.die();
-            }
+        if (enemy.animations.currentAnim.name === 'slash'
+            && enemy.animations.currentAnim.currentFrame.index >= 19) {
+            this.player.takeDamage(player, enemy);
         }
     };
 

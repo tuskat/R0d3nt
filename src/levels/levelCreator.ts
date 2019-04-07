@@ -14,7 +14,10 @@ const enum Tiles {
     SLASHER,
     FLAG,
     COINS,
-    LIGHT
+    LIGHT,
+    INTERUPTOR,
+    TRAP,
+    CANNON,
 };
 
 
@@ -26,6 +29,9 @@ export default class LevelCreator  {
     public exit: Phaser.Group = null;
     public walls: Phaser.Group = null;
     public coins: Phaser.Group = null;
+    public interuptor: Phaser.Group = null;
+    public trap: Phaser.Group = null;
+    public trapWeapon: Phaser.Weapon[] = null;
     public layer: Phaser.TilemapLayer = null;
     public player: Player;
     public game: Phaser.Game = null;
@@ -67,12 +73,21 @@ export default class LevelCreator  {
 
     initLevel() {
         this.enemiesManager = new EnemiesManager(this.game, this.scene);
+        this.trapWeapon = [];
         this.walls = this.game.add.group();
         this.coins = this.game.add.group();
+        this.trap = this.game.add.group();
+        this.interuptor = this.game.add.group();
         this.exit = this.game.add.group();
     };
 
-
+    initTrap(trap) {
+        let trapWeapon = this.game.add.weapon(1, 'bullet', 5, this.trap);
+        trapWeapon.bulletGravity = new Phaser.Point(0, -4000);
+        trapWeapon.bulletAngleOffset = 0;
+        trapWeapon.trackSprite(trap, trap.width / 1.5, -10, false);
+        this.trapWeapon.push(trapWeapon);
+    };
     initLightManager(lightSource, worldSize) {
         this.light = new LightManager(this.walls, this.game, this.scene);
         this.light.createLight(lightSource, worldSize);
@@ -139,7 +154,6 @@ export default class LevelCreator  {
                         wall.body.checkCollision.up = false;
                         this.setScale(wall);
                         //  wall.body.friction.y = -0.5;
-
                         break;
                     }
                     case Tiles.COINS: {
@@ -150,8 +164,7 @@ export default class LevelCreator  {
                         break;
                     }
                     case Tiles.SPAWN: {
-                        this.enemiesManager.initEnemySpawn(hX, hY, 10, levelTileSize);
-
+                        this.enemiesManager.initEnemySpawn(hX, hY, 5, levelTileSize);
                         break;
                     }
                     case Tiles.SLASHER: {
@@ -175,7 +188,21 @@ export default class LevelCreator  {
                     case Tiles.LIGHT: {
                         lightSource.x = levelTileSize * hX;
                         lightSource.y = (levelTileSize * hY) + 20;
-
+                        break;
+                    }
+                    case Tiles.INTERUPTOR: {
+                        let interuptor = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'interuptor');
+                        this.interuptor.add(interuptor);
+                        interuptor.body.allowGravity = false;
+                        break;
+                    }
+                    case Tiles.TRAP: {
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap');
+                        this.trap.add(trap);
+                        trap.body.immovable = true;
+                        trap.body.allowGravity = false;
+                        this.initTrap(trap);
+                        this.setScale(trap);
                         break;
                     }
                     default: {
@@ -185,7 +212,6 @@ export default class LevelCreator  {
                 i++;
             }
         }
-
         this.initLightManager(lightSource, worldSize);
         this.textManager.levelTitle(level.layers[0].properties[0].value, this.game, player);
         return level.new;

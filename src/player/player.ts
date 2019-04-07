@@ -201,12 +201,19 @@ export default class Player {
         }
     };
 
-    takeDamage(enemy) {
-        this.life -= 1;
-        this.invincibility = true;
-        this.sprite.body.velocity.x = enemy.facingRight ? 500 : -500;
-        this.scene.timer.add(1000, this.updateInvincibility, this);
-        this.scene.timer.add(250, this.showDamage, this);
+    takeDamage(playerSprite = this.sprite, threatSprite) {
+        if (!this.invincibility) {
+            let facingRight = (threatSprite.x > playerSprite.body.x) || (threatSprite.body.x > playerSprite.body.x); 
+            this.life -= 1;
+            this.invincibility = true;
+            this.sprite.body.velocity.x = facingRight ? 500 : -500;
+            this.scene.timer.add(1000, this.updateInvincibility, this);
+            this.scene.timer.add(250, this.showDamage, this);
+            this.scene.textManager.textUpdate(this.life, this.scene.score);
+            if (this.life <= 0) {
+                this.die();
+            }
+        }
     };
     showDamage() {
         let damageColor = 0xc51b10;

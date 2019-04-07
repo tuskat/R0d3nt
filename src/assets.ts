@@ -63,6 +63,11 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/gfx/html5.png'); };
     }
+    export class GfxInteruptor {
+        static getName(): string { return 'interuptor'; };
+
+        static getPNG(): string { return require('assets/gfx/interuptor.png'); };
+    }
     export class GfxLight {
         static getName(): string { return 'light'; };
 
@@ -108,6 +113,11 @@ export namespace Images {
         static getName(): string { return 'top'; };
 
         static getPNG(): string { return require('assets/gfx/top.png'); };
+    }
+    export class GfxTrap {
+        static getName(): string { return 'trap'; };
+
+        static getPNG(): string { return require('assets/gfx/trap.png'); };
     }
     export class GfxWall {
         static getName(): string { return 'wall'; };

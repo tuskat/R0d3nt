@@ -87,14 +87,11 @@ export default class EnemiesManager extends EnemiesFactory {
 
     enemiesOverlap(player) {
         this.game.physics.arcade.overlap(this.enemyGroup, player.weaponManager.getPistolBullets(), this.damageEnemies, null, this);
-    }
+    };
 
     damageEnemies(enemy, bullet) {
         let collided = false;
-        if (enemy.life <= 0) {
-            enemy.state = State.DEAD;
-            return;
-        }
+ 
         if (enemy.status !== State.DEAD) {
             enemy.body.velocity.x = this.getKnockBack(enemy, bullet);
             enemy.life--;
@@ -104,7 +101,10 @@ export default class EnemiesManager extends EnemiesFactory {
             this.scene.score += 25;
             this.scene.textManager.textUpdate(null, this.scene.score);
         }
-
+        if (enemy.life <= 0) {
+            enemy.state = State.DEAD;
+            return;
+        }
         return collided;
     };
     killEnemy(enemy) {
