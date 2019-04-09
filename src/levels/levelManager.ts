@@ -26,10 +26,10 @@ export default class LevelManager extends LevelCreator  {
         this.game.physics.arcade.collide(this.exit, this.walls);
     };
     updateOverlap() {
-        this.game.physics.arcade.overlap(this.player.sprite, this.enemiesManager.getSprites(), this.playerIsAttacked, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
         this.game.physics.arcade.overlap(this.player.sprite, this.interuptor, this.activateTrap, null, this);
+        this.game.physics.arcade.overlap(this.enemiesManager.getSprites(), this.interuptor, this.activateTrap, null, this);
         this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.interuptor, this.activateTrap, null, this);
         this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.walls, this.killEntity, null, this.scene);
         this.trapWeapon.forEach(element => {
@@ -37,10 +37,7 @@ export default class LevelManager extends LevelCreator  {
             this.game.physics.arcade.overlap(this.player.sprite, element.bullets, this.player.takeDamage, null, this.player);
         });
     };
-    updateEnemies() {
-        this.enemiesManager.enemiesOverlap(this.player);
-        this.enemiesManager.update(this.player, this.walls);
-    };
+
     updateDeadMenu() {
         if (this.player.controls.retryInputIsActive()) {
             this.restart();
@@ -50,7 +47,7 @@ export default class LevelManager extends LevelCreator  {
     update() {
         this.updateCollision();
         this.updateOverlap();
-        this.updateEnemies();
+        this.enemiesManager.update(this.player, this.walls);
         if (this.player.isDead()) {
             this.updateDeadMenu();
             return;

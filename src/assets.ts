@@ -114,6 +114,21 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/gfx/top.png'); };
     }
+    export class GfxTrapDown {
+        static getName(): string { return 'trap_down'; };
+
+        static getPNG(): string { return require('assets/gfx/trap_down.png'); };
+    }
+    export class GfxTrapLeft {
+        static getName(): string { return 'trap_left'; };
+
+        static getPNG(): string { return require('assets/gfx/trap_left.png'); };
+    }
+    export class GfxTrapRight {
+        static getName(): string { return 'trap_right'; };
+
+        static getPNG(): string { return require('assets/gfx/trap_right.png'); };
+    }
     export class GfxTrap {
         static getName(): string { return 'trap'; };
 

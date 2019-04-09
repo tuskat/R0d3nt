@@ -16,10 +16,17 @@ const enum Tiles {
     COINS,
     LIGHT,
     INTERUPTOR,
-    TRAP,
-    CANNON,
+    TRAP_UP,
+    TRAP_DOWN,
+    TRAP_LEFT,
+    TRAP_RIGHT
 };
-
+const enum Orientation {
+    UP = 1,
+    DOWN,
+    LEFT,
+    RIGHT
+}
 
 export default class LevelCreator  {
     private scale: number = 1.5;
@@ -74,18 +81,44 @@ export default class LevelCreator  {
     initLevel() {
         this.enemiesManager = new EnemiesManager(this.game, this.scene);
         this.trapWeapon = [];
-        this.walls = this.game.add.group();
         this.coins = this.game.add.group();
         this.trap = this.game.add.group();
         this.interuptor = this.game.add.group();
+        this.walls = this.game.add.group();
         this.exit = this.game.add.group();
     };
 
-    initTrap(trap) {
+    initTrap(trap, rotation) {
         let trapWeapon = this.game.add.weapon(1, 'bullet', 5, this.trap);
-        trapWeapon.bulletGravity = new Phaser.Point(0, -4000);
-        trapWeapon.bulletAngleOffset = 0;
-        trapWeapon.trackSprite(trap, trap.width / 1.5, -10, false);
+        trapWeapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
+        switch (rotation) {
+            case Orientation.DOWN: {
+                trapWeapon.bulletGravity = new Phaser.Point(0, 1150);
+                trapWeapon.fireAngle = 90;
+                trapWeapon.trackSprite(trap, trap.width / 1.5, trap.height, false);
+                break;
+            }
+            case Orientation.UP: {
+                trapWeapon.bulletGravity = new Phaser.Point(0, -2000);
+                trapWeapon.bulletAngleOffset = 0;
+                trapWeapon.trackSprite(trap, trap.width / 1.5, -10, false);
+                break;
+            }
+            case Orientation.LEFT: {
+                trapWeapon.bulletGravity = new Phaser.Point(-100, -1150);
+                trapWeapon.fireAngle = 180;
+                trapWeapon.bulletSpeed = 1000;
+                trapWeapon.trackSprite(trap, 0, trap.height / 1.5, false);
+                break;
+            }
+            case Orientation.RIGHT: {
+                trapWeapon.bulletGravity = new Phaser.Point(-100, -1150);
+                trapWeapon.fireAngle = 0;
+                trapWeapon.bulletSpeed = 1000;
+                trapWeapon.trackSprite(trap, trap.width, trap.height / 1.5, false);
+                break;
+            }
+        }
         this.trapWeapon.push(trapWeapon);
     };
     initLightManager(lightSource, worldSize) {
@@ -116,6 +149,82 @@ export default class LevelCreator  {
             for (let hX = 0; hX < width; hX++) {
 
                 switch (layout[i]) {
+                    case Tiles.INTERUPTOR: {
+                        let interuptor = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) + 40, 'interuptor');
+                        this.interuptor.add(interuptor);
+                        interuptor.body.allowGravity = false;
+                        break;
+                    }
+                    case Tiles.COINS: {
+                        let coin = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'ball');
+                        this.coins.add(coin);
+                        coin.body.allowGravity = false;
+
+                        break;
+                    }
+                    case Tiles.SPAWN: {
+                        this.enemiesManager.initEnemySpawn(hX, hY, 5, levelTileSize);
+                        break;
+                    }
+                    case Tiles.SLASHER: {
+                        this.enemiesManager.initSlasher(hX, hY, levelTileSize);
+
+                        break;
+                    }
+                    case Tiles.PLAYER: {
+                        player.sprite.x = levelTileSize * hX;
+                        player.sprite.y = levelTileSize * hY;
+
+                        break;
+                    }
+                    case Tiles.FLAG: {
+                        let exit = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) + 20, 'flag');
+                        this.exit.add(exit);
+                        exit.body.immovable = true;
+                        exit.body.allowGravity = false;
+                        break;
+                    }
+                    case Tiles.LIGHT: {
+                        lightSource.x = levelTileSize * hX;
+                        lightSource.y = (levelTileSize * hY) + 20;
+                        break;
+                    }
+                    case Tiles.TRAP_UP: {
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap');
+                        this.trap.add(trap);
+                        trap.body.immovable = true;
+                        trap.body.allowGravity = false;
+                        this.initTrap(trap, Orientation.UP);
+                        this.setScale(trap);
+                        break;
+                    }
+                    case Tiles.TRAP_DOWN: {
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap_down');
+                        this.trap.add(trap);
+                        trap.body.immovable = true;
+                        trap.body.allowGravity = false;
+                        this.initTrap(trap, Orientation.DOWN);
+                        this.setScale(trap);
+                        break;
+                    }
+                    case Tiles.TRAP_LEFT: {
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap_left');
+                        this.trap.add(trap);
+                        trap.body.immovable = true;
+                        trap.body.allowGravity = false;
+                        this.initTrap(trap, Orientation.LEFT);
+                        this.setScale(trap);
+                        break;
+                    }
+                    case Tiles.TRAP_RIGHT: {
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap_right');
+                        this.trap.add(trap);
+                        trap.body.immovable = true;
+                        trap.body.allowGravity = false;
+                        this.initTrap(trap, Orientation.RIGHT);
+                        this.setScale(trap);
+                        break;
+                    }
                     case Tiles.FLOOR: {
                         let wall = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'block');
                         this.walls.add(wall);
@@ -154,55 +263,6 @@ export default class LevelCreator  {
                         wall.body.checkCollision.up = false;
                         this.setScale(wall);
                         //  wall.body.friction.y = -0.5;
-                        break;
-                    }
-                    case Tiles.COINS: {
-                        let coin = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'ball');
-                        this.coins.add(coin);
-                        coin.body.allowGravity = false;
-
-                        break;
-                    }
-                    case Tiles.SPAWN: {
-                        this.enemiesManager.initEnemySpawn(hX, hY, 5, levelTileSize);
-                        break;
-                    }
-                    case Tiles.SLASHER: {
-                        this.enemiesManager.initSlasher(hX, hY, levelTileSize);
-
-                        break;
-                    }
-                    case Tiles.PLAYER: {
-                        player.sprite.x = levelTileSize * hX;
-                        player.sprite.y = levelTileSize * hY;
-
-                        break;
-                    }
-                    case Tiles.FLAG: {
-                        let exit = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) + 20, 'flag');
-                        this.exit.add(exit);
-                        exit.body.immovable = true;
-                        exit.body.allowGravity = false;
-                        break;
-                    }
-                    case Tiles.LIGHT: {
-                        lightSource.x = levelTileSize * hX;
-                        lightSource.y = (levelTileSize * hY) + 20;
-                        break;
-                    }
-                    case Tiles.INTERUPTOR: {
-                        let interuptor = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'interuptor');
-                        this.interuptor.add(interuptor);
-                        interuptor.body.allowGravity = false;
-                        break;
-                    }
-                    case Tiles.TRAP: {
-                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap');
-                        this.trap.add(trap);
-                        trap.body.immovable = true;
-                        trap.body.allowGravity = false;
-                        this.initTrap(trap);
-                        this.setScale(trap);
                         break;
                     }
                     default: {

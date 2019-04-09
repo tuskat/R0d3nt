@@ -10,16 +10,13 @@ const enum State {
 export default class EnemiesManager extends EnemiesFactory {
 
     update(player, walls) {
+        this.enemiesOverlap(this.scene.levelManager.player);
         this.enemyGroup.forEachAlive((enemy) => {
             if (this.isOutBound(enemy)) {
                 enemy.state = State.DEAD;
             }
             if (enemy.state !== State.DEAD) {
-                if (!player.isDead()) {
-                    this.seekPlayer(enemy, player, walls, this);
-                } else {
-                    enemy.state = State.CONFUSED;
-                }
+                this.seekPlayer(enemy, player, walls);
                 this.act(enemy, player);
             } else {
                 this.erase(enemy);
@@ -46,12 +43,12 @@ export default class EnemiesManager extends EnemiesFactory {
             }
         }
     };
-    seekPlayer(enemy, player, walls, self) {
+    seekPlayer(enemy, player, walls) {
         if (enemy.onCooldown) {
             return;
         }
-        if (self.trackPlayer(enemy, player.sprite, walls)) {
-            if (self.inAttackRange(enemy, player.sprite)) {
+        if (this.trackPlayer(enemy, player.sprite, walls)) {
+            if (this.inAttackRange(enemy, player.sprite)) {
                 enemy.state = State.ATTACKING;
             } else {
                 enemy.state = State.CHASE;
@@ -86,6 +83,7 @@ export default class EnemiesManager extends EnemiesFactory {
     };
 
     enemiesOverlap(player) {
+        this.game.physics.arcade.overlap(this.enemyGroup, this.scene.levelManager.player.sprite, this.scene.levelManager.playerIsAttacked, null, this.scene);
         this.game.physics.arcade.overlap(this.enemyGroup, player.weaponManager.getPistolBullets(), this.damageEnemies, null, this);
     };
 
@@ -135,7 +133,7 @@ export default class EnemiesManager extends EnemiesFactory {
     };
 
     inAttackRange = function (enemy, player) {
-        if (enemy.onCooldown) {
+        if (enemy.onCooldown || this.scene.levelManager.player.isDead()) {
             return false;
         }
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);

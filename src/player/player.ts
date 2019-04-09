@@ -206,7 +206,7 @@ export default class Player {
             let facingRight = (threatSprite.x > playerSprite.body.x) || (threatSprite.body.x > playerSprite.body.x); 
             this.life -= 1;
             this.invincibility = true;
-            this.sprite.body.velocity.x = facingRight ? 500 : -500;
+            this.sprite.body.velocity.x = facingRight ? -500 : 500;
             this.scene.timer.add(1000, this.updateInvincibility, this);
             this.scene.timer.add(250, this.showDamage, this);
             this.scene.textManager.textUpdate(this.life, this.scene.score);
