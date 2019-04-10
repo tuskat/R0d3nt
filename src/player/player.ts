@@ -59,12 +59,11 @@ export default class Player {
         this.sprite.body.drag.setTo(this.DRAG, 0);
         this.shooting = false;
 
-        this.game.physics.arcade.gravity.y = this.GRAVITY;
+        this.game.physics.arcade.gravity.y = this.GRAVITY; // Put THIS somewhere else
         this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
         this.animation = new PlayerAnimation(this.sprite, this);
         this.animation.initPlayerAnimation();
-
         this.weaponManager.initWeapon();
     };
     updatePlayer() {

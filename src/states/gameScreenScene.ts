@@ -1,11 +1,13 @@
 import LevelManager from '../levels/levelManager';
-import TextManager from '../text/textManager';
+import TextManager from '../ui/textManager';
+import SoundManager from '../ui/soundManager';
 import Player from '../player/player';
 import PlayerControls from '../player/controls';
 
 export default class Scene extends Phaser.State {
     public levelManager: LevelManager;
     public textManager: TextManager;
+    public soundManager: SoundManager;
     private player: Player;
     controls: PlayerControls = null;
     public level: number = 1;
@@ -24,6 +26,7 @@ export default class Scene extends Phaser.State {
         this.player = new Player(this.controls, this.game, this);
         this.levelManager = new LevelManager(this.game, this.player, this);
         this.textManager = new TextManager();
+        this.soundManager = new SoundManager(this.game);
     }
 
     public create(): void {
@@ -45,6 +48,7 @@ export default class Scene extends Phaser.State {
         this.player.initPlayer();
 
         this.levelManager.createLevel(this.player);
+        this.soundManager.initSounds();
         this.textManager.createText(this.game, this.score, this.player.life);
     }
     public update(): void {

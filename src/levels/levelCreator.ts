@@ -1,7 +1,7 @@
 import Scene from '../states/gameScreenScene';
 import EnemiesManager from '../enemies/enemiesManager';
 import LightManager from './light/lightManager';
-import TextManager from '../text/textManager';
+import TextManager from '../ui/textManager';
 import Player from '../player/player';
 
 const enum Tiles {

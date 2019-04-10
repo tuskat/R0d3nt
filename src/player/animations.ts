@@ -23,12 +23,15 @@ export default class PlayerAnimation {
     };
 
     initRun() {
-        this.sprite.animations.add('run', [Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun1,
+        let anim = this.sprite.animations.add('run', [Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun3,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun4,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun6]);
+
+        anim.enableUpdate = true;
+        anim.onUpdate.add(this.running, this);
     };
 
     initDash() {
@@ -138,5 +141,12 @@ export default class PlayerAnimation {
     };
     doneDoubleJump() {
         this.playAnimation('jump', 2);
+    };
+    running(anim, frame) {
+        console.log(frame);
+        // console.log()
+        if (frame.index === 44) {
+            this.player.scene.soundManager.playSound('run');
+        }
     };
 }
