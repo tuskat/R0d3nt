@@ -75,7 +75,7 @@ export default class Player {
         else if (!this.isDashing()) {
             if (onTheGround) {
                 this.isOnFloor();
-            }    
+            }  
             this.isRunning();
             this.isShooting(onTheGround);
             this.isJumping(onTheGround);
@@ -103,7 +103,7 @@ export default class Player {
     };
     jump() {
         this.sprite.body.velocity.y = this.JUMP_SPEED;
-        this.animation.playAnimation('jump', 3);
+        this.animation.playAnimation('jump', 10, false);
         this.playerState = PlayerState.JUMPING;
     };
     isJumping(onTheGround) {
@@ -135,7 +135,7 @@ export default class Player {
             if (this.playerState !== PlayerState.SHOOTING &&
                 this.playerState !== PlayerState.DASHING) {
                 this.playerState = PlayerState.IDLE;
-                this.animation.playAnimation('idle', 4);
+                this.animation.playAnimation('idle', 4, true);
             }
         }
     };

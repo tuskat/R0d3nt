@@ -531,10 +531,25 @@ export namespace Atlases {
 }
 
 export namespace Audio {
+    export class AudioClear {
+        static getName(): string { return 'clear'; };
+
+        static getWAV(): string { return require('assets/audio/clear.wav'); };
+    }
+    export class AudioDie {
+        static getName(): string { return 'die'; };
+
+        static getWAV(): string { return require('assets/audio/die.wav'); };
+    }
     export class AudioRun {
         static getName(): string { return 'run'; };
 
         static getWAV(): string { return require('assets/audio/run.wav'); };
+    }
+    export class AudioShoot {
+        static getName(): string { return 'shoot'; };
+
+        static getWAV(): string { return require('assets/audio/shoot.wav'); };
     }
     export class AudioUnfilteredDMCGS2 {
         static getName(): string { return 'DM-CGS-02'; };
@@ -775,11 +790,6 @@ export namespace Audio {
         static getName(): string { return 'DM-CGS-49'; };
 
         static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-49.wav'); };
-    }
-    export class AudioUnfilteredDMCGS50 {
-        static getName(): string { return 'DM-CGS-50'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-50.wav'); };
     }
 }
 

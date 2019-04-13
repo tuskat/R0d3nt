@@ -7,7 +7,7 @@ const enum WeaponsType {
 };
 
 export default class WeaponManager {
-    state: Scene = null;
+    scene: Scene = null;
     magazine: number = -1;
     pellet: number = 3;
     armory = [
@@ -70,13 +70,13 @@ export default class WeaponManager {
     fireButton = null;
     canShoot = true;
     fireInterval: number = 0;
-    constructor(state) {
-        this.state = state;
+    constructor(scene) {
+        this.scene = scene;
     }
 
     initWeapon(shootKey = Phaser.KeyCode.X) {
         this.initGun();
-        this.fireButton = this.state.input.keyboard.addKey(shootKey);
+        this.fireButton = this.scene.input.keyboard.addKey(shootKey);
     };
 
     fireAction() {
@@ -88,7 +88,7 @@ export default class WeaponManager {
     };
 
     initGun() {
-        this.weapon = this.state.game.add.weapon(30, 'my_bullet');
+        this.weapon = this.scene.game.add.weapon(30, 'my_bullet');
         this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.setGun(WeaponsType.PISTOL);
     };
@@ -105,7 +105,7 @@ export default class WeaponManager {
     fire() {
         for (let i = 0; i <= this.pellet; i++) {
             if (this.weapon.fireRate > 0) {
-                this.state.timer.add(this.weapon.fireRate * i, this.shoot, this);
+                this.scene.timer.add(this.weapon.fireRate * i, this.shoot, this);
             } else {
                this.shoot();
             }
@@ -117,11 +117,12 @@ export default class WeaponManager {
                 this.setGun(WeaponsType.PISTOL);
             }
         }
-        this.state.timer.add(this.fireInterval, this.reload, this);
+        this.scene.timer.add(this.fireInterval, this.reload, this);
     };
 
     shoot() {
         this.weapon.fire();
+        this.scene.soundManager.playSound('shoot');
     };
 
     getPistolBullets() {
@@ -150,9 +151,9 @@ export default class WeaponManager {
     };
     isShotReleased() {
         let released = false;
-        released = this.state.input.keyboard.upDuration(this.fireButton, 1000);
+        released = this.scene.input.keyboard.upDuration(this.fireButton, 1000);
         if (released)
-            this.state.input.activePointer.justReleased();
+            this.scene.input.activePointer.justReleased();
         return released;
     };
 

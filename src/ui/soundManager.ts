@@ -6,7 +6,16 @@ export default class SoundManager {
         this.game = game;
     }
     initSounds() {
-        this.sounds['run'] = this.game.add.audio('run');
+        let audio = [
+            'run',
+            'shoot'
+        ]
+        audio.forEach(sound => {
+            this.sounds[sound] = this.game.add.audio(sound);
+        });
+        for (let key in this.sounds) {    
+            this.sounds[key].volume = 0.5; 
+        }
     }
     playSound(sfx) {
         this.sounds[sfx].play();

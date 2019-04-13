@@ -35,6 +35,7 @@ export default class LevelManager extends LevelCreator  {
         this.trapWeapon.forEach(element => {
             this.game.physics.arcade.overlap(this.enemiesManager.enemyGroup, element.bullets, this.enemiesManager.damageEnemies, null, this.enemiesManager);
             this.game.physics.arcade.overlap(this.player.sprite, element.bullets, this.player.takeDamage, null, this.player);
+            this.game.physics.arcade.overlap(element.bullets, this.walls , this.killEntity, null, this.player);
         });
     };
 

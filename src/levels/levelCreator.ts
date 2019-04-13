@@ -84,8 +84,8 @@ export default class LevelCreator  {
         this.coins = this.game.add.group();
         this.trap = this.game.add.group();
         this.interuptor = this.game.add.group();
-        this.walls = this.game.add.group();
         this.exit = this.game.add.group();
+        this.walls = this.game.add.group();
     };
 
     initTrap(trap, rotation) {
@@ -105,16 +105,16 @@ export default class LevelCreator  {
                 break;
             }
             case Orientation.LEFT: {
-                trapWeapon.bulletGravity = new Phaser.Point(-100, -1150);
+                trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.fireAngle = 180;
-                trapWeapon.bulletSpeed = 1000;
+                trapWeapon.bulletSpeed = 450;
                 trapWeapon.trackSprite(trap, 0, trap.height / 1.5, false);
                 break;
             }
             case Orientation.RIGHT: {
-                trapWeapon.bulletGravity = new Phaser.Point(-100, -1150);
+                trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.fireAngle = 0;
-                trapWeapon.bulletSpeed = 1000;
+                trapWeapon.bulletSpeed = 450;
                 trapWeapon.trackSprite(trap, trap.width, trap.height / 1.5, false);
                 break;
             }

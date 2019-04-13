@@ -89,10 +89,10 @@ export default class EnemiesManager extends EnemiesFactory {
 
     damageEnemies(enemy, bullet) {
         let collided = false;
- 
+        let bulletDamage = (bullet.key === 'bullet') ? 3 : 1;
         if (enemy.status !== State.DEAD) {
             enemy.body.velocity.x = this.getKnockBack(enemy, bullet);
-            enemy.life--;
+            enemy.life = enemy.life - bulletDamage;
             this.showEnemyDamage(enemy);
             bullet.kill();
             collided = true;
