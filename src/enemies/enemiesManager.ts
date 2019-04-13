@@ -93,6 +93,7 @@ export default class EnemiesManager extends EnemiesFactory {
         if (enemy.status !== State.DEAD) {
             enemy.body.velocity.x = this.getKnockBack(enemy, bullet);
             enemy.life = enemy.life - bulletDamage;
+            this.scene.soundManager.playSound('enemy-hit');
             this.showEnemyDamage(enemy);
             bullet.kill();
             collided = true;

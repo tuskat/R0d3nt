@@ -1,10 +1,13 @@
 import * as Assets from '../assets';
+import Scene from '../states/gameScreenScene';
 
 export default class EnemyAnimation {
     public sprite: Phaser.Sprite = null;
+    public scene: Scene;
     private lastAnimation: string = null;
-    constructor(sprite) {
+    constructor(sprite,  scene) {
         this.sprite = sprite;
+        this.scene = scene
     }
     initIdle() {
         this.sprite.animations.add('idle', [Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle1,
@@ -14,12 +17,15 @@ export default class EnemyAnimation {
     };
 
     initRun() {
-        this.sprite.animations.add('run', [Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun1,
+        let anim = this.sprite.animations.add('run', [Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun1,
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun2,
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun3,
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun4,
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun5,
         Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun6]);
+
+        anim.enableUpdate = true;
+        anim.onUpdate.add(this.runningSound, this);
     };
 
     initSlash() {
@@ -69,7 +75,14 @@ export default class EnemyAnimation {
 
     slashing(anim, frame) {
         if (frame.index >= 19) {
+            this.scene.soundManager.playSound('slash');
             this.setCollision(frame.sourceSizeW);
+        }
+    };
+    runningSound(anim, frame) {
+        let playSound = (frame.index === 12);
+        if (playSound) {
+            this.scene.soundManager.playSound('enemy-run');
         }
     };
 }

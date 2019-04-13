@@ -23,7 +23,7 @@ export default class PlayerAnimation {
         let jump = this.sprite.animations.add('jump', [Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump3]);
-
+        jump.onStart.add(this.jumpingSound, this);
         jump.onComplete.add(this.doneJumping, this);
     };
 
@@ -144,11 +144,14 @@ export default class PlayerAnimation {
         this.player.shooting = false;
         this.playAnimation('fall', 2);
     };
+    jumpingSound() {
+        this.scene.soundManager.playSound('jump');
+    };
     doneJumping() {
         this.playAnimation('fall', 3);
     };
     runningSound(anim, frame) {
-        let playSound = (frame.index === 44 || frame.index === 52)
+        let playSound = (frame.index === 44 || frame.index === 52);
         if (playSound && this.sprite.body.touching.down) {
             this.scene.soundManager.playSound('run');
         }

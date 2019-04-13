@@ -7,7 +7,16 @@ export default class SoundManager {
     }
     initSounds() {
         let audio = [
+            'clear',
+            'die',
+            'dash',
+            'explosion',
+            'enemy-run',
+            'enemy-hit',
+            'jump',
+            'hit',
             'run',
+            'slash',
             'shoot'
         ]
         audio.forEach(sound => {

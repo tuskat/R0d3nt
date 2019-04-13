@@ -89,6 +89,7 @@ export default class Player {
         this.sprite.body.allowGravity = false;
         this.sprite.body.y = 0;
         this.scene.textManager.showRetryText(this.game);
+        this.scene.soundManager.playSound('die');
         this.sprite.kill();
     };
     isDead() {
@@ -183,6 +184,7 @@ export default class Player {
             this.sprite.body.velocity.x += this.facingRight ? this.MAX_SPEED : - this.MAX_SPEED;
             this.sprite.body.velocity.y = 0;
             this.animation.playAnimation('dash', 25, false);
+            this.scene.soundManager.playSound('dash');
             this.dash--;
             this.scene.timer.add(400, this.endDash, this);
         }
@@ -208,6 +210,7 @@ export default class Player {
             this.sprite.body.velocity.x = facingRight ? -500 : 500;
             this.scene.timer.add(1000, this.updateInvincibility, this);
             this.scene.timer.add(250, this.showDamage, this);
+            this.scene.soundManager.playSound('hit');
             this.scene.textManager.textUpdate(this.life, this.scene.score);
             if (this.life <= 0) {
                 this.die();

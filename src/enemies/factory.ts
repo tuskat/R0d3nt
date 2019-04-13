@@ -60,7 +60,7 @@ export default class EnemiesFactory {
         enemy.anchor.setTo(0.5, 0.5);
         enemy.wandering = false;
         enemy.speed = this.game.rnd.integerInRange(-50, 50);
-        enemy.animation = new EnemyAnimation(enemy);
+        enemy.animation = new EnemyAnimation(enemy, this.scene);
         enemy.animation.initAnimation();
         enemy.body.allowGravity = true;
         enemy.life = this.MAX_LIFE * 3;
