@@ -183,6 +183,9 @@ export default class Player {
             this.playerState = PlayerState.DASHING;
             this.sprite.body.velocity.x += this.facingRight ? this.MAX_SPEED : - this.MAX_SPEED;
             this.sprite.body.velocity.y = 0;
+            if (!this.sprite.body.touching.down) {
+                this.sprite.body.allowGravity = false;
+            }
             this.animation.playAnimation('dash', 25, false);
             this.scene.soundManager.playSound('dash');
             this.dash--;
@@ -197,11 +200,15 @@ export default class Player {
 
     endDash() {
         if (!this.isDead()) {
+            this.sprite.body.allowGravity = true;
             this.playerState = PlayerState.IDLE;
             this.scene.timer.add(400, this.restoreDash, this);
         }
     };
-
+    takeBullet(playerSprite = this.sprite, bullet) {
+        this.takeDamage(this.sprite, bullet);
+        bullet.kill();
+    };
     takeDamage(playerSprite = this.sprite, threatSprite) {
         if (!this.invincibility) {
             let facingRight = (threatSprite.x > playerSprite.body.x) || (threatSprite.body.x > playerSprite.body.x); 

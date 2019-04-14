@@ -52,7 +52,6 @@ export default class LevelCreator  {
         this.scene = scene;
         this.player = player;
     }
-
         
     setScale(item) {
         item.scale.y = this.scale;
@@ -77,7 +76,6 @@ export default class LevelCreator  {
         return this.getJsonData(lvlIndex);
     }
 
-
     initLevel() {
         this.enemiesManager = new EnemiesManager(this.game, this.scene);
         this.trapWeapon = [];
@@ -90,31 +88,34 @@ export default class LevelCreator  {
 
     initTrap(trap, rotation) {
         let trapWeapon = this.game.add.weapon(1, 'bullet', 5, this.trap);
-        trapWeapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
+        trapWeapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+        trapWeapon.bulletSpeed = 450;
         switch (rotation) {
             case Orientation.DOWN: {
-                trapWeapon.bulletGravity = new Phaser.Point(0, 1150);
+                trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.fireAngle = 90;
+                trapWeapon.setBulletBodyOffset(20, 32, 6, 6);
                 trapWeapon.trackSprite(trap, trap.width / 1.5, trap.height, false);
                 break;
             }
             case Orientation.UP: {
-                trapWeapon.bulletGravity = new Phaser.Point(0, -2000);
+                trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.bulletAngleOffset = 0;
+                trapWeapon.setBulletBodyOffset(20, 32, 6, -6);
                 trapWeapon.trackSprite(trap, trap.width / 1.5, -10, false);
                 break;
             }
             case Orientation.LEFT: {
                 trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.fireAngle = 180;
-                trapWeapon.bulletSpeed = 450;
+                trapWeapon.setBulletBodyOffset(32, 20, -6, 6);
                 trapWeapon.trackSprite(trap, 0, trap.height / 1.5, false);
                 break;
             }
             case Orientation.RIGHT: {
                 trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.fireAngle = 0;
-                trapWeapon.bulletSpeed = 450;
+                trapWeapon.setBulletBodyOffset(32, 20, 6, 6);
                 trapWeapon.trackSprite(trap, trap.width, trap.height / 1.5, false);
                 break;
             }
@@ -212,6 +213,8 @@ export default class LevelCreator  {
                         this.trap.add(trap);
                         trap.body.immovable = true;
                         trap.body.allowGravity = false;
+                        trap.body.checkCollision.up = false;
+                        trap.body.checkCollision.down = false;
                         this.initTrap(trap, Orientation.LEFT);
                         this.setScale(trap);
                         break;
@@ -221,6 +224,8 @@ export default class LevelCreator  {
                         this.trap.add(trap);
                         trap.body.immovable = true;
                         trap.body.allowGravity = false;
+                        trap.body.checkCollision.up = false;
+                        trap.body.checkCollision.down = false;
                         this.initTrap(trap, Orientation.RIGHT);
                         this.setScale(trap);
                         break;

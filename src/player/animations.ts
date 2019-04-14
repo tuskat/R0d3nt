@@ -133,7 +133,7 @@ export default class PlayerAnimation {
         if (this.sprite.body.touching.down) {
             this.playAnimation('run');
         } else {
-            this.playAnimation('jump', 10);
+            this.playAnimation('fall', 2);
         }
     };
     doneShooting() {

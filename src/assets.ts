@@ -534,257 +534,57 @@ export namespace Audio {
     export class AudioClear {
         static getName(): string { return 'clear'; };
 
-        static getWAV(): string { return require('assets/audio/clear.wav'); };
+        static getOGG(): string { return require('assets/audio/clear.ogg'); };
     }
     export class AudioDash {
         static getName(): string { return 'dash'; };
 
-        static getWAV(): string { return require('assets/audio/dash.wav'); };
+        static getOGG(): string { return require('assets/audio/dash.ogg'); };
     }
     export class AudioDie {
         static getName(): string { return 'die'; };
 
-        static getWAV(): string { return require('assets/audio/die.wav'); };
+        static getOGG(): string { return require('assets/audio/die.ogg'); };
     }
     export class AudioEnemyHit {
         static getName(): string { return 'enemy-hit'; };
 
-        static getWAV(): string { return require('assets/audio/enemy-hit.wav'); };
+        static getOGG(): string { return require('assets/audio/enemy-hit.ogg'); };
     }
     export class AudioEnemyRun {
         static getName(): string { return 'enemy-run'; };
 
-        static getWAV(): string { return require('assets/audio/enemy-run.wav'); };
+        static getOGG(): string { return require('assets/audio/enemy-run.ogg'); };
     }
     export class AudioExplosion {
         static getName(): string { return 'explosion'; };
 
-        static getWAV(): string { return require('assets/audio/explosion.wav'); };
+        static getOGG(): string { return require('assets/audio/explosion.ogg'); };
     }
     export class AudioHit {
         static getName(): string { return 'hit'; };
 
-        static getWAV(): string { return require('assets/audio/hit.wav'); };
+        static getOGG(): string { return require('assets/audio/hit.ogg'); };
     }
     export class AudioJump {
         static getName(): string { return 'jump'; };
 
-        static getWAV(): string { return require('assets/audio/jump.wav'); };
+        static getOGG(): string { return require('assets/audio/jump.ogg'); };
     }
     export class AudioRun {
         static getName(): string { return 'run'; };
 
-        static getWAV(): string { return require('assets/audio/run.wav'); };
+        static getOGG(): string { return require('assets/audio/run.ogg'); };
     }
     export class AudioShoot {
         static getName(): string { return 'shoot'; };
 
-        static getWAV(): string { return require('assets/audio/shoot.wav'); };
+        static getOGG(): string { return require('assets/audio/shoot.ogg'); };
     }
     export class AudioSlash {
         static getName(): string { return 'slash'; };
 
-        static getWAV(): string { return require('assets/audio/slash.wav'); };
-    }
-    export class AudioUnfilteredDMCGS2 {
-        static getName(): string { return 'DM-CGS-02'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-02.wav'); };
-    }
-    export class AudioUnfilteredDMCGS3 {
-        static getName(): string { return 'DM-CGS-03'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-03.wav'); };
-    }
-    export class AudioUnfilteredDMCGS4 {
-        static getName(): string { return 'DM-CGS-04'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-04.wav'); };
-    }
-    export class AudioUnfilteredDMCGS6 {
-        static getName(): string { return 'DM-CGS-06'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-06.wav'); };
-    }
-    export class AudioUnfilteredDMCGS8 {
-        static getName(): string { return 'DM-CGS-08'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-08.wav'); };
-    }
-    export class AudioUnfilteredDMCGS9 {
-        static getName(): string { return 'DM-CGS-09'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-09.wav'); };
-    }
-    export class AudioUnfilteredDMCGS10 {
-        static getName(): string { return 'DM-CGS-10'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-10.wav'); };
-    }
-    export class AudioUnfilteredDMCGS13 {
-        static getName(): string { return 'DM-CGS-13'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-13.wav'); };
-    }
-    export class AudioUnfilteredDMCGS14 {
-        static getName(): string { return 'DM-CGS-14'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-14.wav'); };
-    }
-    export class AudioUnfilteredDMCGS15 {
-        static getName(): string { return 'DM-CGS-15'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-15.wav'); };
-    }
-    export class AudioUnfilteredDMCGS16 {
-        static getName(): string { return 'DM-CGS-16'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-16.wav'); };
-    }
-    export class AudioUnfilteredDMCGS17 {
-        static getName(): string { return 'DM-CGS-17'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-17.wav'); };
-    }
-    export class AudioUnfilteredDMCGS19 {
-        static getName(): string { return 'DM-CGS-19'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-19.wav'); };
-    }
-    export class AudioUnfilteredDMCGS20 {
-        static getName(): string { return 'DM-CGS-20'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-20.wav'); };
-    }
-    export class AudioUnfilteredDMCGS21 {
-        static getName(): string { return 'DM-CGS-21'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-21.wav'); };
-    }
-    export class AudioUnfilteredDMCGS22 {
-        static getName(): string { return 'DM-CGS-22'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-22.wav'); };
-    }
-    export class AudioUnfilteredDMCGS24 {
-        static getName(): string { return 'DM-CGS-24'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-24.wav'); };
-    }
-    export class AudioUnfilteredDMCGS25 {
-        static getName(): string { return 'DM-CGS-25'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-25.wav'); };
-    }
-    export class AudioUnfilteredDMCGS26 {
-        static getName(): string { return 'DM-CGS-26'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-26.wav'); };
-    }
-    export class AudioUnfilteredDMCGS27 {
-        static getName(): string { return 'DM-CGS-27'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-27.wav'); };
-    }
-    export class AudioUnfilteredDMCGS28 {
-        static getName(): string { return 'DM-CGS-28'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-28.wav'); };
-    }
-    export class AudioUnfilteredDMCGS29 {
-        static getName(): string { return 'DM-CGS-29'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-29.wav'); };
-    }
-    export class AudioUnfilteredDMCGS30 {
-        static getName(): string { return 'DM-CGS-30'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-30.wav'); };
-    }
-    export class AudioUnfilteredDMCGS31 {
-        static getName(): string { return 'DM-CGS-31'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-31.wav'); };
-    }
-    export class AudioUnfilteredDMCGS32 {
-        static getName(): string { return 'DM-CGS-32'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-32.wav'); };
-    }
-    export class AudioUnfilteredDMCGS33 {
-        static getName(): string { return 'DM-CGS-33'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-33.wav'); };
-    }
-    export class AudioUnfilteredDMCGS34 {
-        static getName(): string { return 'DM-CGS-34'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-34.wav'); };
-    }
-    export class AudioUnfilteredDMCGS35 {
-        static getName(): string { return 'DM-CGS-35'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-35.wav'); };
-    }
-    export class AudioUnfilteredDMCGS36 {
-        static getName(): string { return 'DM-CGS-36'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-36.wav'); };
-    }
-    export class AudioUnfilteredDMCGS37 {
-        static getName(): string { return 'DM-CGS-37'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-37.wav'); };
-    }
-    export class AudioUnfilteredDMCGS38 {
-        static getName(): string { return 'DM-CGS-38'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-38.wav'); };
-    }
-    export class AudioUnfilteredDMCGS39 {
-        static getName(): string { return 'DM-CGS-39'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-39.wav'); };
-    }
-    export class AudioUnfilteredDMCGS40 {
-        static getName(): string { return 'DM-CGS-40'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-40.wav'); };
-    }
-    export class AudioUnfilteredDMCGS41 {
-        static getName(): string { return 'DM-CGS-41'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-41.wav'); };
-    }
-    export class AudioUnfilteredDMCGS42 {
-        static getName(): string { return 'DM-CGS-42'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-42.wav'); };
-    }
-    export class AudioUnfilteredDMCGS43 {
-        static getName(): string { return 'DM-CGS-43'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-43.wav'); };
-    }
-    export class AudioUnfilteredDMCGS44 {
-        static getName(): string { return 'DM-CGS-44'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-44.wav'); };
-    }
-    export class AudioUnfilteredDMCGS47 {
-        static getName(): string { return 'DM-CGS-47'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-47.wav'); };
-    }
-    export class AudioUnfilteredDMCGS48 {
-        static getName(): string { return 'DM-CGS-48'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-48.wav'); };
-    }
-    export class AudioUnfilteredDMCGS49 {
-        static getName(): string { return 'DM-CGS-49'; };
-
-        static getWAV(): string { return require('assets/audio/unfiltered/DM-CGS-49.wav'); };
+        static getOGG(): string { return require('assets/audio/slash.ogg'); };
     }
 }
 

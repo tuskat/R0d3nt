@@ -34,8 +34,9 @@ export default class LevelManager extends LevelCreator  {
         this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.walls, this.killEntity, null, this.scene);
         this.trapWeapon.forEach(element => {
             this.game.physics.arcade.overlap(this.enemiesManager.enemyGroup, element.bullets, this.enemiesManager.damageEnemies, null, this.enemiesManager);
-            this.game.physics.arcade.overlap(this.player.sprite, element.bullets, this.player.takeDamage, null, this.player);
-            this.game.physics.arcade.overlap(element.bullets, this.walls , this.killEntity, null, this.player);
+            this.game.physics.arcade.overlap(this.player.sprite, element.bullets, this.player.takeBullet, null, this.player);
+            this.game.physics.arcade.overlap(element.bullets, this.walls , this.killEntity, null, this);
+            this.game.physics.arcade.overlap(element.bullets, this.trap , this.killBullet, null, this);
         });
     };
 
@@ -56,8 +57,13 @@ export default class LevelManager extends LevelCreator  {
         // this.light.updateLight();
     }
     activateTrap(player, interuptor) {
+        let bullet = null;
         this.trapWeapon.forEach(element => {
-           element.fire();
+            bullet = element.fire();
+            if (bullet) {
+                bullet.trackedSprite = element.trackedSprite;
+                this.scene.soundManager.playSound('explosion');
+            }
         });
     };
     // Should Absolutely be not here
@@ -82,12 +88,25 @@ export default class LevelManager extends LevelCreator  {
         entity.kill();
     };
 
+    
+    killBullet(entity, trap) {
+        if (entity.trackedSprite !== trap) {
+            entity.kill();
+        }
+    };
+
     enemiesCount() {
         return this.enemiesManager.getEnemiesCount();
     };
 
     enemiesSprite() {
         return this.enemiesManager.getSprites();
+    };
+
+    bulletSprite() {
+        this.trapWeapon.forEach(element => {
+            element.debug(0, 0, true);
+        });
     };
 
     nextStage(player, exit) {
