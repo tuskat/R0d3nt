@@ -213,7 +213,6 @@ export default class LevelCreator  {
                         this.trap.add(trap);
                         trap.body.immovable = true;
                         trap.body.allowGravity = false;
-                        trap.body.checkCollision.up = false;
                         trap.body.checkCollision.down = false;
                         this.initTrap(trap, Orientation.LEFT);
                         this.setScale(trap);
@@ -224,7 +223,6 @@ export default class LevelCreator  {
                         this.trap.add(trap);
                         trap.body.immovable = true;
                         trap.body.allowGravity = false;
-                        trap.body.checkCollision.up = false;
                         trap.body.checkCollision.down = false;
                         this.initTrap(trap, Orientation.RIGHT);
                         this.setScale(trap);
