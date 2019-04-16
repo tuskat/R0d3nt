@@ -571,6 +571,11 @@ export namespace Audio {
 
         static getOGG(): string { return require('assets/audio/jump.ogg'); };
     }
+    export class AudioPowerup {
+        static getName(): string { return 'powerup'; };
+
+        static getOGG(): string { return require('assets/audio/powerup.ogg'); };
+    }
     export class AudioRun {
         static getName(): string { return 'run'; };
 

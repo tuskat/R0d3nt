@@ -14,6 +14,7 @@ export default class SoundManager {
       'enemy-run',
       'enemy-hit',
       'jump',
+      'powerup',
       'hit',
       'run',
       'slash',

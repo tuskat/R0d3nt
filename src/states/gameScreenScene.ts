@@ -49,7 +49,7 @@ export default class Scene extends Phaser.State {
 
         this.levelManager.createLevel(this.player);
         this.soundManager.initSounds();
-        this.textManager.createText(this.game, this.score, this.player.life);
+        this.textManager.createText(this.game, this.currentScore(), this.player.life);
     }
     public update(): void {
         this.levelManager.update();
@@ -65,6 +65,9 @@ export default class Scene extends Phaser.State {
         // this.game.debug.body(this.player.sprite);
     }
     //
+    public currentScore() {
+        return this.levelManager.score + this.score;
+    };
     public initGradientBackground() {
         let margin = 50;
         let padding = 200;
@@ -92,12 +95,12 @@ export default class Scene extends Phaser.State {
         this.background.add(bg2);
     };
     public uploadBackground() {
-        let slide = 0.2;
+        let slide = 0.05;
         this.background.forEachAlive(background => {
             if (background.tilePosition) {
                 background.tilePosition.x = -(this.game.camera.x * slide);
                 background.tilePosition.y = -(this.game.camera.y * slide / 2);
-                slide += 0.4;
+                slide += 0.05;
             }
         });
     };

@@ -30,7 +30,7 @@ const enum Orientation {
 
 export default class LevelCreator  {
     private scale: number = 1.5;
-
+    public score = 0;
     public ground: Phaser.Group = null;
     public map: Phaser.Tilemap = null;
     public exit: Phaser.Group = null;
@@ -84,6 +84,7 @@ export default class LevelCreator  {
         this.interuptor = this.game.add.group();
         this.exit = this.game.add.group();
         this.walls = this.game.add.group();
+        this.score = 0;
     };
 
     initTrap(trap, rotation) {

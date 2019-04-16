@@ -69,9 +69,10 @@ export default class LevelManager extends LevelCreator  {
     // Should Absolutely be not here
     takeCoin(player, coin, score) {
         coin.kill();
-        this.scene.score += 100;
+        this.scene.soundManager.playSound('powerup');
+        this.scene.levelManager.score += 100;
         this.player.weaponManager.setGun(this.game.rnd.integerInRange(1,2));
-        this.scene.textManager.textUpdate(null, this.scene.score);
+        this.scene.textManager.textUpdate(null, this.scene.currentScore());
     };
     // LOGIC BINDED TO LEVEL
     playerIsAttacked(player, enemy) {
@@ -112,6 +113,8 @@ export default class LevelManager extends LevelCreator  {
     nextStage(player, exit) {
         let enemiesNbr = + this.enemiesCount();
         if (enemiesNbr === 0) {
+            this.scene.soundManager.playSound('clear');
+            this.scene.score = this.scene.currentScore();
             this.scene.level = this.scene.level + 1;
             this.game.state.start('scene');
         }

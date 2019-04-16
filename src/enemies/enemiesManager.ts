@@ -97,8 +97,8 @@ export default class EnemiesManager extends EnemiesFactory {
             this.showEnemyDamage(enemy);
             bullet.kill();
             collided = true;
-            this.scene.score += 25;
-            this.scene.textManager.textUpdate(null, this.scene.score);
+            this.scene.levelManager.score += (25 * bulletDamage);
+            this.scene.textManager.textUpdate(null, this.scene.currentScore());
         }
         if (enemy.life <= 0) {
             enemy.state = State.DEAD;
@@ -111,6 +111,8 @@ export default class EnemiesManager extends EnemiesFactory {
     };
     isOutBound(enemy) {
         if (enemy.body.y > this.game.world.height) {
+            this.scene.levelManager.score += 75;
+            this.scene.textManager.textUpdate(null, this.scene.currentScore());
             return true;
         }
         return false;
@@ -155,6 +157,7 @@ export default class EnemiesManager extends EnemiesFactory {
     erase(enemy) {
         if (!enemy.dying) {
             enemy.animation.playAnimation('idle', false);
+            this.scene.soundManager.playSound('enemy-hit');
             enemy.dying = true;
             let pos = { x: enemy.x, y: enemy.y };
             enemy.reset(pos.x, pos.y);

@@ -60,7 +60,7 @@ export default class Player {
         this.shooting = false;
 
         this.game.physics.arcade.gravity.y = this.GRAVITY; // Put THIS somewhere else
-        this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+        // this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_PLATFORMER, 1, 0.5);
 
         this.animation = new PlayerAnimation(this.sprite, this);
         this.animation.initPlayerAnimation();
@@ -80,6 +80,7 @@ export default class Player {
             this.isShooting(onTheGround);
             this.isJumping(onTheGround);
         }
+        this.game.camera.focusOnXY(this.sprite.x + 50 , this.sprite.y);
     };
     die() {;
         this.playerState = PlayerState.DEAD;
@@ -181,11 +182,9 @@ export default class Player {
     isDashing() {
         if (this.dash > 0 && (this.controls.dashInputIsActive(50))) {
             this.playerState = PlayerState.DASHING;
-            this.sprite.body.velocity.x += this.facingRight ? this.MAX_SPEED : - this.MAX_SPEED;
-            this.sprite.body.velocity.y = 0;
-            if (!this.sprite.body.touching.down) {
-                this.sprite.body.allowGravity = false;
-            }
+            this.sprite.body.velocity.x += this.facingRight ? this.MAX_SPEED : -this.MAX_SPEED;
+            // this.sprite.body.gravity.y = -1150;
+            this.sprite.body.velocity.y = -10;
             this.animation.playAnimation('dash', 25, false);
             this.scene.soundManager.playSound('dash');
             this.dash--;
@@ -200,8 +199,8 @@ export default class Player {
 
     endDash() {
         if (!this.isDead()) {
-            this.sprite.body.allowGravity = true;
             this.playerState = PlayerState.IDLE;
+            // this.sprite.body.gravity.y = 0;
             this.scene.timer.add(400, this.restoreDash, this);
         }
     };
@@ -218,7 +217,7 @@ export default class Player {
             this.scene.timer.add(1000, this.updateInvincibility, this);
             this.scene.timer.add(250, this.showDamage, this);
             this.scene.soundManager.playSound('hit');
-            this.scene.textManager.textUpdate(this.life, this.scene.score);
+            this.scene.textManager.textUpdate(this.life, this.scene.currentScore());
             if (this.life <= 0) {
                 this.die();
             }
