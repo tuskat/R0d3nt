@@ -144,8 +144,13 @@ export default class EnemiesManager extends EnemiesFactory {
     };
     trackPlayer(enemy, player, walls) {
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
-        let intersect = this.getWallIntersection(ray, walls, enemy.sight.x);
-        if (intersect !== null) {
+        let blocked = null;
+        walls.forEach(element => {
+            if (!blocked) {
+                blocked = this.getWallIntersection(ray, element, enemy.sight.x);
+            }
+        });
+        if (blocked)  {
             return false;
         } else if (ray.height > enemy.sight.y
             || ray.width > enemy.sight.x) {
@@ -180,7 +185,7 @@ export default class EnemiesManager extends EnemiesFactory {
         if (!enemy.onCooldown) {
             enemy.body.velocity.x = 0;
             enemy.body.velocity.y = 0;
-            enemy.animation.playAnimation('slash', 15, false, true);
+            enemy.animation.playAnimation('slash', 24, false, true);
             this.scene.timer.add(1000, this.recharge, this, enemy);
             enemy.onCooldown = true;
         }

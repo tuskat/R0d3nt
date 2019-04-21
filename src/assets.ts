@@ -642,6 +642,14 @@ export namespace CustomWebFonts {
         static getCSS(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/Havana/Havana.css'); };
         static getTTF(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/Havana/Havana.ttf'); };
     }
+    export class FontsVCROSDMONOVCROSDMONO {
+        static getName(): string { return 'VCR_OSD_MONO'; };
+
+        static getFamily(): string { return 'VCR_OSD'; };
+
+        static getCSS(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/VCR_OSD_MONO/VCR_OSD_MONO.css'); };
+        static getTTF(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/VCR_OSD_MONO/VCR_OSD_MONO.ttf'); };
+    }
 }
 
 export namespace BitmapFonts {
@@ -665,15 +673,10 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/levels/hub.json'); };
     }
-    export class LevelsLevel {
-        static getName(): string { return 'level'; };
+    export class LevelsMap1 {
+        static getName(): string { return 'map1'; };
 
-        static getJSON(): string { return require('assets/levels/level.json'); };
-    }
-    export class LevelsLevel1 {
-        static getName(): string { return 'level1'; };
-
-        static getJSON(): string { return require('assets/levels/level1.json'); };
+        static getJSON(): string { return require('assets/levels/map1.json'); };
     }
 }
 

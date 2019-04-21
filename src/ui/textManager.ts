@@ -1,6 +1,6 @@
 export default class TextManager {
-    style = { font: '16px Havana', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    titleStyle = { font: '70px Havana', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    style = { font: '16px VCR_OSD', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    titleStyle = { font: '70px VCR_OSD', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
     scoreText;
     lifeText;
     constructor() {
