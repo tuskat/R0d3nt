@@ -85,6 +85,7 @@ export default class Scene extends Phaser.State {
         let bg1 = this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'my_background');
         bg1.body.immovable = true;
         bg1.body.allowGravity = false;
+        bg1.fixedToCamera= true;
 
         let bg2 = this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'my_background2');
         bg2.body.immovable = true;

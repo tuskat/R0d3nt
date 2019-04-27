@@ -28,12 +28,12 @@ export default class EnemiesFactory {
     constructor(game, scene) {
         this.game = game;
         this.scene = scene;
-        this.enemyGroup = this.game.add.group();
         this.spawnDoor = this.game.add.group();
+        this.enemyGroup = this.game.add.group();
     }
     initEnemySpawn(x, y, nbr, tilesize) {
         this.tilesize = tilesize;
-        let spawn = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) , 'my_spawn');
+        let spawn = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 10 , 'rat_spawn');
         this.spawnDoor.add(spawn);
         spawn.body.immovable = true;
         spawn.body.allowGravity = false;

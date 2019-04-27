@@ -139,50 +139,55 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/gfx/wall.png'); };
     }
-    export class ImagesBackgroundTemplate {
-        static getName(): string { return 'background_template'; };
+    export class ImagesCannonBall {
+        static getName(): string { return 'cannon_ball'; };
 
-        static getPNG(): string { return require('assets/images/background_template.png'); };
+        static getPNG(): string { return require('assets/images/cannon_ball.png'); };
     }
-    export class MyAssetsMyBackground {
+    export class ImagesCannonDown {
+        static getName(): string { return 'cannon_down'; };
+
+        static getPNG(): string { return require('assets/images/cannon_down.png'); };
+    }
+    export class ImagesCannonLeft {
+        static getName(): string { return 'cannon_left'; };
+
+        static getPNG(): string { return require('assets/images/cannon_left.png'); };
+    }
+    export class ImagesCannonRight {
+        static getName(): string { return 'cannon_right'; };
+
+        static getPNG(): string { return require('assets/images/cannon_right.png'); };
+    }
+    export class ImagesCannon {
+        static getName(): string { return 'cannon'; };
+
+        static getPNG(): string { return require('assets/images/cannon.png'); };
+    }
+    export class ImagesExit {
+        static getName(): string { return 'exit'; };
+
+        static getPNG(): string { return require('assets/images/exit.png'); };
+    }
+    export class ImagesMyBackground {
         static getName(): string { return 'my_background'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_background.png'); };
+        static getPNG(): string { return require('assets/images/my_background.png'); };
     }
-    export class MyAssetsMyBackground2 {
+    export class ImagesMyBackground2 {
         static getName(): string { return 'my_background2'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_background2.png'); };
+        static getPNG(): string { return require('assets/images/my_background2.png'); };
     }
-    export class MyAssetsMyBoss {
-        static getName(): string { return 'my_boss'; };
-
-        static getPNG(): string { return require('assets/myAssets/my_boss.png'); };
-    }
-    export class MyAssetsMyBoss2 {
-        static getName(): string { return 'my_boss2'; };
-
-        static getPNG(): string { return require('assets/myAssets/my_boss2.png'); };
-    }
-    export class MyAssetsMyBullet {
+    export class ImagesMyBullet {
         static getName(): string { return 'my_bullet'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_bullet.png'); };
+        static getPNG(): string { return require('assets/images/my_bullet.png'); };
     }
-    export class MyAssetsMyMonster {
-        static getName(): string { return 'my_monster'; };
+    export class ImagesRatSpawn {
+        static getName(): string { return 'rat_spawn'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_monster.png'); };
-    }
-    export class MyAssetsMyPlayer {
-        static getName(): string { return 'my_player'; };
-
-        static getPNG(): string { return require('assets/myAssets/my_player.png'); };
-    }
-    export class MyAssetsMySpawn {
-        static getName(): string { return 'my_spawn'; };
-
-        static getPNG(): string { return require('assets/myAssets/my_spawn.png'); };
+        static getPNG(): string { return require('assets/images/rat_spawn.png'); };
     }
     export class TilesetsBuildingSpritesheet {
         static getName(): string { return 'building_spritesheet'; };
@@ -594,28 +599,7 @@ export namespace Audio {
 }
 
 export namespace Audiosprites {
-    enum AudiospritesSfxSprites {
-        Laser1 = <any>'laser1',
-        Laser2 = <any>'laser2',
-        Laser3 = <any>'laser3',
-        Laser4 = <any>'laser4',
-        Laser5 = <any>'laser5',
-        Laser6 = <any>'laser6',
-        Laser7 = <any>'laser7',
-        Laser8 = <any>'laser8',
-        Laser9 = <any>'laser9',
-    }
-    export class AudiospritesSfx {
-        static getName(): string { return 'sfx'; };
-
-        static getAC3(): string { return require('assets/audiosprites/sfx.ac3'); };
-        static getJSON(): string { return require('assets/audiosprites/sfx.json'); };
-        static getM4A(): string { return require('assets/audiosprites/sfx.m4a'); };
-        static getMP3(): string { return require('assets/audiosprites/sfx.mp3'); };
-        static getOGG(): string { return require('assets/audiosprites/sfx.ogg'); };
-
-        static Sprites = AudiospritesSfxSprites;
-    }
+    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
 }
 
 export namespace GoogleWebFonts {

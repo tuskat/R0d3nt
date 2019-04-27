@@ -77,18 +77,19 @@ export default class LevelCreator  {
     }
 
     initLevel() {
-        this.enemiesManager = new EnemiesManager(this.game, this.scene);
+      
         this.trapWeapon = [];
         this.coins = this.game.add.group();
         this.trap = this.game.add.group();
         this.interuptor = this.game.add.group();
         this.exit = this.game.add.group();
+        this.enemiesManager = new EnemiesManager(this.game, this.scene);
         this.walls = this.game.add.group();
         this.score = 0;
     };
 
     initTrap(trap, rotation) {
-        let trapWeapon = this.game.add.weapon(1, 'bullet', 5, this.trap);
+        let trapWeapon = this.game.add.weapon(1, 'cannon_ball', 5, this.trap);
         trapWeapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         trapWeapon.bulletSpeed = 450;
         switch (rotation) {
@@ -180,7 +181,7 @@ export default class LevelCreator  {
                         break;
                     }
                     case Tiles.FLAG: {
-                        let exit = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) + 20, 'flag');
+                        let exit = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) -10, 'exit');
                         this.exit.add(exit);
                         exit.body.immovable = true;
                         exit.body.allowGravity = false;
@@ -192,7 +193,7 @@ export default class LevelCreator  {
                         break;
                     }
                     case Tiles.TRAP_UP: {
-                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap');
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'cannon');
                         this.trap.add(trap);
                         trap.body.immovable = true;
                         trap.body.allowGravity = false;
@@ -201,7 +202,7 @@ export default class LevelCreator  {
                         break;
                     }
                     case Tiles.TRAP_DOWN: {
-                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap_down');
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'cannon_down');
                         this.trap.add(trap);
                         trap.body.immovable = true;
                         trap.body.allowGravity = false;
@@ -210,7 +211,7 @@ export default class LevelCreator  {
                         break;
                     }
                     case Tiles.TRAP_LEFT: {
-                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap_left');
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'cannon_left');
                         this.trap.add(trap);
                         trap.body.immovable = true;
                         trap.body.allowGravity = false;
@@ -220,7 +221,7 @@ export default class LevelCreator  {
                         break;
                     }
                     case Tiles.TRAP_RIGHT: {
-                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'trap_right');
+                        let trap = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'cannon_right');
                         this.trap.add(trap);
                         trap.body.immovable = true;
                         trap.body.allowGravity = false;
@@ -276,6 +277,7 @@ export default class LevelCreator  {
                 i++;
             }
         }
+        player.sprite.bringToTop();
         this.initLightManager(lightSource, worldSize);
         this.textManager.levelTitle(level.layers[0].properties[0].value, this.game, player);
         return level.new;

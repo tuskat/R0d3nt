@@ -29,8 +29,8 @@ export default class TextManager {
     };
 
     levelTitle(levelName, game, player) {
-        let posX = player.sprite.x - (game.width / 2.5);
-        let posY = game.height / 2;
+        let posX = 100;
+        let posY = player.sprite.y - 200;
 
         let text = game.add.text(posX, posY, levelName, this.titleStyle);
         let textReflect = game.add.text(posX, posY + 50, levelName, this.titleStyle);
@@ -48,7 +48,7 @@ export default class TextManager {
     };
 
     showRetryText(game) {
-        let text = game.add.text(game.width * .25, game.height * 0.125, 'Press X to retry', this.titleStyle);
+        let text = game.add.text(0, game.height * 0.125, 'Press X to retry', this.titleStyle);
         text.fixedToCamera = true;
         text.alpha = 0;
         game.add.tween(text).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
