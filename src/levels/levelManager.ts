@@ -57,7 +57,11 @@ export default class LevelManager extends LevelCreator {
     }
     // this.light.updateLight();
   }
-  activateTrap(player, interuptor) {
+  activateTrap(trigger, interuptor) {
+  if (trigger instanceof Phaser.Bullet) {
+    this.scene.soundManager.playSound('hit');
+    trigger.kill();
+  }
     let bullet = null;
     this.trapWeapon.forEach(element => {
       if (element.trackedSprite.inCamera) {

@@ -576,6 +576,16 @@ export namespace Audio {
 
         static getOGG(): string { return require('assets/audio/jump.ogg'); };
     }
+    export class AudioPauseIn {
+        static getName(): string { return 'pause_in'; };
+
+        static getWAV(): string { return require('assets/audio/pause_in.wav'); };
+    }
+    export class AudioPauseOut {
+        static getName(): string { return 'pause_out'; };
+
+        static getWAV(): string { return require('assets/audio/pause_out.wav'); };
+    }
     export class AudioPowerup {
         static getName(): string { return 'powerup'; };
 

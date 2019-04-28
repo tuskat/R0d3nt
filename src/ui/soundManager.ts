@@ -18,7 +18,9 @@ export default class SoundManager {
       'hit',
       'run',
       'slash',
-      'shoot'
+      'shoot',
+      'pause_in',
+      'pause_out'
     ];
     audio.forEach(sound => {
       this.sounds[sound] = this.game.add.audio(sound);

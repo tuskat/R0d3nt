@@ -92,30 +92,27 @@ export default class LevelCreator  {
         let trapWeapon = this.game.add.weapon(1, 'cannon_ball', 5, this.trap);
         trapWeapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         trapWeapon.bulletSpeed = 450;
+        trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
         switch (rotation) {
             case Orientation.DOWN: {
-                trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.fireAngle = 90;
                 trapWeapon.setBulletBodyOffset(20, 32, 6, 6);
                 trapWeapon.trackSprite(trap, trap.width / 1.5, trap.height, false);
                 break;
             }
             case Orientation.UP: {
-                trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.bulletAngleOffset = 0;
                 trapWeapon.setBulletBodyOffset(20, 32, 6, -6);
-                trapWeapon.trackSprite(trap, trap.width / 1.5, -10, false);
+                trapWeapon.trackSprite(trap, trap.width * 0.7, trap.height * 0.7, false);
                 break;
             }
             case Orientation.LEFT: {
-                trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.fireAngle = 180;
                 trapWeapon.setBulletBodyOffset(32, 20, -6, 6);
                 trapWeapon.trackSprite(trap, 0, trap.height / 1.5, false);
                 break;
             }
             case Orientation.RIGHT: {
-                trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
                 trapWeapon.fireAngle = 0;
                 trapWeapon.setBulletBodyOffset(32, 20, 6, 6);
                 trapWeapon.trackSprite(trap, trap.width, trap.height / 1.5, false);
@@ -153,7 +150,7 @@ export default class LevelCreator  {
 
                 switch (layout[i]) {
                     case Tiles.INTERUPTOR: {
-                        let interuptor = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) + 40, 'interuptor');
+                        let interuptor = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) + 10, 'interuptor');
                         this.interuptor.add(interuptor);
                         interuptor.body.allowGravity = false;
                         break;

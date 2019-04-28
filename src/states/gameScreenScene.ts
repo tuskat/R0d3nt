@@ -10,7 +10,7 @@ export default class Scene extends Phaser.State {
     public soundManager: SoundManager;
     private player: Player;
     controls: PlayerControls = null;
-    public level: number = 1;
+    public level: number = 0;
     public background: Phaser.Group = null;
     public sky: Phaser.Sprite = null;
     public score = 0;
@@ -50,6 +50,8 @@ export default class Scene extends Phaser.State {
         this.levelManager.createLevel(this.player);
         this.soundManager.initSounds();
         this.textManager.createText(this.game, this.currentScore(), this.player.life);
+        let pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        pauseKey.onDown.add(this.pauseGame, this);
     }
     public update(): void {
         this.levelManager.update();
@@ -105,5 +107,19 @@ export default class Scene extends Phaser.State {
             }
         });
     };
+    pauseGame() {
+        if (this.game.paused) {
+            this.togglePause();
+            this.soundManager.playSound('pause_out');            
+            this.textManager.hidePauseText();
+        } else {
+            this.game.time.events.add( 100, this.togglePause, this);
+            this.soundManager.playSound('pause_in');
+            this.textManager.showPauseText();
+        }
+    };
+    togglePause() {
+        this.game.paused = !this.game.paused;
+    }
 }
 
