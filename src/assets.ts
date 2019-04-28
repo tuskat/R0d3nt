@@ -579,12 +579,12 @@ export namespace Audio {
     export class AudioPauseIn {
         static getName(): string { return 'pause_in'; };
 
-        static getWAV(): string { return require('assets/audio/pause_in.wav'); };
+        static getOGG(): string { return require('assets/audio/pause_in.ogg'); };
     }
     export class AudioPauseOut {
         static getName(): string { return 'pause_out'; };
 
-        static getWAV(): string { return require('assets/audio/pause_out.wav'); };
+        static getOGG(): string { return require('assets/audio/pause_out.ogg'); };
     }
     export class AudioPowerup {
         static getName(): string { return 'powerup'; };
