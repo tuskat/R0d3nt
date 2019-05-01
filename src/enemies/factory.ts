@@ -1,4 +1,5 @@
 import EnemyAnimation from './animations';
+import DasherAnimation from './dasher_animations';
 import EnemySprite from './sprite';
 import Scene from '../states/gameScreenScene';
 
@@ -9,9 +10,11 @@ const enum State {
     DEAD
 };
 const enum EnemyType {
-    MOB = 1,
-    BOSS
-}
+    SLASHER = 1,
+    REAPER,
+    SHOOTER
+  };
+  
 export default class EnemiesFactory {
     public MAX_SPEED = 750; // pixels/second
     public MAX_LIFE = 1;
@@ -65,12 +68,38 @@ export default class EnemiesFactory {
         enemy.body.allowGravity = true;
         enemy.life = this.MAX_LIFE * 3;
         enemy.sight = { x: 500, y: 100 };
-        enemy.type = EnemyType.BOSS;
+        enemy.type = EnemyType.SLASHER;
         enemy.facingRight = false;
         enemy.state = State.IDLE;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
+    initDasher(x, y, tilesize) {
+        this.tilesize = tilesize;
 
+        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 64, 'dasher_ninja');
+        enemy.scale.x = 0.5;
+        enemy.scale.y = 0.5;
+        enemy.body.collideWorldBounds = false;
+
+        this.enemyGroup.add(enemy);
+        enemy.body.gravity.y = this.GRAVITY;
+
+        enemy.body.enableBody = true;
+        enemy.body.checkCollision.up = false;
+        enemy.body.setSize(112, 176, -16, 0);
+        enemy.anchor.setTo(0.5, 0.5);
+        enemy.wandering = false;
+        enemy.speed = this.game.rnd.integerInRange(-50, 50);
+        enemy.animation = new DasherAnimation(enemy, this.scene);
+        enemy.animation.initAnimation();
+        enemy.body.allowGravity = true;
+        enemy.life = this.MAX_LIFE * 3;
+        enemy.sight = { x: 500, y: 100 };
+        enemy.type = EnemyType.REAPER;
+        enemy.facingRight = false;
+        enemy.state = State.IDLE;
+        this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
+    };
 
     public getEnemiesCount() {
         return this.enemyGroup.countLiving().toString();

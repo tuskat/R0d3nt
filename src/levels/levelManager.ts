@@ -9,19 +9,15 @@ const enum State {
   DEAD
 };
 
-const enum EnemyType {
-  SLASHER = 1,
-  REAPER,
-  SHOOTER
-};
-
 export default class LevelManager extends LevelCreator {
   // Update
   updateCollision() {
     this.game.physics.arcade.collide(this.player.sprite, this.walls);
+    this.game.physics.arcade.collide(this.player.sprite, this.glass);
     this.game.physics.arcade.collide(this.player.sprite, this.trap);
     this.game.physics.arcade.collide(this.enemiesSprite());
     this.game.physics.arcade.collide(this.enemiesSprite(), this.walls);
+    this.game.physics.arcade.collide(this.enemiesSprite(), this.glass);
     this.game.physics.arcade.collide(this.enemiesSprite(), this.trap);
     this.game.physics.arcade.collide(this.exit, this.walls);
   };

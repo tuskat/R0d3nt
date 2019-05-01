@@ -19,7 +19,9 @@ const enum Tiles {
     TRAP_UP,
     TRAP_DOWN,
     TRAP_LEFT,
-    TRAP_RIGHT
+    TRAP_RIGHT,
+    GLASS,
+    DASHER
 };
 const enum Orientation {
     UP = 1,
@@ -35,6 +37,7 @@ export default class LevelCreator  {
     public map: Phaser.Tilemap = null;
     public exit: Phaser.Group = null;
     public walls: Phaser.Group = null;
+    public glass: Phaser.Group = null;
     public coins: Phaser.Group = null;
     public interuptor: Phaser.Group = null;
     public trap: Phaser.Group = null;
@@ -84,6 +87,7 @@ export default class LevelCreator  {
         this.interuptor = this.game.add.group();
         this.exit = this.game.add.group();
         this.enemiesManager = new EnemiesManager(this.game, this.scene);
+        this.glass = this.game.add.group();
         this.walls = this.game.add.group();
         this.score = 0;
     };
@@ -150,7 +154,7 @@ export default class LevelCreator  {
 
                 switch (layout[i]) {
                     case Tiles.INTERUPTOR: {
-                        let interuptor = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) + 10, 'interuptor');
+                        let interuptor = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) + 10, 'trigger');
                         this.interuptor.add(interuptor);
                         interuptor.body.allowGravity = false;
                         break;
@@ -164,6 +168,11 @@ export default class LevelCreator  {
                     }
                     case Tiles.SPAWN: {
                         this.enemiesManager.initEnemySpawn(hX, hY, 5, levelTileSize);
+                        break;
+                    }
+                    case Tiles.DASHER: {
+                        this.enemiesManager.initDasher(hX, hY, levelTileSize);
+
                         break;
                     }
                     case Tiles.SLASHER: {
@@ -245,6 +254,16 @@ export default class LevelCreator  {
                         wall.body.checkCollision.down = false;
                         //  wall.body.friction.y = -0.5;
                         this.setScale(wall);
+                        break;
+                    }
+                    case Tiles.GLASS: {
+                        let glass = this.game.add.sprite(levelTileSize * hX, levelTileSize * hY, 'glass');
+                        this.glass.add(glass);
+                        glass.body.immovable = true;
+                        glass.body.allowGravity = false;
+                        glass.body.checkCollision.up = false;
+                        glass.body.checkCollision.down = false;
+                        this.setScale(glass);
                         break;
                     }
                     case Tiles.TOP: {

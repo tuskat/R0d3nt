@@ -169,6 +169,11 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/images/exit.png'); };
     }
+    export class ImagesGlass {
+        static getName(): string { return 'glass'; };
+
+        static getPNG(): string { return require('assets/images/glass.png'); };
+    }
     export class ImagesMyBackground {
         static getName(): string { return 'my_background'; };
 
@@ -189,6 +194,11 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/images/rat_spawn.png'); };
     }
+    export class ImagesTrigger {
+        static getName(): string { return 'trigger'; };
+
+        static getPNG(): string { return require('assets/images/trigger.png'); };
+    }
     export class TilesetsBuildingSpritesheet {
         static getName(): string { return 'building_spritesheet'; };
 
@@ -197,6 +207,33 @@ export namespace Images {
 }
 
 export namespace Atlases {
+    enum AtlasesDasherNinjaFrames {
+        Idle0 = <any>'Idle/00.png',
+        Idle1 = <any>'Idle/01.png',
+        Idle2 = <any>'Idle/02.png',
+        Idle3 = <any>'Idle/03.png',
+        Run0 = <any>'Run/00.png',
+        Run1 = <any>'Run/01.png',
+        Run2 = <any>'Run/02.png',
+        Run3 = <any>'Run/03.png',
+        Run4 = <any>'Run/04.png',
+        Run5 = <any>'Run/05.png',
+        Slash0 = <any>'Slash/00.png',
+        Slash1 = <any>'Slash/01.png',
+        Slash2 = <any>'Slash/02.png',
+        Slash3 = <any>'Slash/03.png',
+        Slash4 = <any>'Slash/04.png',
+        Slash5 = <any>'Slash/05.png',
+    }
+    export class AtlasesDasherNinja {
+        static getName(): string { return 'dasher_ninja'; };
+
+        static getJSONArray(): string { return require('assets/atlases/dasher_ninja.json'); };
+
+        static getPNG(): string { return require('assets/atlases/dasher_ninja.png'); };
+
+        static Frames = AtlasesDasherNinjaFrames;
+    }
     enum AtlasesEnemyNinjaFrames {
         DeathDeath1 = <any>'Death/Death1.png',
         DeathDeath2 = <any>'Death/Death2.png',
