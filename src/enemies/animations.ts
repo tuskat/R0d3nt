@@ -10,33 +10,31 @@ export default class EnemyAnimation {
     this.scene = scene
   }
   initIdle() {
-    this.sprite.animations.add('idle', [Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle1,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle2,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle3,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.IdleIdle4]);
+    this.sprite.animations.add('idle', [Assets.Atlases.AtlasesSlasherNinja.Frames.Idle00,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Idle01,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Idle02,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Idle03]);
   };
 
   initRun() {
-    let anim = this.sprite.animations.add('run', [Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun1,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun2,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun3,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun4,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun5,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.RunRun6]);
+    let anim = this.sprite.animations.add('run', [Assets.Atlases.AtlasesSlasherNinja.Frames.Run00,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Run01,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Run02,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Run03,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Run04,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Run05]);
 
     anim.enableUpdate = true;
     anim.onUpdate.add(this.runningSound, this);
   };
 
   initSlash() {
-    let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash1,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash2,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash3,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash4,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash5,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash6,
-    Assets.Atlases.AtlasesEnemyNinja.Frames.SlashSlash7,
-    ]);
+    let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesSlasherNinja.Frames.Slash00,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash01,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash02,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash03,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash04,
+    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash05]);
     anim.enableUpdate = true;
     anim.onUpdate.add(this.slashing, this);
     anim.onComplete.add(this.doneSlashing, this);
@@ -66,7 +64,7 @@ export default class EnemyAnimation {
     }
   };
 
-  setCollision(width, height = 178) {
+  setCollision(width, height = 86) {
     this.sprite.body.setSize(width, height, 0, 0);
   };
 

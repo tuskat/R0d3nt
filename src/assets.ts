@@ -35,6 +35,11 @@ export namespace Images {
         static getPNG(): string { return require('assets/gfx/bullet.png'); };
         static getSVG(): string { return require('assets/gfx/bullet.svg'); };
     }
+    export class GfxDasher {
+        static getName(): string { return 'dasher'; };
+
+        static getPNG(): string { return require('assets/gfx/dasher.png'); };
+    }
     export class GfxExplosion {
         static getName(): string { return 'explosion'; };
 
@@ -386,6 +391,39 @@ export namespace Atlases {
         static getXML(): string { return require('assets/atlases/preload_sprites_xml.xml'); };
 
         static Frames = AtlasesPreloadSpritesXmlFrames;
+    }
+    enum AtlasesSlasherNinjaFrames {
+        Death00 = <any>'Death/000.png',
+        Death01 = <any>'Death/001.png',
+        Death02 = <any>'Death/002.png',
+        Death03 = <any>'Death/003.png',
+        Death04 = <any>'Death/004.png',
+        Idle00 = <any>'Idle/000.png',
+        Idle01 = <any>'Idle/001.png',
+        Idle02 = <any>'Idle/002.png',
+        Idle03 = <any>'Idle/003.png',
+        Run00 = <any>'Run/000.png',
+        Run01 = <any>'Run/001.png',
+        Run02 = <any>'Run/002.png',
+        Run03 = <any>'Run/003.png',
+        Run04 = <any>'Run/004.png',
+        Run05 = <any>'Run/005.png',
+        Slash00 = <any>'Slash/000.png',
+        Slash01 = <any>'Slash/001.png',
+        Slash02 = <any>'Slash/002.png',
+        Slash03 = <any>'Slash/003.png',
+        Slash04 = <any>'Slash/004.png',
+        Slash05 = <any>'Slash/005.png',
+        Slash06 = <any>'Slash/006.png',
+    }
+    export class AtlasesSlasherNinja {
+        static getName(): string { return 'slasher_ninja'; };
+
+        static getJSONArray(): string { return require('assets/atlases/slasher_ninja.json'); };
+
+        static getPNG(): string { return require('assets/atlases/slasher_ninja.png'); };
+
+        static Frames = AtlasesSlasherNinjaFrames;
     }
     enum TilesetsTilesSpritesheetFrames {
         Box = <any>'box.png',

@@ -23,7 +23,7 @@ export default class EnemiesFactory {
     public GRAVITY = 30; // pixels/second/second
     public JUMP_SPEED = -700; // pixels/second (negative y is up)
     private tilesize = 32;
-    public scale = 0.25;
+    public scale = 0.5;
     public enemyGroup: Phaser.Group = null;
     public spawnDoor: Phaser.Group = null;
     public game: Phaser.Game = null;
@@ -42,14 +42,14 @@ export default class EnemiesFactory {
         spawn.body.allowGravity = false;
         for (let i = 0; i < nbr; i++) {
             let spawnRate = (100 * i) + this.game.rnd.integerInRange(2000, 5000);
-            this.scene.timer.add(spawnRate, this.initSlasher, this, x, y + 1 , tilesize);
+            this.scene.timer.add(spawnRate, this.initSlasher, this, x, y, tilesize);
         }
     };
 
     initSlasher(x, y, tilesize) {
         this.tilesize = tilesize;
 
-        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 64, 'enemy_ninja');
+        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y), 'slasher_ninja');
         enemy.scale.x = this.scale;
         enemy.scale.y = this.scale;
         enemy.body.collideWorldBounds = false;
@@ -59,7 +59,7 @@ export default class EnemiesFactory {
 
         enemy.body.enableBody = true;
         enemy.body.checkCollision.up = false;
-        enemy.body.setSize(112, 176, -16, 0);
+        enemy.body.setSize(112, 88, 0, 0);
         enemy.anchor.setTo(0.5, 0.5);
         enemy.wandering = false;
         enemy.speed = this.game.rnd.integerInRange(-50, 50);
@@ -76,9 +76,9 @@ export default class EnemiesFactory {
     initDasher(x, y, tilesize) {
         this.tilesize = tilesize;
 
-        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 64, 'dasher_ninja');
-        enemy.scale.x = 0.5;
-        enemy.scale.y = 0.5;
+        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y), 'dasher_ninja');
+        enemy.scale.x = this.scale;
+        enemy.scale.y = this.scale;
         enemy.body.collideWorldBounds = false;
 
         this.enemyGroup.add(enemy);
@@ -86,7 +86,7 @@ export default class EnemiesFactory {
 
         enemy.body.enableBody = true;
         enemy.body.checkCollision.up = false;
-        enemy.body.setSize(112, 176, -16, 0);
+        enemy.body.setSize(112, 88, 0, 0);
         enemy.anchor.setTo(0.5, 0.5);
         enemy.wandering = false;
         enemy.speed = this.game.rnd.integerInRange(-50, 50);

@@ -62,7 +62,7 @@ export default class DasherAnimation {
     }
   };
 
-  setCollision(width, height = 178) {
+  setCollision(width, height = 88) {
     this.sprite.body.setSize(width, height, 0, 0);
   };
 
