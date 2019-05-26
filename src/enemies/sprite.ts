@@ -7,5 +7,5 @@ export default class EnemySprite extends Phaser.Sprite {
     public wandering;
     public facingRight;
     public speed;
-
+    public attackDistance;
 }

@@ -8,7 +8,6 @@ const enum State {
     DEAD
 };
 export default class EnemiesManager extends EnemiesFactory {
-
     update(player, walls) {
         this.enemiesOverlap(this.scene.levelManager.player);
         this.enemyGroup.forEachAlive((enemy) => {
@@ -141,7 +140,11 @@ export default class EnemiesManager extends EnemiesFactory {
             return false;
         }
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
-        return this.shouldAttack(ray);
+        let distance = enemy.attackDistance;
+        if ((ray.width <= distance) && (ray.height <= distance)) {
+            return true;
+        }
+        return false;
     };
     trackPlayer(enemy, player, walls) {
         let ray = new Phaser.Line(enemy.x, enemy.y, player.x, player.y);
@@ -175,25 +178,12 @@ export default class EnemiesManager extends EnemiesFactory {
             this.scene.timer.add(800, this.killEnemy, this, enemy);
         }
     };
-    shouldAttack(ray) {
-        let distance = 30;
-        if ((ray.width <= distance) && (ray.height <= distance)) {
-            return true;
-        }
-        return false;
-    };
+
     attack(enemy) {
         if (!enemy.onCooldown) {
-            enemy.body.velocity.x = 0;
-            enemy.body.velocity.y = 0;
-            enemy.animation.playAnimation('slash', 24, false, true);
-            this.scene.timer.add(1000, this.recharge, this, enemy);
-            enemy.onCooldown = true;
+            this.attackList[enemy.type](enemy);
         }
-    };
-    recharge = function (enemy) {
-        enemy.onCooldown = false;
-    };
+    }
     getWallIntersection(ray, walls, sight) {
         let distanceToWall = sight;
         let closestIntersection = null;

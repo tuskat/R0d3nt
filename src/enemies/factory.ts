@@ -11,7 +11,7 @@ const enum State {
 };
 const enum EnemyType {
     SLASHER = 1,
-    REAPER,
+    DASHER,
     SHOOTER
   };
   
@@ -28,12 +28,40 @@ export default class EnemiesFactory {
     public spawnDoor: Phaser.Group = null;
     public game: Phaser.Game = null;
     public scene: Scene = null;
+    public attackList = [];
     constructor(game, scene) {
         this.game = game;
         this.scene = scene;
         this.spawnDoor = this.game.add.group();
         this.enemyGroup = this.game.add.group();
+        this.initAttack();
     }
+    stopDash = function (enemy) {
+        enemy.body.velocity.x = 0;
+    }
+    recharge = function (enemy) {
+        enemy.onCooldown = false;
+    };
+    dashAttack(enemy) {
+        enemy.body.velocity.x = this.MAX_SPEED * enemy.scale.x;
+        enemy.body.velocity.y = 0;
+        enemy.animation.playAnimation('slash', 12, false, true);
+        this.scene.timer.add(500, this.stopDash, this, enemy);
+        this.scene.timer.add(1000, this.recharge, this, enemy);
+        enemy.onCooldown = true;
+    };
+    slashAttack(enemy) { 
+        enemy.body.velocity.x = 0;
+        enemy.body.velocity.y = 0;
+        enemy.animation.playAnimation('slash', 24, false, true);
+        this.scene.timer.add(1000, this.recharge, this, enemy);
+        
+        enemy.onCooldown = true;
+    };
+    initAttack() {
+        this.attackList[EnemyType.SLASHER] = this.slashAttack.bind(this);
+        this.attackList[EnemyType.DASHER] = this.dashAttack.bind(this);
+    };
     initEnemySpawn(x, y, nbr, tilesize) {
         this.tilesize = tilesize;
         let spawn = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 10 , 'rat_spawn');
@@ -71,6 +99,7 @@ export default class EnemiesFactory {
         enemy.type = EnemyType.SLASHER;
         enemy.facingRight = false;
         enemy.state = State.IDLE;
+        enemy.attackDistance = 30;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
     initDasher(x, y, tilesize) {
@@ -95,9 +124,10 @@ export default class EnemiesFactory {
         enemy.body.allowGravity = true;
         enemy.life = this.MAX_LIFE * 3;
         enemy.sight = { x: 500, y: 100 };
-        enemy.type = EnemyType.REAPER;
+        enemy.type = EnemyType.DASHER;
         enemy.facingRight = false;
         enemy.state = State.IDLE;
+        enemy.attackDistance = 100;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 

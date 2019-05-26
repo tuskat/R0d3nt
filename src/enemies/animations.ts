@@ -73,7 +73,7 @@ export default class EnemyAnimation {
   };
 
   slashing(anim, frame) {
-    if (frame.index >= 19) {
+    if (frame.index >= Assets.Atlases.AtlasesSlasherNinja.Frames.Slash03) {
       this.scene.soundManager.playSound('slash');
       this.setCollision(frame.sourceSizeW);
     }

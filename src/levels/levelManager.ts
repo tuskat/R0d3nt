@@ -1,4 +1,4 @@
-
+import * as Assets from '../assets';
 import LevelCreator from './levelCreator';
 
 const enum State {
@@ -82,8 +82,9 @@ export default class LevelManager extends LevelCreator {
     if (enemy.state === State.DEAD) {
       return;
     }
-    if (enemy.animations.currentAnim.name === 'slash'
-      && enemy.animations.currentAnim.currentFrame.index >= 19) {
+    if (enemy.animations.currentAnim.name === 'slash' && 
+        (enemy.animations.currentAnim.currentFrame.name === Assets.Atlases.AtlasesDasherNinja.Frames.Slash3 ||
+          enemy.animations.currentAnim.currentFrame.name === Assets.Atlases.AtlasesSlasherNinja.Frames.Slash03)) {
       this.player.takeDamage(player, enemy);
     }
   };
