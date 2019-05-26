@@ -73,13 +73,13 @@ export default class EnemyAnimation {
   };
 
   slashing(anim, frame) {
-    if (frame.index >= Assets.Atlases.AtlasesSlasherNinja.Frames.Slash03) {
+    if (frame.name === Assets.Atlases.AtlasesSlasherNinja.Frames.Slash02) {
       this.scene.soundManager.playSound('slash');
       this.setCollision(frame.sourceSizeW);
     }
   };
   runningSound(anim, frame) {
-    let playSound = (frame.index === 12);
+    let playSound = (frame.name === Assets.Atlases.AtlasesSlasherNinja.Frames.Run02);
     if (playSound) {
       this.scene.soundManager.playSound('enemy-run');
     }

@@ -71,13 +71,13 @@ export default class DasherAnimation {
   };
 
   slashing(anim, frame) {
-    if (frame.index >= Assets.Atlases.AtlasesDasherNinja.Frames.Slash3) {
+    if (frame.name === Assets.Atlases.AtlasesDasherNinja.Frames.Slash3) {
       this.scene.soundManager.playSound('slash');
       this.setCollision(frame.sourceSizeW);
     }
   };
   runningSound(anim, frame) {
-    let playSound = (frame.index === Assets.Atlases.AtlasesDasherNinja.Frames.Run3);
+    let playSound = (frame.name === Assets.Atlases.AtlasesDasherNinja.Frames.Run3);
     if (playSound) {
       this.scene.soundManager.playSound('enemy-run');
     }

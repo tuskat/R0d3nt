@@ -127,7 +127,7 @@ export default class EnemiesFactory {
         enemy.type = EnemyType.DASHER;
         enemy.facingRight = false;
         enemy.state = State.IDLE;
-        enemy.attackDistance = 100;
+        enemy.attackDistance = 90;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
     };
 
