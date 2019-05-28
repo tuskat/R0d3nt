@@ -64,10 +64,10 @@ export default class Scene extends Phaser.State {
         this.game.debug.text(this.game.time.fps.toString(), this.game.width - 32, 14, '#FFFFFF');
         // this.game.debug.text(this.levelManager.enemiesCount(), this.game.width - 32, 32, '#FFFFFF');
         // this.levelManager.bulletSprite();
-        this.levelManager.enemiesSprite().forEach(element => {
-            this.game.debug.body(element);
-        });
-        // this.game.debug.body(this.player.sprite);
+        // this.levelManager.enemiesSprite().forEach(element => {
+        //     this.game.debug.body(element);
+        // });
+        // // this.game.debug.body(this.player.sprite);
     }
     //
     public currentScore() {

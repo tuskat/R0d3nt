@@ -37,6 +37,11 @@ export default class EnemiesFactory {
         this.initAttack();
     }
     stopDash = function (enemy) {
+        if (this.scene.levelManager.player.sprite.x > enemy.body.x) {
+            enemy.scale.x = this.scale;
+        } else {
+            enemy.scale.x = -this.scale;
+        }
         enemy.body.velocity.x = 0;
     }
     recharge = function (enemy) {

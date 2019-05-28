@@ -747,6 +747,11 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/levels/map1.json'); };
     }
+    export class LevelsMap2 {
+        static getName(): string { return 'map2'; };
+
+        static getJSON(): string { return require('assets/levels/map2.json'); };
+    }
 }
 
 export namespace XML {
