@@ -7,22 +7,6 @@ export default class PlayerControls {
         this.input = input;
         this.game = game;
     }
-    upInputIsActive(duration) {
-        let isActive = false;
-        isActive = this.input.keyboard.downDuration(Phaser.Keyboard.UP, duration);
-        return isActive;
-    };
-
-    leftInputIsActive() {
-        let isActive = false;
-        isActive = this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
-        return isActive;
-    };
-    rightInputIsActive() {
-        let isActive = false;
-        isActive = this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
-        return isActive;
-    };
 
     upInputReleased() {
         let released = false;
@@ -32,10 +16,26 @@ export default class PlayerControls {
         return released;
     };
 
-    RetryInputIsActive() {
+    upInputIsActive(duration) {
         let isActive = false;
-        isActive = this.input.keyboard.isDown(Phaser.Keyboard.X);
+        isActive = this.input.keyboard.downDuration(Phaser.Keyboard.UP, duration);
         return isActive;
+    };
+
+    leftInputIsActive() {
+        return this.input.keyboard.isDown(Phaser.Keyboard.LEFT);
+    };
+
+    rightInputIsActive() {
+        return this.input.keyboard.isDown(Phaser.Keyboard.RIGHT);
+    };
+
+    dashInputIsActive(duration) {
+        return this.input.keyboard.downDuration(Phaser.Keyboard.C, duration);
+    };
+
+    retryInputIsActive() {
+        return this.input.keyboard.isDown(Phaser.Keyboard.X);
     };
 
 }

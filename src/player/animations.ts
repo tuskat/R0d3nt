@@ -1,13 +1,16 @@
 import * as Assets from '../assets';
 import Player from './player';
+import Scene from '../states/gameScreenScene';
 
 export default class PlayerAnimation {
     public sprite: Phaser.Sprite = null;
     public player: Player = null;
+    public scene: Scene = null;
     private lastAnimation: string = null;
     constructor(sprite, player) {
         this.sprite = sprite;
         this.player = player;
+        this.scene = player.scene;
     }
     initIdle() {
         this.sprite.animations.add('idle', [Assets.Atlases.AtlasesPlayerNinja.Frames.IdleIdle1,
@@ -17,53 +20,65 @@ export default class PlayerAnimation {
     };
 
     initJump() {
-        this.sprite.animations.add('jump', [Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump1,
+        let jump = this.sprite.animations.add('jump', [Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.JumpJump3]);
+        jump.onStart.add(this.jumpingSound, this);
+        jump.onComplete.add(this.doneJumping, this);
     };
+
     initFall() {
-        let fall = this.sprite.animations.add('fall', [Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall1,
+        this.sprite.animations.add('fall', [Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.FallFall3]);
-
-        //   fall.onComplete.add(this.doneDoubleJump, this);
     };
+
     initRun() {
-        this.sprite.animations.add('run', [Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun1,
+        let anim = this.sprite.animations.add('run', [Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun1,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun2,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun3,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun4,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.RunRun6]);
+
+        anim.enableUpdate = true;
+        anim.onUpdate.add(this.runningSound, this);
+    };
+
+    initDash() {
+        let dash = this.sprite.animations.add('dash', [Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash1,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash2,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash3,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash4,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash5,
+        Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash6]);
+        dash.onComplete.add(this.doneDashing, this);
     };
 
     initShoot() {
         let shoot = this.sprite.animations.add('shoot', [
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot5,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot6,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot7]);
-
-        shoot.onComplete.add(this.doneShooting, this);
-
+            Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot5,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot6,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.ShootShoot7]);
         let runshoot = this.sprite.animations.add('runshoot', [
-        Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot1,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot2,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot3,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot4,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot5,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot6]);
+            Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot1,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot2,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot3,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot4,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot5,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.RunShootRunShoot6]);
+        let airshoot = this.sprite.animations.add('jumpshoot', [
+            Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot5,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot6,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot7,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot8,
+            Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot9]);
+        
+        runshoot.enableUpdate = true;
+        runshoot.onUpdate.add(this.runningSound, this);
 
         shoot.onComplete.add(this.doneShooting, this);
-
-        let airshot = this.sprite.animations.add('jumpshoot', [
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot4,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot5,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot6,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot7,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot8,
-        Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot9]);
-
-        airshot.onComplete.add(this.doneAirShooting, this);
+        airshoot.onComplete.add(this.doneAirShooting, this);
     };
 
     initSlash() {
@@ -96,6 +111,7 @@ export default class PlayerAnimation {
         this.initFall();
         this.initRun();
         this.initShoot();
+        this.initDash();
         this.initSlash();
         this.initWallClimb();
         this.sprite.animations.play('idle', 4, true);
@@ -105,18 +121,20 @@ export default class PlayerAnimation {
         if (animation !== this.lastAnimation) {
             let previousframe = this.sprite.animations.currentFrame;
             this.sprite.animations.play(animation, framerate, loop);
-            this.swapRun(animation, previousframe);
+            // this.swapRun(animation, previousframe);
             this.lastAnimation = animation;
         }
     };
-    swapRun(animation, previousframe) {
-        if (animation === 'run') {
-            let swapFrame = previousframe.name.match(/\d+/)[0];
-            this.sprite.animations.currentAnim.setFrame(swapFrame, true);
-        }
-    };
+
     setCollision(width = 80, height = 176) {
         this.sprite.body.setSize(width, height, 8, 0);
+    };
+    doneDashing() {
+        if (this.sprite.body.touching.down) {
+            this.playAnimation('run');
+        } else {
+            this.playAnimation('fall', 2);
+        }
     };
     doneShooting() {
         this.player.shooting = false;
@@ -124,9 +142,18 @@ export default class PlayerAnimation {
     };
     doneAirShooting() {
         this.player.shooting = false;
-        this.playAnimation('jump', 2);
+        this.playAnimation('fall', 2);
     };
-    doneDoubleJump() {
-        this.playAnimation('jump', 2);
+    jumpingSound() {
+        this.scene.soundManager.playSound('jump');
+    };
+    doneJumping() {
+        this.playAnimation('fall', 3);
+    };
+    runningSound(anim, frame) {
+        let playSound = (frame.index === 44 || frame.index === 52);
+        if (playSound && this.sprite.body.touching.down) {
+            this.scene.soundManager.playSound('run');
+        }
     };
 }

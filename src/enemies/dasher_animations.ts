@@ -1,7 +1,7 @@
 import * as Assets from '../assets';
 import Scene from '../states/gameScreenScene';
 
-export default class EnemyAnimation {
+export default class DasherAnimation {
   public sprite: Phaser.Sprite = null;
   public scene: Scene;
   private lastAnimation: string = null;
@@ -10,31 +10,29 @@ export default class EnemyAnimation {
     this.scene = scene
   }
   initIdle() {
-    this.sprite.animations.add('idle', [Assets.Atlases.AtlasesSlasherNinja.Frames.Idle00,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Idle01,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Idle02,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Idle03]);
+    this.sprite.animations.add('idle', [Assets.Atlases.AtlasesDasherNinja.Frames.Idle1,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Idle2,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Idle3]);
   };
 
   initRun() {
-    let anim = this.sprite.animations.add('run', [Assets.Atlases.AtlasesSlasherNinja.Frames.Run00,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Run01,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Run02,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Run03,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Run04,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Run05]);
+    let anim = this.sprite.animations.add('run', [Assets.Atlases.AtlasesDasherNinja.Frames.Run1,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Run2,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Run3,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Run4,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Run5]);
 
     anim.enableUpdate = true;
     anim.onUpdate.add(this.runningSound, this);
   };
 
   initSlash() {
-    let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesSlasherNinja.Frames.Slash00,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash01,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash02,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash03,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash04,
-    Assets.Atlases.AtlasesSlasherNinja.Frames.Slash05]);
+    let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesDasherNinja.Frames.Slash1,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Slash2,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Slash3,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Slash4,
+    Assets.Atlases.AtlasesDasherNinja.Frames.Slash5
+    ]);
     anim.enableUpdate = true;
     anim.onUpdate.add(this.slashing, this);
     anim.onComplete.add(this.doneSlashing, this);
@@ -64,7 +62,7 @@ export default class EnemyAnimation {
     }
   };
 
-  setCollision(width, height = 86) {
+  setCollision(width, height = 88) {
     this.sprite.body.setSize(width, height, 0, 0);
   };
 
@@ -73,13 +71,13 @@ export default class EnemyAnimation {
   };
 
   slashing(anim, frame) {
-    if (frame.name === Assets.Atlases.AtlasesSlasherNinja.Frames.Slash02) {
+    if (frame.name === Assets.Atlases.AtlasesDasherNinja.Frames.Slash3) {
       this.scene.soundManager.playSound('slash');
       this.setCollision(frame.sourceSizeW);
     }
   };
   runningSound(anim, frame) {
-    let playSound = (frame.name === Assets.Atlases.AtlasesSlasherNinja.Frames.Run02);
+    let playSound = (frame.name === Assets.Atlases.AtlasesDasherNinja.Frames.Run3);
     if (playSound) {
       this.scene.soundManager.playSound('enemy-run');
     }

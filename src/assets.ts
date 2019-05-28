@@ -35,6 +35,11 @@ export namespace Images {
         static getPNG(): string { return require('assets/gfx/bullet.png'); };
         static getSVG(): string { return require('assets/gfx/bullet.svg'); };
     }
+    export class GfxDasher {
+        static getName(): string { return 'dasher'; };
+
+        static getPNG(): string { return require('assets/gfx/dasher.png'); };
+    }
     export class GfxExplosion {
         static getName(): string { return 'explosion'; };
 
@@ -62,6 +67,11 @@ export namespace Images {
         static getName(): string { return 'html5'; };
 
         static getPNG(): string { return require('assets/gfx/html5.png'); };
+    }
+    export class GfxInteruptor {
+        static getName(): string { return 'interuptor'; };
+
+        static getPNG(): string { return require('assets/gfx/interuptor.png'); };
     }
     export class GfxLight {
         static getName(): string { return 'light'; };
@@ -109,55 +119,90 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/gfx/top.png'); };
     }
+    export class GfxTrapDown {
+        static getName(): string { return 'trap_down'; };
+
+        static getPNG(): string { return require('assets/gfx/trap_down.png'); };
+    }
+    export class GfxTrapLeft {
+        static getName(): string { return 'trap_left'; };
+
+        static getPNG(): string { return require('assets/gfx/trap_left.png'); };
+    }
+    export class GfxTrapRight {
+        static getName(): string { return 'trap_right'; };
+
+        static getPNG(): string { return require('assets/gfx/trap_right.png'); };
+    }
+    export class GfxTrap {
+        static getName(): string { return 'trap'; };
+
+        static getPNG(): string { return require('assets/gfx/trap.png'); };
+    }
     export class GfxWall {
         static getName(): string { return 'wall'; };
 
         static getPNG(): string { return require('assets/gfx/wall.png'); };
     }
-    export class ImagesBackgroundTemplate {
-        static getName(): string { return 'background_template'; };
+    export class ImagesCannonBall {
+        static getName(): string { return 'cannon_ball'; };
 
-        static getPNG(): string { return require('assets/images/background_template.png'); };
+        static getPNG(): string { return require('assets/images/cannon_ball.png'); };
     }
-    export class MyAssetsMyBackground {
+    export class ImagesCannonDown {
+        static getName(): string { return 'cannon_down'; };
+
+        static getPNG(): string { return require('assets/images/cannon_down.png'); };
+    }
+    export class ImagesCannonLeft {
+        static getName(): string { return 'cannon_left'; };
+
+        static getPNG(): string { return require('assets/images/cannon_left.png'); };
+    }
+    export class ImagesCannonRight {
+        static getName(): string { return 'cannon_right'; };
+
+        static getPNG(): string { return require('assets/images/cannon_right.png'); };
+    }
+    export class ImagesCannon {
+        static getName(): string { return 'cannon'; };
+
+        static getPNG(): string { return require('assets/images/cannon.png'); };
+    }
+    export class ImagesExit {
+        static getName(): string { return 'exit'; };
+
+        static getPNG(): string { return require('assets/images/exit.png'); };
+    }
+    export class ImagesGlass {
+        static getName(): string { return 'glass'; };
+
+        static getPNG(): string { return require('assets/images/glass.png'); };
+    }
+    export class ImagesMyBackground {
         static getName(): string { return 'my_background'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_background.png'); };
+        static getPNG(): string { return require('assets/images/my_background.png'); };
     }
-    export class MyAssetsMyBackground2 {
+    export class ImagesMyBackground2 {
         static getName(): string { return 'my_background2'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_background2.png'); };
+        static getPNG(): string { return require('assets/images/my_background2.png'); };
     }
-    export class MyAssetsMyBoss {
-        static getName(): string { return 'my_boss'; };
-
-        static getPNG(): string { return require('assets/myAssets/my_boss.png'); };
-    }
-    export class MyAssetsMyBoss2 {
-        static getName(): string { return 'my_boss2'; };
-
-        static getPNG(): string { return require('assets/myAssets/my_boss2.png'); };
-    }
-    export class MyAssetsMyBullet {
+    export class ImagesMyBullet {
         static getName(): string { return 'my_bullet'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_bullet.png'); };
+        static getPNG(): string { return require('assets/images/my_bullet.png'); };
     }
-    export class MyAssetsMyMonster {
-        static getName(): string { return 'my_monster'; };
+    export class ImagesRatSpawn {
+        static getName(): string { return 'rat_spawn'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_monster.png'); };
+        static getPNG(): string { return require('assets/images/rat_spawn.png'); };
     }
-    export class MyAssetsMyPlayer {
-        static getName(): string { return 'my_player'; };
+    export class ImagesTrigger {
+        static getName(): string { return 'trigger'; };
 
-        static getPNG(): string { return require('assets/myAssets/my_player.png'); };
-    }
-    export class MyAssetsMySpawn {
-        static getName(): string { return 'my_spawn'; };
-
-        static getPNG(): string { return require('assets/myAssets/my_spawn.png'); };
+        static getPNG(): string { return require('assets/images/trigger.png'); };
     }
     export class TilesetsBuildingSpritesheet {
         static getName(): string { return 'building_spritesheet'; };
@@ -167,6 +212,33 @@ export namespace Images {
 }
 
 export namespace Atlases {
+    enum AtlasesDasherNinjaFrames {
+        Idle0 = <any>'Idle/00.png',
+        Idle1 = <any>'Idle/01.png',
+        Idle2 = <any>'Idle/02.png',
+        Idle3 = <any>'Idle/03.png',
+        Run0 = <any>'Run/00.png',
+        Run1 = <any>'Run/01.png',
+        Run2 = <any>'Run/02.png',
+        Run3 = <any>'Run/03.png',
+        Run4 = <any>'Run/04.png',
+        Run5 = <any>'Run/05.png',
+        Slash0 = <any>'Slash/00.png',
+        Slash1 = <any>'Slash/01.png',
+        Slash2 = <any>'Slash/02.png',
+        Slash3 = <any>'Slash/03.png',
+        Slash4 = <any>'Slash/04.png',
+        Slash5 = <any>'Slash/05.png',
+    }
+    export class AtlasesDasherNinja {
+        static getName(): string { return 'dasher_ninja'; };
+
+        static getJSONArray(): string { return require('assets/atlases/dasher_ninja.json'); };
+
+        static getPNG(): string { return require('assets/atlases/dasher_ninja.png'); };
+
+        static Frames = AtlasesDasherNinjaFrames;
+    }
     enum AtlasesEnemyNinjaFrames {
         DeathDeath1 = <any>'Death/Death1.png',
         DeathDeath2 = <any>'Death/Death2.png',
@@ -319,6 +391,39 @@ export namespace Atlases {
         static getXML(): string { return require('assets/atlases/preload_sprites_xml.xml'); };
 
         static Frames = AtlasesPreloadSpritesXmlFrames;
+    }
+    enum AtlasesSlasherNinjaFrames {
+        Death00 = <any>'Death/000.png',
+        Death01 = <any>'Death/001.png',
+        Death02 = <any>'Death/002.png',
+        Death03 = <any>'Death/003.png',
+        Death04 = <any>'Death/004.png',
+        Idle00 = <any>'Idle/000.png',
+        Idle01 = <any>'Idle/001.png',
+        Idle02 = <any>'Idle/002.png',
+        Idle03 = <any>'Idle/003.png',
+        Run00 = <any>'Run/000.png',
+        Run01 = <any>'Run/001.png',
+        Run02 = <any>'Run/002.png',
+        Run03 = <any>'Run/003.png',
+        Run04 = <any>'Run/004.png',
+        Run05 = <any>'Run/005.png',
+        Slash00 = <any>'Slash/000.png',
+        Slash01 = <any>'Slash/001.png',
+        Slash02 = <any>'Slash/002.png',
+        Slash03 = <any>'Slash/003.png',
+        Slash04 = <any>'Slash/004.png',
+        Slash05 = <any>'Slash/005.png',
+        Slash06 = <any>'Slash/006.png',
+    }
+    export class AtlasesSlasherNinja {
+        static getName(): string { return 'slasher_ninja'; };
+
+        static getJSONArray(): string { return require('assets/atlases/slasher_ninja.json'); };
+
+        static getPNG(): string { return require('assets/atlases/slasher_ninja.png'); };
+
+        static Frames = AtlasesSlasherNinjaFrames;
     }
     enum TilesetsTilesSpritesheetFrames {
         Box = <any>'box.png',
@@ -506,39 +611,80 @@ export namespace Atlases {
 }
 
 export namespace Audio {
-    export class AudioMusic {
-        static getName(): string { return 'music'; };
+    export class AudioClear {
+        static getName(): string { return 'clear'; };
 
-        static getAC3(): string { return require('assets/audio/music.ac3'); };
-        static getM4A(): string { return require('assets/audio/music.m4a'); };
-        static getMP3(): string { return require('assets/audio/music.mp3'); };
-        static getOGG(): string { return require('assets/audio/music.ogg'); };
+        static getOGG(): string { return require('assets/audio/clear.ogg'); };
+    }
+    export class AudioDash {
+        static getName(): string { return 'dash'; };
+
+        static getOGG(): string { return require('assets/audio/dash.ogg'); };
+    }
+    export class AudioDie {
+        static getName(): string { return 'die'; };
+
+        static getOGG(): string { return require('assets/audio/die.ogg'); };
+    }
+    export class AudioEnemyHit {
+        static getName(): string { return 'enemy-hit'; };
+
+        static getOGG(): string { return require('assets/audio/enemy-hit.ogg'); };
+    }
+    export class AudioEnemyRun {
+        static getName(): string { return 'enemy-run'; };
+
+        static getOGG(): string { return require('assets/audio/enemy-run.ogg'); };
+    }
+    export class AudioExplosion {
+        static getName(): string { return 'explosion'; };
+
+        static getOGG(): string { return require('assets/audio/explosion.ogg'); };
+    }
+    export class AudioHit {
+        static getName(): string { return 'hit'; };
+
+        static getOGG(): string { return require('assets/audio/hit.ogg'); };
+    }
+    export class AudioJump {
+        static getName(): string { return 'jump'; };
+
+        static getOGG(): string { return require('assets/audio/jump.ogg'); };
+    }
+    export class AudioPauseIn {
+        static getName(): string { return 'pause_in'; };
+
+        static getOGG(): string { return require('assets/audio/pause_in.ogg'); };
+    }
+    export class AudioPauseOut {
+        static getName(): string { return 'pause_out'; };
+
+        static getOGG(): string { return require('assets/audio/pause_out.ogg'); };
+    }
+    export class AudioPowerup {
+        static getName(): string { return 'powerup'; };
+
+        static getOGG(): string { return require('assets/audio/powerup.ogg'); };
+    }
+    export class AudioRun {
+        static getName(): string { return 'run'; };
+
+        static getOGG(): string { return require('assets/audio/run.ogg'); };
+    }
+    export class AudioShoot {
+        static getName(): string { return 'shoot'; };
+
+        static getOGG(): string { return require('assets/audio/shoot.ogg'); };
+    }
+    export class AudioSlash {
+        static getName(): string { return 'slash'; };
+
+        static getOGG(): string { return require('assets/audio/slash.ogg'); };
     }
 }
 
 export namespace Audiosprites {
-    enum AudiospritesSfxSprites {
-        Laser1 = <any>'laser1',
-        Laser2 = <any>'laser2',
-        Laser3 = <any>'laser3',
-        Laser4 = <any>'laser4',
-        Laser5 = <any>'laser5',
-        Laser6 = <any>'laser6',
-        Laser7 = <any>'laser7',
-        Laser8 = <any>'laser8',
-        Laser9 = <any>'laser9',
-    }
-    export class AudiospritesSfx {
-        static getName(): string { return 'sfx'; };
-
-        static getAC3(): string { return require('assets/audiosprites/sfx.ac3'); };
-        static getJSON(): string { return require('assets/audiosprites/sfx.json'); };
-        static getM4A(): string { return require('assets/audiosprites/sfx.m4a'); };
-        static getMP3(): string { return require('assets/audiosprites/sfx.mp3'); };
-        static getOGG(): string { return require('assets/audiosprites/sfx.ogg'); };
-
-        static Sprites = AudiospritesSfxSprites;
-    }
+    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
 }
 
 export namespace GoogleWebFonts {
@@ -565,6 +711,14 @@ export namespace CustomWebFonts {
         static getCSS(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/Havana/Havana.css'); };
         static getTTF(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/Havana/Havana.ttf'); };
     }
+    export class FontsVCROSDMONOVCROSDMONO {
+        static getName(): string { return 'VCR_OSD_MONO'; };
+
+        static getFamily(): string { return 'VCR_OSD'; };
+
+        static getCSS(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/VCR_OSD_MONO/VCR_OSD_MONO.css'); };
+        static getTTF(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/VCR_OSD_MONO/VCR_OSD_MONO.ttf'); };
+    }
 }
 
 export namespace BitmapFonts {
@@ -587,6 +741,16 @@ export namespace JSON {
         static getName(): string { return 'hub'; };
 
         static getJSON(): string { return require('assets/levels/hub.json'); };
+    }
+    export class LevelsMap1 {
+        static getName(): string { return 'map1'; };
+
+        static getJSON(): string { return require('assets/levels/map1.json'); };
+    }
+    export class LevelsMap2 {
+        static getName(): string { return 'map2'; };
+
+        static getJSON(): string { return require('assets/levels/map2.json'); };
     }
 }
 

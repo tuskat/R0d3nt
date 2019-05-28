@@ -1,13 +1,12 @@
 (global as any).p2 = require('p2');
 (global as any).PIXI = require('pixi');
-
 (global as any).Phaser = require('phaser');
-
 
 import * as WebFontLoader from 'webfontloader';
 
 import Boot from './states/bootScene';
 import Preloader from './states/preloaderScene';
+import Title from './states/titleScene';
 import Scene from './states/gameScreenScene';
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
@@ -19,7 +18,7 @@ class App extends Phaser.Game {
         this.state.add('boot', Boot);
         this.state.add('preloader', Preloader);
         this.state.add('scene', Scene);
-        //  this.state.add('title', Title);
+        this.state.add('title', Title);
         this.state.start('boot');
 
     }
