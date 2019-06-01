@@ -17,7 +17,7 @@ const enum EnemyType {
   
 export default class EnemiesFactory {
     public MAX_SPEED = 750; // pixels/second
-    public MAX_LIFE = 1;
+    public MAX_LIFE = 3;
     public ACCELERATION = 300; // pixels/second/second
     public DRAG = 400; // pixels/second
     public GRAVITY = 30; // pixels/second/second
@@ -99,7 +99,7 @@ export default class EnemiesFactory {
         enemy.animation = new EnemyAnimation(enemy, this.scene);
         enemy.animation.initAnimation();
         enemy.body.allowGravity = true;
-        enemy.life = this.MAX_LIFE * 3;
+        enemy.life = this.MAX_LIFE;
         enemy.sight = { x: 500, y: 100 };
         enemy.type = EnemyType.SLASHER;
         enemy.facingRight = false;

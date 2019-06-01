@@ -95,7 +95,9 @@ export default class EnemiesManager extends EnemiesFactory {
             enemy.life = enemy.life - bulletDamage;
             this.scene.soundManager.playSound('enemy-hit');
             this.showEnemyDamage(enemy);
-            bullet.kill();
+            if (!bullet.trackedSprite) {
+                bullet.kill();
+            }
             collided = true;
             this.scene.levelManager.score += (25 * bulletDamage);
             this.scene.textManager.textUpdate(null, this.scene.currentScore());

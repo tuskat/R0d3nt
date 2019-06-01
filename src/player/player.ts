@@ -206,7 +206,7 @@ export default class Player {
     }
   };
   takeBullet(playerSprite = this.sprite, bullet) {
-    this.takeDamage(this.sprite, bullet);
+    this.die();
     bullet.kill();
   };
   takeDamage(playerSprite = this.sprite, threatSprite) {

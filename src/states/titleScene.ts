@@ -2,7 +2,7 @@ export default class Title extends Phaser.State {
   private backgroundTemplateSprite: Phaser.Sprite = null;
   private titleText: Phaser.Text = null;
   private pressStartText: Phaser.Text = null;
-
+  music;
 
   public preload(): void {
     this.backgroundTemplateSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'my_background');
@@ -24,6 +24,8 @@ export default class Title extends Phaser.State {
   public create(): void {
     this.game.camera.flash(0x000000, 1000);
     this.game.input.keyboard.addCallbacks(this, null, null, this.keyPress);
+    this.music = this.game.add.audio('baws_waves');
+    this.music.play();
   }
 
   public keyPress(): void {

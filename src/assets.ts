@@ -681,6 +681,11 @@ export namespace Audio {
 
         static getOGG(): string { return require('assets/audio/slash.ogg'); };
     }
+    export class MusicBawsWaves {
+        static getName(): string { return 'baws_waves'; };
+
+        static getOGG(): string { return require('assets/music/baws_waves.ogg'); };
+    }
 }
 
 export namespace Audiosprites {

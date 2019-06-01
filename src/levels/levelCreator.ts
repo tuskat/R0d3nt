@@ -95,7 +95,7 @@ export default class LevelCreator  {
     initTrap(trap, rotation) {
         let trapWeapon = this.game.add.weapon(1, 'cannon_ball', 5, this.trap);
         trapWeapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        trapWeapon.bulletSpeed = 450;
+        trapWeapon.bulletSpeed = 400;
         trapWeapon.bulletGravity = new Phaser.Point(0, -1150);
         switch (rotation) {
             case Orientation.DOWN: {
@@ -261,8 +261,6 @@ export default class LevelCreator  {
                         this.glass.add(glass);
                         glass.body.immovable = true;
                         glass.body.allowGravity = false;
-                        glass.body.checkCollision.up = false;
-                        glass.body.checkCollision.down = false;
                         this.setScale(glass);
                         break;
                     }
