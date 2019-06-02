@@ -757,6 +757,31 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/levels/map2.json'); };
     }
+    export class LevelsMap3 {
+        static getName(): string { return 'map3'; };
+
+        static getJSON(): string { return require('assets/levels/map3.json'); };
+    }
+    export class LevelsMap4 {
+        static getName(): string { return 'map4'; };
+
+        static getJSON(): string { return require('assets/levels/map4.json'); };
+    }
+    export class LevelsMap5 {
+        static getName(): string { return 'map5'; };
+
+        static getJSON(): string { return require('assets/levels/map5.json'); };
+    }
+    export class LevelsMap6 {
+        static getName(): string { return 'map6'; };
+
+        static getJSON(): string { return require('assets/levels/map6.json'); };
+    }
+    export class LevelsMap7 {
+        static getName(): string { return 'map7'; };
+
+        static getJSON(): string { return require('assets/levels/map7.json'); };
+    }
 }
 
 export namespace XML {

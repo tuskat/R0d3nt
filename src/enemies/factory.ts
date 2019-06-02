@@ -74,7 +74,7 @@ export default class EnemiesFactory {
         spawn.body.immovable = true;
         spawn.body.allowGravity = false;
         for (let i = 0; i < nbr; i++) {
-            let spawnRate = (100 * i) + this.game.rnd.integerInRange(2000, 5000);
+            let spawnRate = (100 * i) + this.game.rnd.integerInRange(200, 500);
             this.scene.timer.add(spawnRate, this.initSlasher, this, x, y, tilesize);
         }
     };
@@ -82,7 +82,7 @@ export default class EnemiesFactory {
     initSlasher(x, y, tilesize) {
         this.tilesize = tilesize;
 
-        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y), 'slasher_ninja');
+        let enemy = <EnemySprite> this.game.add.sprite((this.tilesize * x) + 16, (this.tilesize * y)  + 20, 'slasher_ninja');
         enemy.scale.x = this.scale;
         enemy.scale.y = this.scale;
         enemy.body.collideWorldBounds = false;

@@ -28,7 +28,7 @@ export default class LevelManager extends LevelCreator {
     this.game.physics.arcade.overlap(this.enemiesManager.getSprites(), this.interuptor, this.activateTrap, null, this);
     this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.interuptor, this.activateTrap, null, this);
     this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.walls, this.killEntity, null, this.scene);
-    this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.trap, this.killEntity, null, this.scene);
+    // this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.trap, this.killEntity, null, this.scene);
     this.trapWeapon.forEach(element => {
       this.game.physics.arcade.overlap(this.enemiesManager.enemyGroup, element.bullets, this.enemiesManager.damageEnemies, null, this.enemiesManager);
       this.game.physics.arcade.overlap(this.player.sprite, element.bullets, this.player.takeBullet, null, this.player);
@@ -60,12 +60,10 @@ export default class LevelManager extends LevelCreator {
   }
     let bullet = null;
     this.trapWeapon.forEach(element => {
-      if (element.trackedSprite.inCamera) {
-        bullet = element.fire();
-        if (bullet) {
-          bullet.trackedSprite = element.trackedSprite;
-          this.scene.soundManager.playSound('explosion');
-        }
+      bullet = element.fire();
+      if (bullet) {
+        bullet.trackedSprite = element.trackedSprite;
+        this.scene.soundManager.playSound('explosion');
       }
     });
   };
