@@ -110,7 +110,7 @@ export default class EnemiesFactory {
     initDasher(x, y, tilesize) {
         this.tilesize = tilesize;
 
-        let enemy = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y), 'dasher_ninja');
+        let enemy = <EnemySprite> this.game.add.sprite((this.tilesize * x) + 20, (this.tilesize * y), 'dasher_ninja');
         enemy.scale.x = this.scale;
         enemy.scale.y = this.scale;
         enemy.body.collideWorldBounds = false;

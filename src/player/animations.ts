@@ -52,6 +52,7 @@ export default class PlayerAnimation {
         Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash4,
         Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash5,
         Assets.Atlases.AtlasesPlayerNinja.Frames.DashDash6]);
+        dash.onStart.add(this.startDashing, this);
         dash.onComplete.add(this.doneDashing, this);
     };
 
@@ -117,24 +118,29 @@ export default class PlayerAnimation {
         this.sprite.animations.play('idle', 4, true);
     };
     playAnimation(animation, framerate = 30, loop = true) {
-        this.setCollision();
         if (animation !== this.lastAnimation) {
             let previousframe = this.sprite.animations.currentFrame;
             this.sprite.animations.play(animation, framerate, loop);
-            // this.swapRun(animation, previousframe);
             this.lastAnimation = animation;
         }
+        this.setCollision();
     };
 
-    setCollision(width = 80, height = 176) {
-        this.sprite.body.setSize(width, height, 8, 0);
+    setCollision(width = 80, height = 176, offsetY = 0) {
+        let sourceWidth = this.sprite.animations.currentFrame.sourceSizeW;
+        let offsetX = (sourceWidth > 80) ? (sourceWidth * 0.40) : 0; 
+        this.sprite.body.setSize(width, height, offsetX, offsetY);
     };
+    startDashing() {
+        this.setCollision(80, 160);
+    }
     doneDashing() {
         if (this.sprite.body.touching.down) {
             this.playAnimation('run');
         } else {
             this.playAnimation('fall', 2);
         }
+        this.setCollision();
     };
     doneShooting() {
         this.player.shooting = false;
@@ -149,6 +155,7 @@ export default class PlayerAnimation {
     };
     doneJumping() {
         this.playAnimation('fall', 3);
+        this.setCollision();
     };
     runningSound(anim, frame) {
         let playSound = (frame.index === 44 || frame.index === 52);

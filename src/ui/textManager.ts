@@ -1,7 +1,7 @@
 export default class TextManager {
     style = { font: '16px VCR_OSD', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
     pauseStyle = { font: '28px VCR_OSD', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
-    titleStyle = { font: '70px VCR_OSD', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
+    titleStyle = { font: '50px VCR_OSD', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
     scoreText;
     lifeText;
     pauseText;

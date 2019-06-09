@@ -50,20 +50,13 @@ export default class DasherAnimation {
     if (animation !== this.lastAnimation) {
       this.sprite.animations.play(animation, framerate, loop);
       this.lastAnimation = animation;
-      let frame = this.sprite.animations.currentFrame;
-      this.setCollision(frame.sourceSizeW);
-      if (immovable) {
-        this.sprite.body.checkCollision.left = false;
-        this.sprite.body.checkCollision.right = false;
-      } else {
-        this.sprite.body.checkCollision.left = true;
-        this.sprite.body.checkCollision.right = true;
-      }
     }
+    this.setCollision();
   };
 
-  setCollision(width, height = 88) {
-    this.sprite.body.setSize(width, height, 0, 0);
+  setCollision(width = 88, height = 88, offsetY = 0) {
+    let offsetX = 4; 
+    this.sprite.body.setSize(width, height, offsetX, offsetY);
   };
 
   doneSlashing() {
@@ -73,7 +66,6 @@ export default class DasherAnimation {
   slashing(anim, frame) {
     if (frame.name === Assets.Atlases.AtlasesDasherNinja.Frames.Slash3) {
       this.scene.soundManager.playSound('slash');
-      this.setCollision(frame.sourceSizeW);
     }
   };
   runningSound(anim, frame) {

@@ -181,7 +181,7 @@ export default class LevelCreator  {
                         break;
                     }
                     case Tiles.PLAYER: {
-                        player.sprite.x = levelTileSize * hX;
+                        player.sprite.x = (levelTileSize * hX) + 16;
                         player.sprite.y = levelTileSize * hY;
 
                         break;

@@ -31,6 +31,7 @@ export default class Player {
   public fireButton;
   public invincibility = false;
   public facingRight = true;
+  public cooldownIcon;
   game: Phaser.Game = null;
   scene: Scene = null;
   controls: PlayerControls = null;
@@ -47,6 +48,11 @@ export default class Player {
   }
   initPlayer() {
     this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
+    this.cooldownIcon = this.game.add.sprite(-8, -128, 'ball');
+    this.cooldownIcon.body.allowGravity = false;
+    this.cooldownIcon.alpha = 0;
+    this.cooldownIcon.tint = 0x7d7d7d;
+    this.sprite.addChild(this.cooldownIcon);
     this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.collideWorldBounds = false;
     this.sprite.body.checkWorldBounds = true;
@@ -183,26 +189,28 @@ export default class Player {
   isDashing() {
     if (this.dash > 0 && (this.controls.dashInputIsActive(50))) {
       this.playerState = PlayerState.DASHING;
-      this.sprite.body.velocity.x += this.facingRight ? this.MAX_SPEED : -this.MAX_SPEED;
+      this.sprite.body.velocity.x = this.MAX_SPEED * (this.sprite.scale.x * 4);
       // this.sprite.body.gravity.y = -1150;
-      this.sprite.body.velocity.y = -10;
+
       this.animation.playAnimation('dash', 25, false);
       this.scene.soundManager.playSound('dash');
       this.dash--;
-      this.scene.timer.add(400, this.endDash, this);
+      this.scene.timer.add(375, this.endDash, this);
     }
     return this.playerState === PlayerState.DASHING;
   };
 
   restoreDash() {
+    this.cooldownIcon.alpha = 0;
     this.dash = 1;
   };
 
   endDash() {
     if (!this.isDead()) {
+      this.cooldownIcon.alpha = 1;
       this.playerState = PlayerState.IDLE;
       // this.sprite.body.gravity.y = 0;
-      this.scene.timer.add(400, this.restoreDash, this);
+      this.scene.timer.add(500, this.restoreDash, this);
     }
   };
   takeBullet(playerSprite = this.sprite, bullet) {

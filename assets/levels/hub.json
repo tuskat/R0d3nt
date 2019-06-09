@@ -13,7 +13,7 @@
                 {
                  "name":"title",
                  "type":"string",
-                 "value":"This is a R4T"
+                 "value":"ESC to see controls"
                 }],
          "type":"tilelayer",
          "visible":true,

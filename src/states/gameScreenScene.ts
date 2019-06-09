@@ -10,10 +10,11 @@ export default class Scene extends Phaser.State {
     public soundManager: SoundManager;
     private player: Player;
     controls: PlayerControls = null;
-    public level: number = 0;
+    public level: number = 3;
     public background: Phaser.Group = null;
     public sky: Phaser.Sprite = null;
     public score = 0;
+    public initialized = false;
     // enemies;
     light;
     bitmap;
@@ -25,8 +26,13 @@ export default class Scene extends Phaser.State {
         this.controls = new PlayerControls(this.input, this.game);
         this.player = new Player(this.controls, this.game, this);
         this.levelManager = new LevelManager(this.game, this.player, this);
-        this.textManager = new TextManager();
-        this.soundManager = new SoundManager(this.game);
+
+        if (!this.initialized) {
+            this.textManager = new TextManager();
+            this.soundManager = new SoundManager(this.game);
+            this.initialized = true;
+            this.soundManager.initSounds();
+        }
     }
 
     public create(): void {
@@ -48,7 +54,6 @@ export default class Scene extends Phaser.State {
         this.player.initPlayer();
 
         this.levelManager.createLevel(this.player);
-        this.soundManager.initSounds();
         this.textManager.createText(this.game, this.currentScore(), this.player.life);
         let pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         pauseKey.onDown.add(this.pauseGame, this);
@@ -62,12 +67,12 @@ export default class Scene extends Phaser.State {
     // DEBUG
     public render(): void {
         this.game.debug.text(this.game.time.fps.toString(), this.game.width - 32, 14, '#FFFFFF');
-        // this.game.debug.text(this.levelManager.enemiesCount(), this.game.width - 32, 32, '#FFFFFF');
+        this.game.debug.text('Enemies left: ' + this.levelManager.enemiesCount(), this.game.width * 0.85, this.game.height - 16, '#FFFFFF');
         // this.levelManager.bulletSprite();
-        // this.levelManager.enemiesSprite().forEach(element => {
-        //     this.game.debug.body(element);
-        // });
-        // // this.game.debug.body(this.player.sprite);
+        this.levelManager.enemiesSprite().forEach(element => {
+            this.game.debug.body(element);
+        });
+        this.game.debug.body(this.player.sprite);
     }
     //
     public currentScore() {

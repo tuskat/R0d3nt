@@ -742,6 +742,41 @@ export namespace BitmapFonts {
 }
 
 export namespace JSON {
+    export class LevelsHardMap10 {
+        static getName(): string { return 'map10'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map10.json'); };
+    }
+    export class LevelsHardMap11 {
+        static getName(): string { return 'map11'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map11.json'); };
+    }
+    export class LevelsHardMap12 {
+        static getName(): string { return 'map12'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map12.json'); };
+    }
+    export class LevelsHardMap13 {
+        static getName(): string { return 'map13'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map13.json'); };
+    }
+    export class LevelsHardMap7 {
+        static getName(): string { return 'map7'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map7.json'); };
+    }
+    export class LevelsHardMap8 {
+        static getName(): string { return 'map8'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map8.json'); };
+    }
+    export class LevelsHardMap9 {
+        static getName(): string { return 'map9'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map9.json'); };
+    }
     export class LevelsHub {
         static getName(): string { return 'hub'; };
 
@@ -761,26 +796,6 @@ export namespace JSON {
         static getName(): string { return 'map3'; };
 
         static getJSON(): string { return require('assets/levels/map3.json'); };
-    }
-    export class LevelsMap4 {
-        static getName(): string { return 'map4'; };
-
-        static getJSON(): string { return require('assets/levels/map4.json'); };
-    }
-    export class LevelsMap5 {
-        static getName(): string { return 'map5'; };
-
-        static getJSON(): string { return require('assets/levels/map5.json'); };
-    }
-    export class LevelsMap6 {
-        static getName(): string { return 'map6'; };
-
-        static getJSON(): string { return require('assets/levels/map6.json'); };
-    }
-    export class LevelsMap7 {
-        static getName(): string { return 'map7'; };
-
-        static getJSON(): string { return require('assets/levels/map7.json'); };
     }
 }
 
