@@ -4,6 +4,7 @@ export default class TextManager {
     titleStyle = { font: '50px VCR_OSD', fill: '#fff', boundsAlignH: 'center', boundsAlignV: 'middle' };
     scoreText;
     lifeText;
+    enemyText;
     pauseText;
     instructionsText;
     poly;
@@ -18,6 +19,8 @@ export default class TextManager {
         this.scoreText.fixedToCamera = true;
         this.lifeText = game.add.text(10, game.height - 30, 'Hp : ' + life, this.style);
         this.lifeText.fixedToCamera = true;
+        this.enemyText = game.add.text(game.width * 0.35, 10, '', this.style);
+        this.enemyText.fixedToCamera = true;
         this.createBG(game);
         this.pauseText = game.add.text(game.width * 0.425, game.height * 0.3, 'Pause', this.pauseStyle);
         this.pauseText.fixedToCamera = true;
@@ -53,8 +56,11 @@ export default class TextManager {
     };
 
     levelTitle(levelName, game, player) {
-        let posX = 100;
-        let posY = player.sprite.y - 200;
+        let posX = player.sprite.x;
+        let posY = player.sprite.y - 100;
+        if (posY < 0) {
+           posY = player.sprite.y + 100;
+        }
 
         let text = game.add.text(posX, posY, levelName, this.titleStyle);
         let textReflect = game.add.text(posX, posY + 50, levelName, this.titleStyle);
@@ -85,5 +91,14 @@ export default class TextManager {
         text.fixedToCamera = true;
         text.alpha = 0;
         game.add.tween(text).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
+    }
+    updateEnemyText(enemyCount) {
+        if (enemyCount > 0) {
+            let text = 'Enemies left: ' + enemyCount;
+            this.enemyText.setText(text);
+            this.enemyText.alpha = 1;   
+        } else {
+            this.enemyText.alpha = 0;
+        }     
     }
 }

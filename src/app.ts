@@ -8,6 +8,7 @@ import Boot from './states/bootScene';
 import Preloader from './states/preloaderScene';
 import Title from './states/titleScene';
 import Scene from './states/gameScreenScene';
+import End from './states/endScene';
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
 
@@ -19,6 +20,7 @@ class App extends Phaser.Game {
         this.state.add('preloader', Preloader);
         this.state.add('scene', Scene);
         this.state.add('title', Title);
+        this.state.add('end', End);
         this.state.start('boot');
 
     }

@@ -13,7 +13,7 @@
                 {
                  "name":"title",
                  "type":"string",
-                 "value":"02 - C to Dash"
+                 "value":"C to Dash"
                 }],
          "type":"tilelayer",
          "visible":true,

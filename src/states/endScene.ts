@@ -1,4 +1,4 @@
-export default class Title extends Phaser.State {
+export default class End extends Phaser.State {
   private backgroundTemplateSprite: Phaser.Sprite = null;
   private titleText: Phaser.Text = null;
   private pressStartText: Phaser.Text = null;
@@ -6,21 +6,23 @@ export default class Title extends Phaser.State {
   public preload(): void {
     this.backgroundTemplateSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'my_background');
     this.backgroundTemplateSprite.anchor.setTo(0.5);
-
-    this.titleText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 100, 'R0D3NT', {
-        font: '50px VCR_OSD',
+    this.game.world.setBounds(0, 0, this.game.width, this.game.height);
+    this.titleText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 100, 'THANKS FOR PLAYING !!\n GAME MADE BY TUSKAT\n MUSIC BY BAD ASS WOLF SHIRT\nNINJA SPRITES BY MARVIN Z', {
+        font: '30px VCR_OSD',
         fill: '#fff'
     });
     this.titleText.anchor.setTo(0.5);
-
-    this.pressStartText = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 100, 'Press Space to Start', {
+    this.titleText.fixedToCamera = true;
+    this.pressStartText = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 100, 'Press Space to Restart', {
         font: '25px VCR_OSD',
         fill: '#fff'
     });
+    this.pressStartText.fixedToCamera = true;
     this.pressStartText.anchor.setTo(0.5);
   }
 
   public create(): void {
+    this.game.stage.backgroundColor = 0x000000;
     this.game.camera.flash(0x000000, 1000);
     this.game.input.keyboard.addCallbacks(this, null, null, this.keyPress);
   }

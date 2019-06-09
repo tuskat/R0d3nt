@@ -22,8 +22,8 @@ export default class LevelManager extends LevelCreator {
     this.game.physics.arcade.collide(this.exit, this.walls);
   };
   updateOverlap() {
-    this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
     this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
+    this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
     this.game.physics.arcade.overlap(this.player.sprite, this.interuptor, this.activateTrap, null, this);
     this.game.physics.arcade.overlap(this.enemiesManager.getSprites(), this.interuptor, this.activateTrap, null, this);
     this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.interuptor, this.activateTrap, null, this);
@@ -72,7 +72,7 @@ export default class LevelManager extends LevelCreator {
     coin.kill();
     this.scene.soundManager.playSound('powerup');
     this.scene.levelManager.score += 100;
-    this.player.weaponManager.setGun(this.game.rnd.integerInRange(1, 2));
+    this.player.weaponManager.setGun(1); // Shotgun pickup
     this.scene.textManager.textUpdate(null, this.scene.currentScore());
   };
   // LOGIC BINDED TO LEVEL
@@ -118,6 +118,12 @@ export default class LevelManager extends LevelCreator {
       this.scene.soundManager.playSound('clear');
       this.scene.score = this.scene.currentScore();
       this.scene.level = this.scene.level + 1;
+      if (this.scene.level === 6) {
+        this.scene.soundManager.playMusic('baws_waves');
+      } else if (this.scene.level === 15) {
+        this.game.state.start('end');
+        return;
+      }
       this.game.state.start('scene');
     }
   };

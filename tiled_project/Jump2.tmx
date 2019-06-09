@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="tiles2.tsx"/>
  <layer id="1" name="Tile Layer 1" width="100" height="20" opacity="0.9" offsetx="133.333" offsety="103.03">
   <properties>
-   <property name="title" value="02 - C to Dash"/>
+   <property name="title" value="C to Dash"/>
   </properties>
   <data encoding="csv">
 3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

@@ -13,7 +13,7 @@
                 {
                  "name":"title",
                  "type":"string",
-                 "value":"01 - Up *is* Jump"
+                 "value":"Up is Jump"
                 }],
          "type":"tilelayer",
          "visible":true,

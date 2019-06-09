@@ -204,11 +204,6 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/images/trigger.png'); };
     }
-    export class TilesetsBuildingSpritesheet {
-        static getName(): string { return 'building_spritesheet'; };
-
-        static getPNG(): string { return require('assets/tilesets/building_spritesheet.png'); };
-    }
 }
 
 export namespace Atlases {
@@ -425,189 +420,6 @@ export namespace Atlases {
 
         static Frames = AtlasesSlasherNinjaFrames;
     }
-    enum TilesetsTilesSpritesheetFrames {
-        Box = <any>'box.png',
-        BoxAlt = <any>'boxAlt.png',
-        BoxCoin = <any>'boxCoin.png',
-        BoxCoinAlt = <any>'boxCoinAlt.png',
-        BoxCoinAltDisabled = <any>'boxCoinAlt_disabled.png',
-        BoxCoinDisabled = <any>'boxCoin_disabled.png',
-        BoxEmpty = <any>'boxEmpty.png',
-        BoxExplosive = <any>'boxExplosive.png',
-        BoxExplosiveAlt = <any>'boxExplosiveAlt.png',
-        BoxExplosiveDisabled = <any>'boxExplosive_disabled.png',
-        BoxItem = <any>'boxItem.png',
-        BoxItemAlt = <any>'boxItemAlt.png',
-        BoxItemAltDisabled = <any>'boxItemAlt_disabled.png',
-        BoxItemDisabled = <any>'boxItem_disabled.png',
-        BoxWarning = <any>'boxWarning.png',
-        BrickWall = <any>'brickWall.png',
-        Bridge = <any>'bridge.png',
-        BridgeLogs = <any>'bridgeLogs.png',
-        Castle = <any>'castle.png',
-        CastleCenter = <any>'castleCenter.png',
-        CastleCenterRounded = <any>'castleCenter_rounded.png',
-        CastleCliffLeft = <any>'castleCliffLeft.png',
-        CastleCliffLeftAlt = <any>'castleCliffLeftAlt.png',
-        CastleCliffRight = <any>'castleCliffRight.png',
-        CastleCliffRightAlt = <any>'castleCliffRightAlt.png',
-        CastleHalf = <any>'castleHalf.png',
-        CastleHalfLeft = <any>'castleHalfLeft.png',
-        CastleHalfMid = <any>'castleHalfMid.png',
-        CastleHalfRight = <any>'castleHalfRight.png',
-        CastleHillLeft = <any>'castleHillLeft.png',
-        CastleHillLeft2 = <any>'castleHillLeft2.png',
-        CastleHillRight = <any>'castleHillRight.png',
-        CastleHillRight2 = <any>'castleHillRight2.png',
-        CastleLedgeLeft = <any>'castleLedgeLeft.png',
-        CastleLedgeRight = <any>'castleLedgeRight.png',
-        CastleLeft = <any>'castleLeft.png',
-        CastleMid = <any>'castleMid.png',
-        CastleRight = <any>'castleRight.png',
-        Dirt = <any>'dirt.png',
-        DirtCenter = <any>'dirtCenter.png',
-        DirtCenterRounded = <any>'dirtCenter_rounded.png',
-        DirtCliffLeft = <any>'dirtCliffLeft.png',
-        DirtCliffLeftAlt = <any>'dirtCliffLeftAlt.png',
-        DirtCliffRight = <any>'dirtCliffRight.png',
-        DirtCliffRightAlt = <any>'dirtCliffRightAlt.png',
-        DirtHalf = <any>'dirtHalf.png',
-        DirtHalfLeft = <any>'dirtHalfLeft.png',
-        DirtHalfMid = <any>'dirtHalfMid.png',
-        DirtHalfRight = <any>'dirtHalfRight.png',
-        DirtHillLeft = <any>'dirtHillLeft.png',
-        DirtHillLeft2 = <any>'dirtHillLeft2.png',
-        DirtHillRight = <any>'dirtHillRight.png',
-        DirtHillRight2 = <any>'dirtHillRight2.png',
-        DirtLedgeLeft = <any>'dirtLedgeLeft.png',
-        DirtLedgeRight = <any>'dirtLedgeRight.png',
-        DirtLeft = <any>'dirtLeft.png',
-        DirtMid = <any>'dirtMid.png',
-        DirtRight = <any>'dirtRight.png',
-        DoorClosedMid = <any>'door_closedMid.png',
-        DoorClosedTop = <any>'door_closedTop.png',
-        DoorOpenMid = <any>'door_openMid.png',
-        DoorOpenTop = <any>'door_openTop.png',
-        Fence = <any>'fence.png',
-        FenceBroken = <any>'fenceBroken.png',
-        Grass = <any>'grass.png',
-        GrassCenter = <any>'grassCenter.png',
-        GrassCenterRounded = <any>'grassCenter_rounded.png',
-        GrassCliffLeft = <any>'grassCliffLeft.png',
-        GrassCliffLeftAlt = <any>'grassCliffLeftAlt.png',
-        GrassCliffRight = <any>'grassCliffRight.png',
-        GrassCliffRightAlt = <any>'grassCliffRightAlt.png',
-        GrassHalf = <any>'grassHalf.png',
-        GrassHalfLeft = <any>'grassHalfLeft.png',
-        GrassHalfMid = <any>'grassHalfMid.png',
-        GrassHalfRight = <any>'grassHalfRight.png',
-        GrassHillLeft = <any>'grassHillLeft.png',
-        GrassHillLeft2 = <any>'grassHillLeft2.png',
-        GrassHillRight = <any>'grassHillRight.png',
-        GrassHillRight2 = <any>'grassHillRight2.png',
-        GrassLedgeLeft = <any>'grassLedgeLeft.png',
-        GrassLedgeRight = <any>'grassLedgeRight.png',
-        GrassLeft = <any>'grassLeft.png',
-        GrassMid = <any>'grassMid.png',
-        GrassRight = <any>'grassRight.png',
-        HillLarge = <any>'hill_large.png',
-        HillLargeAlt = <any>'hill_largeAlt.png',
-        HillSmall = <any>'hill_small.png',
-        HillSmallAlt = <any>'hill_smallAlt.png',
-        LadderMid = <any>'ladder_mid.png',
-        LadderTop = <any>'ladder_top.png',
-        LiquidLava = <any>'liquidLava.png',
-        LiquidLavaTop = <any>'liquidLavaTop.png',
-        LiquidLavaTopMid = <any>'liquidLavaTop_mid.png',
-        LiquidWater = <any>'liquidWater.png',
-        LiquidWaterTop = <any>'liquidWaterTop.png',
-        LiquidWaterTopMid = <any>'liquidWaterTop_mid.png',
-        LockBlue = <any>'lock_blue.png',
-        LockGreen = <any>'lock_green.png',
-        LockRed = <any>'lock_red.png',
-        LockYellow = <any>'lock_yellow.png',
-        RockHillLeft = <any>'rockHillLeft.png',
-        RockHillRight = <any>'rockHillRight.png',
-        RopeAttached = <any>'ropeAttached.png',
-        RopeHorizontal = <any>'ropeHorizontal.png',
-        RopeVertical = <any>'ropeVertical.png',
-        Sand = <any>'sand.png',
-        SandCenter = <any>'sandCenter.png',
-        SandCenterRounded = <any>'sandCenter_rounded.png',
-        SandCliffLeft = <any>'sandCliffLeft.png',
-        SandCliffLeftAlt = <any>'sandCliffLeftAlt.png',
-        SandCliffRight = <any>'sandCliffRight.png',
-        SandCliffRightAlt = <any>'sandCliffRightAlt.png',
-        SandHalf = <any>'sandHalf.png',
-        SandHalfLeft = <any>'sandHalfLeft.png',
-        SandHalfMid = <any>'sandHalfMid.png',
-        SandHalfRight = <any>'sandHalfRight.png',
-        SandHillLeft = <any>'sandHillLeft.png',
-        SandHillLeft2 = <any>'sandHillLeft2.png',
-        SandHillRight = <any>'sandHillRight.png',
-        SandHillRight2 = <any>'sandHillRight2.png',
-        SandLedgeLeft = <any>'sandLedgeLeft.png',
-        SandLedgeRight = <any>'sandLedgeRight.png',
-        SandLeft = <any>'sandLeft.png',
-        SandMid = <any>'sandMid.png',
-        SandRight = <any>'sandRight.png',
-        Sign = <any>'sign.png',
-        SignExit = <any>'signExit.png',
-        SignLeft = <any>'signLeft.png',
-        SignRight = <any>'signRight.png',
-        Snow = <any>'snow.png',
-        SnowCenter = <any>'snowCenter.png',
-        SnowCenterRounded = <any>'snowCenter_rounded.png',
-        SnowCliffLeft = <any>'snowCliffLeft.png',
-        SnowCliffLeftAlt = <any>'snowCliffLeftAlt.png',
-        SnowCliffRight = <any>'snowCliffRight.png',
-        SnowCliffRightAlt = <any>'snowCliffRightAlt.png',
-        SnowHalf = <any>'snowHalf.png',
-        SnowHalfLeft = <any>'snowHalfLeft.png',
-        SnowHalfMid = <any>'snowHalfMid.png',
-        SnowHalfRight = <any>'snowHalfRight.png',
-        SnowHillLeft = <any>'snowHillLeft.png',
-        SnowHillLeft2 = <any>'snowHillLeft2.png',
-        SnowHillRight = <any>'snowHillRight.png',
-        SnowHillRight2 = <any>'snowHillRight2.png',
-        SnowLedgeLeft = <any>'snowLedgeLeft.png',
-        SnowLedgeRight = <any>'snowLedgeRight.png',
-        SnowLeft = <any>'snowLeft.png',
-        SnowMid = <any>'snowMid.png',
-        SnowRight = <any>'snowRight.png',
-        Stone = <any>'stone.png',
-        StoneCenter = <any>'stoneCenter.png',
-        StoneCenterRounded = <any>'stoneCenter_rounded.png',
-        StoneCliffLeft = <any>'stoneCliffLeft.png',
-        StoneCliffLeftAlt = <any>'stoneCliffLeftAlt.png',
-        StoneCliffRight = <any>'stoneCliffRight.png',
-        StoneCliffRightAlt = <any>'stoneCliffRightAlt.png',
-        StoneHalf = <any>'stoneHalf.png',
-        StoneHalfLeft = <any>'stoneHalfLeft.png',
-        StoneHalfMid = <any>'stoneHalfMid.png',
-        StoneHalfRight = <any>'stoneHalfRight.png',
-        StoneHillLeft2 = <any>'stoneHillLeft2.png',
-        StoneHillRight2 = <any>'stoneHillRight2.png',
-        StoneLedgeLeft = <any>'stoneLedgeLeft.png',
-        StoneLedgeRight = <any>'stoneLedgeRight.png',
-        StoneLeft = <any>'stoneLeft.png',
-        StoneMid = <any>'stoneMid.png',
-        StoneRight = <any>'stoneRight.png',
-        StoneWall = <any>'stoneWall.png',
-        TochLit = <any>'tochLit.png',
-        TochLit2 = <any>'tochLit2.png',
-        Torch = <any>'torch.png',
-        Window = <any>'window.png',
-    }
-    export class TilesetsTilesSpritesheet {
-        static getName(): string { return 'tiles_spritesheet'; };
-
-        static getPNG(): string { return require('assets/tilesets/tiles_spritesheet.png'); };
-
-        static getXML(): string { return require('assets/tilesets/tiles_spritesheet.xml'); };
-
-        static Frames = TilesetsTilesSpritesheetFrames;
-    }
 }
 
 export namespace Audio {
@@ -680,6 +492,11 @@ export namespace Audio {
         static getName(): string { return 'slash'; };
 
         static getOGG(): string { return require('assets/audio/slash.ogg'); };
+    }
+    export class MusicBawsSirens {
+        static getName(): string { return 'baws_sirens'; };
+
+        static getOGG(): string { return require('assets/music/baws_sirens.ogg'); };
     }
     export class MusicBawsWaves {
         static getName(): string { return 'baws_waves'; };
@@ -762,6 +579,11 @@ export namespace JSON {
 
         static getJSON(): string { return require('assets/levels/hard/map13.json'); };
     }
+    export class LevelsHardMap14 {
+        static getName(): string { return 'map14'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map14.json'); };
+    }
     export class LevelsHardMap7 {
         static getName(): string { return 'map7'; };
 
@@ -796,6 +618,21 @@ export namespace JSON {
         static getName(): string { return 'map3'; };
 
         static getJSON(): string { return require('assets/levels/map3.json'); };
+    }
+    export class LevelsMap4 {
+        static getName(): string { return 'map4'; };
+
+        static getJSON(): string { return require('assets/levels/map4.json'); };
+    }
+    export class LevelsMap5 {
+        static getName(): string { return 'map5'; };
+
+        static getJSON(): string { return require('assets/levels/map5.json'); };
+    }
+    export class LevelsMap6 {
+        static getName(): string { return 'map6'; };
+
+        static getJSON(): string { return require('assets/levels/map6.json'); };
     }
 }
 

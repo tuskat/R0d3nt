@@ -2,6 +2,7 @@ export default class SoundManager {
   game;
   //
   sounds = [];
+  music;
   constructor(game) {
     this.game = game;
   }
@@ -28,8 +29,17 @@ export default class SoundManager {
     for (let key in this.sounds) {
       this.sounds[key].volume = 0.5;
     }
+    this.music = this.game.add.audio('baws_sirens');
+    this.music.play();
+    this.music.loop = true;
   };
   playSound(sfx) {
     this.sounds[sfx].play();
   };
+  playMusic(title) {
+    this.music.stop();
+    this.music = this.game.add.audio(title);
+    this.music.play();
+    this.music.loop = true;
+  }
 }

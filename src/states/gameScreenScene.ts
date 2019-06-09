@@ -10,7 +10,7 @@ export default class Scene extends Phaser.State {
     public soundManager: SoundManager;
     private player: Player;
     controls: PlayerControls = null;
-    public level: number = 3;
+    public level: number = 0;
     public background: Phaser.Group = null;
     public sky: Phaser.Sprite = null;
     public score = 0;
@@ -63,16 +63,16 @@ export default class Scene extends Phaser.State {
         this.player.updatePlayer();
         this.textManager.updateShadows();
         this.uploadBackground();
+        this.textManager.updateEnemyText(this.levelManager.enemiesCount());
     }
     // DEBUG
     public render(): void {
         this.game.debug.text(this.game.time.fps.toString(), this.game.width - 32, 14, '#FFFFFF');
-        this.game.debug.text('Enemies left: ' + this.levelManager.enemiesCount(), this.game.width * 0.85, this.game.height - 16, '#FFFFFF');
         // this.levelManager.bulletSprite();
-        this.levelManager.enemiesSprite().forEach(element => {
-            this.game.debug.body(element);
-        });
-        this.game.debug.body(this.player.sprite);
+        // this.levelManager.enemiesSprite().forEach(element => {
+        //     this.game.debug.body(element);
+        // });
+        // this.game.debug.body(this.player.sprite);
     }
     //
     public currentScore() {
