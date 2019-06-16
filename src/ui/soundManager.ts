@@ -30,8 +30,8 @@ export default class SoundManager {
       this.sounds[key].volume = 0.5;
     }
     this.music = this.game.add.audio('baws_sirens');
-    this.music.play();
     this.music.loop = true;
+    this.music.play();
   };
   playSound(sfx) {
     this.sounds[sfx].play();
@@ -39,7 +39,7 @@ export default class SoundManager {
   playMusic(title) {
     this.music.stop();
     this.music = this.game.add.audio(title);
-    this.music.play();
     this.music.loop = true;
+    this.music.play();
   }
 }

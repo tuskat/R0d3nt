@@ -15,6 +15,12 @@ export default class Scene extends Phaser.State {
     public sky: Phaser.Sprite = null;
     public score = 0;
     public initialized = false;
+    skyColor = [
+        '#5691c8',
+        '#ca9045',
+        '#ca4e45',
+        '#ca457f'
+    ]
     // enemies;
     light;
     bitmap;
@@ -73,29 +79,26 @@ export default class Scene extends Phaser.State {
         //     this.game.debug.body(element);
         // });
         // this.game.debug.body(this.player.sprite);
+        this.game.debug.text('Elapsed seconds: ' + Math.floor(this.game.time.totalElapsedSeconds()), 32, 32);
     }
     //
     public currentScore() {
         return this.levelManager.score + this.score;
     };
     public initGradientBackground() {
-        let margin = 50;
-        let padding = 200;
+        let color =  0;
+        if (this.level > 6) {
+           color = this.game.rnd.integerInRange(1, 3);
+        }
 
         this.gradient = this.game.add.bitmapData(this.game.world.width, this.game.world.height);
-        let grd = this.gradient.context.createLinearGradient(0, 0, 0, this.game.world.height - padding);
-        grd.addColorStop(0, '#457fca');
-        grd.addColorStop(1, '#5691c8');
-        this.gradient.context.fillStyle = grd;
-        this.gradient.context.fillRect(0, 0, this.game.world.width, this.game.world.height - margin);
 
-        this.gradient.context.fillStyle = grd;
-        this.gradient.context.fillRect(0, this.game.world.height - margin, this.game.world.width, margin);
+        this.updateGradient(this.skyColor[color]);
         let grad = this.game.add.image(0, 0, this.gradient);
         let bg1 = this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'my_background');
         bg1.body.immovable = true;
         bg1.body.allowGravity = false;
-        bg1.fixedToCamera= true;
+        bg1.fixedToCamera = true;
 
         let bg2 = this.game.add.tileSprite(0, 0, this.game.world.width, this.game.world.height, 'my_background2');
         bg2.body.immovable = true;
@@ -115,13 +118,27 @@ export default class Scene extends Phaser.State {
             }
         });
     };
+    public updateGradient(colorTop = '#457fca', colorBottom = '#5691c8') {
+        let margin = 50;
+        let padding = 200;
+
+        let grd = this.gradient.context.createLinearGradient(0, 0, 0, this.game.world.height - padding);
+
+        grd.addColorStop(0, colorTop);
+        grd.addColorStop(1, colorBottom);
+        this.gradient.context.fillStyle = grd;
+        this.gradient.context.fillRect(0, 0, this.game.world.width, this.game.world.height - margin);
+
+        this.gradient.context.fillStyle = grd;
+        this.gradient.context.fillRect(0, this.game.world.height - margin, this.game.world.width, margin);
+    }
     pauseGame() {
         if (this.game.paused) {
             this.togglePause();
-            this.soundManager.playSound('pause_out');            
+            this.soundManager.playSound('pause_out');
             this.textManager.hidePauseText();
         } else {
-            this.game.time.events.add( 100, this.togglePause, this);
+            this.game.time.events.add(100, this.togglePause, this);
             this.soundManager.playSound('pause_in');
             this.textManager.showPauseText();
         }
