@@ -493,6 +493,11 @@ export namespace Audio {
 
         static getOGG(): string { return require('assets/audio/slash.ogg'); };
     }
+    export class MusicBawsImaginaryFunerals {
+        static getName(): string { return 'baws_imaginary_funerals'; };
+
+        static getOGG(): string { return require('assets/music/baws_imaginary_funerals.ogg'); };
+    }
     export class MusicBawsSirens {
         static getName(): string { return 'baws_sirens'; };
 
@@ -583,6 +588,11 @@ export namespace JSON {
         static getName(): string { return 'map14'; };
 
         static getJSON(): string { return require('assets/levels/hard/map14.json'); };
+    }
+    export class LevelsHardMap15 {
+        static getName(): string { return 'map15'; };
+
+        static getJSON(): string { return require('assets/levels/hard/map15.json'); };
     }
     export class LevelsHardMap7 {
         static getName(): string { return 'map7'; };

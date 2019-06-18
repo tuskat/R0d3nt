@@ -2,7 +2,8 @@ export default class SoundManager {
   game;
   //
   sounds = [];
-  music;
+  musics = [];
+  current_music;
   constructor(game) {
     this.game = game;
   }
@@ -23,23 +24,30 @@ export default class SoundManager {
       'pause_in',
       'pause_out'
     ];
+  let music = [
+    'baws_sirens',
+    'baws_waves',
+    'baws_imaginary_funerals'
+  ]
     audio.forEach(sound => {
       this.sounds[sound] = this.game.add.audio(sound);
+    });
+    music.forEach(sound => {
+      this.musics[sound] = this.game.add.audio(sound);
     });
     for (let key in this.sounds) {
       this.sounds[key].volume = 0.5;
     }
-    this.music = this.game.add.audio('baws_sirens');
-    this.music.loop = true;
-    this.music.play();
   };
   playSound(sfx) {
     this.sounds[sfx].play();
   };
   playMusic(title) {
-    this.music.stop();
-    this.music = this.game.add.audio(title);
-    this.music.loop = true;
-    this.music.play();
+    if (this.current_music) {
+      this.current_music.stop();
+    }
+    this.current_music = this.musics[title];
+    this.current_music.loop = true;
+    this.current_music.play();
   }
 }

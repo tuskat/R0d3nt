@@ -111,6 +111,22 @@ export default class LevelManager extends LevelCreator {
       element.debug(0, 0, true);
     });
   };
+  stageMusic(level) {
+    switch (level) {
+      case 0: {
+        this.scene.soundManager.playMusic('baws_sirens');
+        return;
+      }
+      case 6: {
+        this.scene.soundManager.playMusic('baws_waves');
+        return;
+      }
+      case 10: {
+        this.scene.soundManager.playMusic('baws_imaginary_funerals');
+        return;
+      }
+    }
+  }
 
   nextStage(player, exit) {
     let enemiesNbr = + this.enemiesCount();
@@ -118,9 +134,7 @@ export default class LevelManager extends LevelCreator {
       this.scene.soundManager.playSound('clear');
       this.scene.score = this.scene.currentScore();
       this.scene.level = this.scene.level + 1;
-      if (this.scene.level === 6) {
-        this.scene.soundManager.playMusic('baws_waves');
-      } else if (this.scene.level === 15) {
+      if (this.scene.level === 16) {
         this.game.state.start('end');
         return;
       }

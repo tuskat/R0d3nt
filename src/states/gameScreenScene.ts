@@ -60,6 +60,7 @@ export default class Scene extends Phaser.State {
         this.player.initPlayer();
 
         this.levelManager.createLevel(this.player);
+        this.levelManager.stageMusic(this.level);   
         this.textManager.createText(this.game, this.currentScore(), this.player.life);
         let pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         pauseKey.onDown.add(this.pauseGame, this);
