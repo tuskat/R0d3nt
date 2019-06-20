@@ -14,7 +14,7 @@ const enum EnemyType {
     DASHER,
     SHOOTER
   };
-  
+
 export default class EnemiesFactory {
     public MAX_SPEED = 750; // pixels/second
     public MAX_LIFE = 3;
@@ -43,7 +43,7 @@ export default class EnemiesFactory {
             enemy.scale.x = -this.scale;
         }
         enemy.body.velocity.x = 0;
-    }
+    };
     recharge = function (enemy) {
         enemy.onCooldown = false;
     };
@@ -55,12 +55,12 @@ export default class EnemiesFactory {
         this.scene.timer.add(1000, this.recharge, this, enemy);
         enemy.onCooldown = true;
     };
-    slashAttack(enemy) { 
+    slashAttack(enemy) {
         enemy.body.velocity.x = 0;
         enemy.body.velocity.y = 0;
         enemy.animation.playAnimation('slash', 24, false, true);
         this.scene.timer.add(1000, this.recharge, this, enemy);
-        
+
         enemy.onCooldown = true;
     };
     initAttack() {

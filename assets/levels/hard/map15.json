@@ -13,7 +13,7 @@
                 {
                  "name":"title",
                  "type":"string",
-                 "value":"Blow his head off"
+                 "value":"Careful now..."
                 }],
          "type":"tilelayer",
          "visible":true,

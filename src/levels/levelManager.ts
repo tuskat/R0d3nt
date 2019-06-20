@@ -80,7 +80,7 @@ export default class LevelManager extends LevelCreator {
     if (enemy.state === State.DEAD) {
       return;
     }
-    if (enemy.animations.currentAnim.name === 'slash' && 
+    if (enemy.animations.currentAnim.name === 'slash' &&
         (enemy.animations.currentAnim.currentFrame.name === Assets.Atlases.AtlasesDasherNinja.Frames.Slash3 ||
           enemy.animations.currentAnim.currentFrame.name === Assets.Atlases.AtlasesSlasherNinja.Frames.Slash03)) {
       this.player.takeDamage(player, enemy);
@@ -121,7 +121,7 @@ export default class LevelManager extends LevelCreator {
         this.scene.soundManager.playMusic('baws_waves');
         return;
       }
-      case 10: {
+      case 12: {
         this.scene.soundManager.playMusic('baws_imaginary_funerals');
         return;
       }

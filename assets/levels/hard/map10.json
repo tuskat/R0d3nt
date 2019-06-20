@@ -13,7 +13,7 @@
                 {
                  "name":"title",
                  "type":"string",
-                 "value":"RUN"
+                 "value":"Air it out"
                 }],
          "type":"tilelayer",
          "visible":true,

@@ -74,7 +74,7 @@ export default class PlayerAnimation {
             Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot7,
             Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot8,
             Assets.Atlases.AtlasesPlayerNinja.Frames.JumpShootJumpShoot9]);
-        
+
         runshoot.enableUpdate = true;
         runshoot.onUpdate.add(this.runningSound, this);
 
@@ -128,7 +128,7 @@ export default class PlayerAnimation {
 
     setCollision(width = 80, height = 176, offsetY = 0) {
         let sourceWidth = this.sprite.animations.currentFrame.sourceSizeW;
-        let offsetX = (sourceWidth > 80) ? (sourceWidth * 0.40) : 0; 
+        let offsetX = (sourceWidth > 80) ? (sourceWidth * 0.40) : 0;
         this.sprite.body.setSize(width, height, offsetX, offsetY);
     };
     startDashing() {

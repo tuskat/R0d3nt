@@ -12,7 +12,7 @@ export default class WeaponManager {
     pellet: number = 3;
     armory = [
         {
-            magazine: 3,
+            magazine: -1,
             pellet: 3,
             fireInterval: 500,
             weapon: {
@@ -31,12 +31,12 @@ export default class WeaponManager {
         },
         {
             magazine: 10,
-            pellet: 5,
+            pellet: 7,
             fireInterval: 400,
             weapon: {
                 type: WeaponsType.SHOTGUN,
-                bulletKillType: Phaser.Weapon.KILL_CAMERA_BOUNDS,
-                bulletLifespan: 100,
+                bulletKillType: Phaser.Weapon.KILL_LIFESPAN,
+                bulletLifespan: 150,
                 bulletSpeed: 2000,
                 bulletAngleOffset: 0,
                 bulletAngleVariance: 10,

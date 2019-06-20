@@ -20,7 +20,7 @@ export default class Scene extends Phaser.State {
         '#ca9045',
         '#ca4e45',
         '#ca457f'
-    ]
+    ];
     // enemies;
     light;
     bitmap;
@@ -60,7 +60,7 @@ export default class Scene extends Phaser.State {
         this.player.initPlayer();
 
         this.levelManager.createLevel(this.player);
-        this.levelManager.stageMusic(this.level);   
+        this.levelManager.stageMusic(this.level);
         this.textManager.createText(this.game, this.currentScore(), this.player.life);
         let pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         pauseKey.onDown.add(this.pauseGame, this);
@@ -71,6 +71,7 @@ export default class Scene extends Phaser.State {
         this.textManager.updateShadows();
         this.uploadBackground();
         this.textManager.updateEnemyText(this.levelManager.enemiesCount());
+        this.textManager.updateShotgunText(this.player.weaponManager.magazine);
     }
     // DEBUG
     public render(): void {
@@ -80,7 +81,7 @@ export default class Scene extends Phaser.State {
         //     this.game.debug.body(element);
         // });
         // this.game.debug.body(this.player.sprite);
-        this.game.debug.text('Elapsed seconds: ' + Math.floor(this.game.time.totalElapsedSeconds()), 32, 32);
+        // this.game.debug.text('Elapsed seconds: ' + Math.floor(this.game.time.totalElapsedSeconds()), 32, 32);
     }
     //
     public currentScore() {

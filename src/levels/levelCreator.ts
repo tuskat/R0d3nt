@@ -55,7 +55,7 @@ export default class LevelCreator  {
         this.scene = scene;
         this.player = player;
     }
-        
+
     setScale(item) {
         item.scale.y = this.scale;
         item.scale.x = this.scale;
@@ -80,7 +80,7 @@ export default class LevelCreator  {
     }
 
     initLevel() {
-      
+
         this.trapWeapon = [];
         this.coins = this.game.add.group();
         this.trap = this.game.add.group();
@@ -187,10 +187,11 @@ export default class LevelCreator  {
                         break;
                     }
                     case Tiles.FLAG: {
-                        let exit = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) -10, 'exit');
+                        let exit = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY) - 10, 'exit');
                         this.exit.add(exit);
                         exit.body.immovable = true;
                         exit.body.allowGravity = false;
+
                         break;
                     }
                     case Tiles.LIGHT: {

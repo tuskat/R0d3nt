@@ -7,7 +7,7 @@ export default class EnemyAnimation {
   private lastAnimation: string = null;
   constructor(sprite, scene) {
     this.sprite = sprite;
-    this.scene = scene
+    this.scene = scene;
   }
   initIdle() {
     this.sprite.animations.add('idle', [Assets.Atlases.AtlasesSlasherNinja.Frames.Idle00,

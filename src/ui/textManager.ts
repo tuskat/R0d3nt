@@ -5,6 +5,7 @@ export default class TextManager {
     scoreText;
     lifeText;
     enemyText;
+    ammoText;
     pauseText;
     instructionsText;
     poly;
@@ -14,13 +15,15 @@ export default class TextManager {
     }
 
     createText(game, score, life) {
-        let instructions = "Arrows to move\nUp is Jump\nPress X to shoot\nPress C to dash"
-        this.scoreText = game.add.text(10, 0, 'Score : ' + score, this.style);
+        let instructions = "Arrows to move\nUp is Jump\nPress X to shoot\nPress C to dash";
+        this.scoreText = game.add.text(10, 20, 'Score : ' + score, this.style);
         this.scoreText.fixedToCamera = true;
-        this.lifeText = game.add.text(10, game.height - 30, 'Hp : ' + life, this.style);
+        this.lifeText = game.add.text(10, 5, 'Hp : ' + life, this.style);
         this.lifeText.fixedToCamera = true;
         this.enemyText = game.add.text(game.width * 0.35, 10, '', this.style);
         this.enemyText.fixedToCamera = true;
+        this.ammoText = game.add.text(10, game.height - 30, '', this.style);
+        this.ammoText.fixedToCamera = true;
         this.createBG(game);
         this.pauseText = game.add.text(game.width * 0.425, game.height * 0.3, 'Pause', this.pauseStyle);
         this.pauseText.fixedToCamera = true;
@@ -39,7 +42,7 @@ export default class TextManager {
         this.pauseBackground.body.immovable = true;
         this.pauseBackground.body.allowGravity = false;
         this.pauseBackground.alpha = 0;
-    }
+    };
     updateShadows() {
         this.textShadow(this.scoreText);
         this.textShadow(this.lifeText);
@@ -96,9 +99,18 @@ export default class TextManager {
         if (enemyCount > 0) {
             let text = 'Enemies left: ' + enemyCount;
             this.enemyText.setText(text);
-            this.enemyText.alpha = 1;   
+            this.enemyText.alpha = 1;
         } else {
             this.enemyText.alpha = 0;
-        }     
+        }
+    }
+    updateShotgunText(ammoCount) {
+        if (ammoCount > 0) {
+            let text = 'Shotgun: ' + ammoCount;
+            this.ammoText.setText(text);
+            this.ammoText.alpha = 1;
+        } else {
+            this.ammoText.alpha = 0;
+        }
     }
 }

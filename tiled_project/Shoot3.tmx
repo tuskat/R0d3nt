@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="tiles2.tsx"/>
  <layer id="1" name="shooty vtutti" width="100" height="20" opacity="0.9" offsetx="133.333" offsety="103.03">
   <properties>
-   <property name="title" value="Blow his head off"/>
+   <property name="title" value="Careful now..."/>
   </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

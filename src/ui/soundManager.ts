@@ -28,7 +28,7 @@ export default class SoundManager {
     'baws_sirens',
     'baws_waves',
     'baws_imaginary_funerals'
-  ]
+  ];
     audio.forEach(sound => {
       this.sounds[sound] = this.game.add.audio(sound);
     });
@@ -37,6 +37,9 @@ export default class SoundManager {
     });
     for (let key in this.sounds) {
       this.sounds[key].volume = 0.5;
+    }
+    for (let key in this.musics) {
+      this.musics[key].volume = 0.5;
     }
   };
   playSound(sfx) {

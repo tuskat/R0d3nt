@@ -7,7 +7,7 @@ export default class DasherAnimation {
   private lastAnimation: string = null;
   constructor(sprite, scene) {
     this.sprite = sprite;
-    this.scene = scene
+    this.scene = scene;
   }
   initIdle() {
     this.sprite.animations.add('idle', [Assets.Atlases.AtlasesDasherNinja.Frames.Idle1,
@@ -55,7 +55,7 @@ export default class DasherAnimation {
   };
 
   setCollision(width = 88, height = 88, offsetY = 0) {
-    let offsetX = 4; 
+    let offsetX = 4;
     this.sprite.body.setSize(width, height, offsetX, offsetY);
   };
 
