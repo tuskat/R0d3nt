@@ -21,7 +21,8 @@ const enum Tiles {
     TRAP_LEFT,
     TRAP_RIGHT,
     GLASS,
-    DASHER
+    DASHER,
+    ARROW
 };
 const enum Orientation {
     UP = 1,
@@ -192,6 +193,17 @@ export default class LevelCreator  {
                         exit.body.immovable = true;
                         exit.body.allowGravity = false;
 
+                        break;
+                    }
+                    case Tiles.ARROW: {
+                        let arrow = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY), 'arrow');
+                        this.walls.add(arrow);
+                        arrow.body.immovable = true;
+                        arrow.body.allowGravity = false;
+                        arrow.body.checkCollision.left = false;
+                        arrow.body.checkCollision.right = false;
+                        arrow.body.checkCollision.up = false;
+                        arrow.body.checkCollision.down = false;
                         break;
                     }
                     case Tiles.LIGHT: {

@@ -16,9 +16,12 @@ export default class PlayerControls {
         return released;
     };
 
-    upInputIsActive(duration) {
+    jumpInputIsActive(duration) {
         let isActive = false;
         isActive = this.input.keyboard.downDuration(Phaser.Keyboard.UP, duration);
+        if (this.input.keyboard.downDuration(Phaser.Keyboard.SPACEBAR, duration)) {
+            isActive = this.input.keyboard.downDuration(Phaser.Keyboard.SPACEBAR, duration);
+        }
         return isActive;
     };
 

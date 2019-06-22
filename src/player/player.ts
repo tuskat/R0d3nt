@@ -51,7 +51,7 @@ export default class Player {
     this.cooldownIcon = this.game.add.sprite(-8, -128, 'ball');
     this.cooldownIcon.body.allowGravity = false;
     this.cooldownIcon.alpha = 0;
-    this.cooldownIcon.tint = 0x7d7d7d;
+    this.cooldownIcon.tint = 0x008a95;
     this.sprite.addChild(this.cooldownIcon);
     this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.collideWorldBounds = false;
@@ -117,11 +117,11 @@ export default class Player {
   };
   isJumping(onTheGround) {
     if (this.jumps > 0) {
-      if (!onTheGround && this.controls.upInputIsActive(50)) {
+      if (!onTheGround && this.controls.jumpInputIsActive(50)) {
         this.jumping = false;
         this.jump();
       }
-      else if (this.controls.upInputIsActive(150)) {
+      else if (this.controls.jumpInputIsActive(150)) {
         this.jumping = true;
         this.jump();
       }
