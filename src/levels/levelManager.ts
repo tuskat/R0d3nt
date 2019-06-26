@@ -121,10 +121,11 @@ export default class LevelManager extends LevelCreator {
         this.scene.soundManager.playMusic('baws_waves');
         return;
       }
-      case 12: {
-        this.scene.soundManager.playMusic('baws_imaginary_funerals');
-        return;
-      }
+      // relieve some weight
+      // case 12: {
+      //   this.scene.soundManager.playMusic('baws_imaginary_funerals');
+      //   return;
+      // }
     }
   }
 

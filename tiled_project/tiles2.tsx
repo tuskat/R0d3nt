@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="2019.03.13" name="tiles2" tilewidth="32" tileheight="32" tilecount="17" columns="0">
+<tileset version="1.2" tiledversion="2019.03.13" name="tiles2" tilewidth="32" tileheight="32" tilecount="18" columns="0">
  <tile id="0">
   <image width="32" height="32" source="../assets/gfx/floor.png"/>
  </tile>
@@ -50,5 +50,8 @@
  </tile>
  <tile id="16">
   <image width="32" height="32" source="../assets/gfx/dasher.png"/>
+ </tile>
+ <tile id="17">
+  <image width="21" height="15" source="../assets/images/arrow.png"/>
  </tile>
 </tileset>

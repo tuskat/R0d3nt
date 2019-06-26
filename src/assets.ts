@@ -498,11 +498,6 @@ export namespace Audio {
 
         static getOGG(): string { return require('assets/audio/slash.ogg'); };
     }
-    export class MusicBawsImaginaryFunerals {
-        static getName(): string { return 'baws_imaginary_funerals'; };
-
-        static getOGG(): string { return require('assets/music/baws_imaginary_funerals.ogg'); };
-    }
     export class MusicBawsSirens {
         static getName(): string { return 'baws_sirens'; };
 
