@@ -76,7 +76,9 @@ export default class WeaponManager {
 
     initWeapon(shootKey = Phaser.KeyCode.X) {
         this.initGun();
-        this.fireButton = this.scene.input.keyboard.addKey(shootKey);
+        if (this.fireButton === null) {
+            this.fireButton = this.scene.input.keyboard.addKey(shootKey);
+        }
     };
 
     fireAction() {
@@ -88,6 +90,9 @@ export default class WeaponManager {
     };
 
     initGun() {
+        if (this.weapon) {
+            this.weapon.destroy(true);
+        }
         this.weapon = this.scene.game.add.weapon(30, 'my_bullet');
         this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.setGun(WeaponsType.PISTOL);

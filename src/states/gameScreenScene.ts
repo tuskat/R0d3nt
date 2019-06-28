@@ -8,7 +8,7 @@ export default class Scene extends Phaser.State {
     public levelManager: LevelManager;
     public textManager: TextManager;
     public soundManager: SoundManager;
-    private player: Player;
+    private player: Player = null;
     controls: PlayerControls = null;
     public level: number = 0;
     public background: Phaser.Group = null;
@@ -29,9 +29,9 @@ export default class Scene extends Phaser.State {
 
     // GAME CYCLE
     public preload(): void {
-        this.controls = new PlayerControls(this.input, this.game);
-        this.player = new Player(this.controls, this.game, this);
-        this.levelManager = new LevelManager(this.game, this.player, this);
+            this.controls = new PlayerControls(this.input, this.game);
+            this.player = new Player(this.controls, this.game, this);
+            this.levelManager = new LevelManager(this.game, this.player, this);
 
         if (!this.initialized) {
             this.textManager = new TextManager();

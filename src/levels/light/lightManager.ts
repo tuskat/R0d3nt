@@ -15,6 +15,9 @@ export default class LightManager {
         this.walls = walls;
     }
     createLight(lightSource, worldSize) {
+        if (this.light) {
+            this.light.destroy(true);
+        }
         this.light = this.game.add.sprite(lightSource.x, lightSource.y, 'light');
 
 
@@ -22,8 +25,6 @@ export default class LightManager {
         this.light.anchor.setTo(0.5, 0.5);
         this.light.body.immovable = true;
         this.light.body.allowGravity = false;
-        this.game.add.tween(this.light).to({ x: lightSource.x - 80 }, 10000,
-            Phaser.Easing.Sinusoidal.InOut, true, 0, Number.POSITIVE_INFINITY, true);
         // Create a bitmap texture for drawing light cones
 
 

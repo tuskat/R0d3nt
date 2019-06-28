@@ -136,6 +136,6 @@ export default class LevelManager extends LevelCreator {
   restart() {
     this.player.life = 3;
     this.player.invincibility = false;
-    this.game.state.start('scene');
+    this.game.state.restart(true);
   };
 }

@@ -32,6 +32,12 @@ export default class EnemiesFactory {
     constructor(game, scene) {
         this.game = game;
         this.scene = scene;
+        if (this.spawnDoor) {
+            this.spawnDoor.destroy(true);
+        }
+        if (this.enemyGroup) {
+            this.enemyGroup.destroy(true);
+        }
         this.spawnDoor = this.game.add.group();
         this.enemyGroup = this.game.add.group();
         this.initAttack();
