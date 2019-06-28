@@ -81,7 +81,10 @@ export default class LevelCreator  {
     }
 
     initLevel() {
-
+        if(this.walls) {
+            this.walls.destroy(true);
+            this.glass.destroy(true);
+        }
         this.trapWeapon = [];
         this.coins = this.game.add.group();
         this.trap = this.game.add.group();

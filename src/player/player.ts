@@ -47,6 +47,10 @@ export default class Player {
     this.weaponManager = new WeaponManager(scene);
   }
   initPlayer() {
+    if (this.sprite) {
+      this.cooldownIcon.destroy(true);
+      this.sprite.destroy(true);
+    }
     this.sprite = this.game.add.sprite(this.game.width / 2, this.game.height - 64, 'player_ninja');
     this.cooldownIcon = this.game.add.sprite(-8, -128, 'ball');
     this.cooldownIcon.body.allowGravity = false;

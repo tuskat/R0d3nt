@@ -114,15 +114,7 @@ export default class LevelManager extends LevelCreator {
   stageMusic(level) {
     switch (level) {
       case 0: {
-        this.scene.soundManager.playMusic('baws_sirens');
-        return;
-      }
-      case 6: {
         this.scene.soundManager.playMusic('baws_waves');
-        return;
-      }
-      case 12: {
-        this.scene.soundManager.playMusic('baws_imaginary_funerals');
         return;
       }
     }
@@ -144,6 +136,6 @@ export default class LevelManager extends LevelCreator {
   restart() {
     this.player.life = 3;
     this.player.invincibility = false;
-    this.game.state.start('scene');
+    this.game.state.restart(true);
   };
 }
