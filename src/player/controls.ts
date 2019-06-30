@@ -8,14 +8,20 @@ export default class PlayerControls {
         this.game = game;
     }
 
-    upInputReleased() {
+    keyReleased(key) {
         let released = false;
-        released = this.input.keyboard.upDuration(Phaser.Keyboard.UP);
-        if (released)
-            this.game.input.activePointer.justReleased();
+        released = this.input.keyboard.upDuration(key);
         return released;
     };
 
+    upInputReleased() {
+     if (this.keyReleased(Phaser.Keyboard.UP) || this.keyReleased(Phaser.Keyboard.SPACEBAR)) {
+        this.game.input.activePointer.justReleased();
+        return true;
+     }
+     return false;
+    };
+    
     jumpInputIsActive(duration) {
         let isActive = false;
         isActive = this.input.keyboard.downDuration(Phaser.Keyboard.UP, duration);

@@ -200,7 +200,7 @@ export default class LevelCreator  {
                     }
                     case Tiles.ARROW: {
                         let arrow = this.game.add.sprite(levelTileSize * hX, (levelTileSize * hY), 'arrow');
-                        this.walls.add(arrow);
+                        this.glass.add(arrow);
                         arrow.body.immovable = true;
                         arrow.body.allowGravity = false;
                         arrow.body.checkCollision.left = false;

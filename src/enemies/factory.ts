@@ -125,11 +125,10 @@ export default class EnemiesFactory {
         enemy.body.gravity.y = this.GRAVITY;
 
         enemy.body.enableBody = true;
-        enemy.body.checkCollision.up = false;
         enemy.body.setSize(112, 88, 0, 0);
         enemy.anchor.setTo(0.5, 0.5);
         enemy.wandering = false;
-        enemy.speed = this.game.rnd.integerInRange(-50, 50);
+        enemy.speed = this.game.rnd.integerInRange(-25, 25);
         enemy.animation = new DasherAnimation(enemy, this.scene);
         enemy.animation.initAnimation();
         enemy.body.allowGravity = true;

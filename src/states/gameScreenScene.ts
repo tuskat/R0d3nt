@@ -44,7 +44,7 @@ export default class Scene extends Phaser.State {
     public create(): void {
         this.game.camera.flash(0x000000);
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.game.physics.arcade.OVERLAP_BIAS = 8;
+        this.game.physics.arcade.OVERLAP_BIAS = 12;
         this.game.time.advancedTiming = true;
 
         this.game.world.enableBody = true;

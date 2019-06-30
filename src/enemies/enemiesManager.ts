@@ -91,7 +91,7 @@ export default class EnemiesManager extends EnemiesFactory {
 
         let bulletDamage = (bullet.trackedSprite) ? 3 : 1;
         if (enemy.status !== State.DEAD) {
-            enemy.body.velocity.x = this.getKnockBack(enemy, bullet);
+            enemy.body.velocity.x = 0;
             enemy.life = enemy.life - bulletDamage;
             this.scene.soundManager.playSound('enemy-hit');
             this.showEnemyDamage(enemy);
@@ -127,14 +127,6 @@ export default class EnemiesManager extends EnemiesFactory {
             enemy.tint = damageColor;
             this.scene.timer.add(250, this.showEnemyDamage, this, enemy);
         }
-    };
-
-    getKnockBack(enemy, bullet) {
-        let knockback = bullet.position.x > enemy.body.x ? -1400 : 1400;
-        if (enemy.body.velocity.x >= -140 && enemy.body.velocity.x <= 140) {
-            knockback = knockback / 10;
-        }
-        return knockback;
     };
 
     inAttackRange = function (enemy, player) {

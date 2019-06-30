@@ -121,18 +121,18 @@ export default class Player {
   };
   isJumping(onTheGround) {
     if (this.jumps > 0) {
-      if (!onTheGround && this.controls.jumpInputIsActive(50)) {
-        this.jumping = false;
+      if (!onTheGround && this.controls.jumpInputIsActive(75)) {
+        this.jumping = true;
         this.jump();
       }
-      else if (this.controls.jumpInputIsActive(150)) {
+      else if (this.controls.jumpInputIsActive(125)) {
         this.jumping = true;
         this.jump();
       }
     }
     if (this.jumping && this.controls.upInputReleased()) {
-      this.jumping = false;
       this.jumps--;
+      this.jumping = false;
     }
   };
   isOnFloor() {

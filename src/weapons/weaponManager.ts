@@ -93,7 +93,7 @@ export default class WeaponManager {
         if (this.weapon) {
             this.weapon.destroy(true);
         }
-        this.weapon = this.scene.game.add.weapon(30, 'my_bullet');
+        this.weapon = this.scene.game.add.weapon(100, 'my_bullet');
         this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.setGun(WeaponsType.PISTOL);
     };
@@ -108,9 +108,13 @@ export default class WeaponManager {
     }
 
     fire() {
-        for (let i = 0; i <= this.pellet; i++) {
+        for (let i = 0; i < this.pellet; i++) {
             if (this.weapon.fireRate > 0) {
-                this.scene.timer.add(this.weapon.fireRate * i, this.shoot, this);
+                if (i > 0) {
+                    this.scene.timer.add((this.weapon.fireRate * i), this.shoot, this);
+                } else {
+                    this.shoot();
+                }
             } else {
                this.shoot();
             }
@@ -135,12 +139,12 @@ export default class WeaponManager {
     };
 
     shootRight(playerSprite) {
-        this.weapon.bulletSpeed = 1000;
+        this.weapon.bulletSpeed = this.armory[this.weapon.type].weapon.bulletSpeed;
         this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(true, playerSprite);
     };
     shootLeft(playerSprite) {
-        this.weapon.bulletSpeed = -1000;
+        this.weapon.bulletSpeed = -this.armory[this.weapon.type].weapon.bulletSpeed;
         this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(false, playerSprite);
     };
