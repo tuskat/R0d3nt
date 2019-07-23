@@ -4,6 +4,7 @@ export default class SoundManager {
   sounds = [];
   musics = [];
   current_music;
+  isplaying = false;
   constructor(game) {
     this.game = game;
   }
@@ -46,11 +47,15 @@ export default class SoundManager {
     this.sounds[sfx].play();
   };
   playMusic(title) {
+    if (this.isplaying) {
+      return;
+    }
     if (this.current_music) {
       this.current_music.stop();
     }
     this.current_music = this.musics[title];
     this.current_music.loop = true;
     this.current_music.play();
+    this.isplaying = true;
   }
 }

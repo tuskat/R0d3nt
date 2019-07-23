@@ -10,6 +10,9 @@ const enum State {
 };
 
 export default class LevelManager extends LevelCreator {
+  showTint(sprite, color = 0xffffff) {
+    sprite.tint = color;
+  };
   // Update
   updateCollision() {
     this.game.physics.arcade.collide(this.player.sprite, this.walls);
@@ -24,9 +27,18 @@ export default class LevelManager extends LevelCreator {
   updateOverlap() {
     this.game.physics.arcade.overlap(this.player.sprite, this.exit, this.nextStage, null, this);
     this.game.physics.arcade.overlap(this.player.sprite, this.coins, this.takeCoin, null, this);
-    this.game.physics.arcade.overlap(this.player.sprite, this.interuptor, this.activateTrap, null, this);
-    this.game.physics.arcade.overlap(this.enemiesManager.getSprites(), this.interuptor, this.activateTrap, null, this);
-    this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.interuptor, this.activateTrap, null, this);
+    let touchA = this.game.physics.arcade.overlap(this.player.sprite, this.interuptor, this.activateTrap, null, this);
+    let touchB = this.game.physics.arcade.overlap(this.enemiesManager.getSprites(), this.interuptor, this.activateTrap, null, this);
+    let touchC = this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.interuptor, this.activateTrap, null, this);
+    if (touchA || touchB || touchC) {
+      this.interuptor.forEach(interuptor => {
+        this.showTint(interuptor, 0x4e0a06);
+      });
+    } else {
+      this.interuptor.forEach(interuptor => {
+        this.showTint(interuptor);
+      });
+    }
     this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.walls, this.killEntity, null, this.scene);
     // this.game.physics.arcade.overlap(this.player.weaponManager.getPistolBullets(), this.trap, this.killEntity, null, this.scene);
     this.trapWeapon.forEach(element => {
@@ -54,6 +66,7 @@ export default class LevelManager extends LevelCreator {
     // this.light.updateLight();
   }
   activateTrap(trigger, interuptor) {
+
   if (trigger instanceof Phaser.Bullet) {
     this.scene.soundManager.playSound('hit');
     trigger.kill();
@@ -112,12 +125,7 @@ export default class LevelManager extends LevelCreator {
     });
   };
   stageMusic(level) {
-    switch (level) {
-      case 0: {
-        this.scene.soundManager.playMusic('baws_waves');
-        return;
-      }
-    }
+    this.scene.soundManager.playMusic('baws_waves');
   }
 
   nextStage(player, exit) {
@@ -126,6 +134,7 @@ export default class LevelManager extends LevelCreator {
       this.scene.soundManager.playSound('clear');
       this.scene.score = this.scene.currentScore();
       this.scene.level = this.scene.level + 1;
+      localStorage.setItem('level', this.scene.level.toString());
       if (this.scene.level === 16) {
         this.game.state.start('end');
         return;

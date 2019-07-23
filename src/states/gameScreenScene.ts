@@ -10,7 +10,7 @@ export default class Scene extends Phaser.State {
     public soundManager: SoundManager;
     private player: Player = null;
     controls: PlayerControls = null;
-    public level: number = 0;
+    public level: number = parseInt(localStorage.getItem('level')) || 0;
     public background: Phaser.Group = null;
     public sky: Phaser.Sprite = null;
     public score = 0;
@@ -88,7 +88,7 @@ export default class Scene extends Phaser.State {
         return this.levelManager.score + this.score;
     };
     public initGradientBackground() {
-        let color =  0;
+        let color =  1;
         if (this.level > 6) {
            color = this.game.rnd.integerInRange(1, 3);
         }
