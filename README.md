@@ -1,17 +1,5 @@
-# Basic Bitch 01 platformer project
-
-# Features:
-
-- Basics features to make a platformer.
-- Ninjas.
-
-### TODO:
-
-- Player damage pushback.
-- Self contained class (gamelogic can change enemies or players, let's not)
-- Enemies with projectiles.
-- Mock player UI.
-- Mock player Cooldown Abilites.
+# R0d3nt
+![My first platformer game](https://tuskat.itch.io/r0d3nt)
 
 # Powered by Phaser NPM Webpack TypeScript Starter Project (catchy name, isn't it?)
 
