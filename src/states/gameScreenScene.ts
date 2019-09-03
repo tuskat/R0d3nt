@@ -65,6 +65,7 @@ export default class Scene extends Phaser.State {
         let pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         pauseKey.onDown.add(this.pauseGame, this);
     }
+
     public update(): void {
         this.levelManager.update();
         this.player.updatePlayer();
@@ -84,9 +85,11 @@ export default class Scene extends Phaser.State {
         // this.game.debug.text('Elapsed seconds: ' + Math.floor(this.game.time.totalElapsedSeconds()), 32, 32);
     }
     //
+
     public currentScore() {
         return this.levelManager.score + this.score;
     };
+
     public initGradientBackground() {
         let color =  1;
         if (this.level > 6) {
@@ -110,6 +113,7 @@ export default class Scene extends Phaser.State {
         this.background.add(bg1);
         this.background.add(bg2);
     };
+
     public uploadBackground() {
         let slide = 0.05;
         this.background.forEachAlive(background => {
@@ -120,6 +124,7 @@ export default class Scene extends Phaser.State {
             }
         });
     };
+
     public updateGradient(colorTop = '#457fca', colorBottom = '#5691c8') {
         let margin = 50;
         let padding = 200;
@@ -134,6 +139,7 @@ export default class Scene extends Phaser.State {
         this.gradient.context.fillStyle = grd;
         this.gradient.context.fillRect(0, this.game.world.height - margin, this.game.world.width, margin);
     }
+
     pauseGame() {
         if (this.game.paused) {
             this.togglePause();
@@ -145,6 +151,7 @@ export default class Scene extends Phaser.State {
             this.textManager.showPauseText();
         }
     };
+
     togglePause() {
         this.game.paused = !this.game.paused;
     }

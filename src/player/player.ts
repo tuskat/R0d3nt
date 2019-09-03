@@ -46,6 +46,7 @@ export default class Player {
     this.playerState = PlayerState.IDLE;
     this.weaponManager = new WeaponManager(scene);
   }
+
   initPlayer() {
     if (this.sprite) {
       this.cooldownIcon.destroy(true);
@@ -76,6 +77,7 @@ export default class Player {
     this.animation.initPlayerAnimation();
     this.weaponManager.initWeapon();
   };
+
   updatePlayer() {
     let onTheGround = this.sprite.body.touching.down;
     if (this.isDead() ||
@@ -92,6 +94,7 @@ export default class Player {
     }
     this.game.camera.focusOnXY(this.sprite.x + 50, this.sprite.y);
   };
+
   die() {
     ;
     this.playerState = PlayerState.DEAD;
@@ -104,9 +107,11 @@ export default class Player {
     this.scene.soundManager.playSound('die');
     this.sprite.kill();
   };
+
   isDead() {
     return this.playerState === PlayerState.DEAD;
   };
+
   isOutBound() {
     if (this.sprite.body.y > this.game.world.height + 128) {
       this.die();
@@ -114,11 +119,13 @@ export default class Player {
     }
     return false;
   };
+
   jump() {
     this.sprite.body.velocity.y = this.JUMP_SPEED;
     this.animation.playAnimation('jump', 10, false);
     this.playerState = PlayerState.JUMPING;
   };
+
   isJumping(onTheGround) {
     if (this.jumps > 0) {
       if (!onTheGround && this.controls.jumpInputIsActive(75)) {
@@ -135,6 +142,7 @@ export default class Player {
       this.jumping = false;
     }
   };
+
   isOnFloor() {
     this.jumps = 2;
     this.jumping = false;
@@ -152,6 +160,7 @@ export default class Player {
       }
     }
   };
+
   isRunning() {
     if (this.controls.leftInputIsActive()) {
       this.sprite.scale.x = -this.scale;
@@ -164,6 +173,7 @@ export default class Player {
       this.sprite.body.velocity.x = this.SPEED;
     }
   };
+
   isShooting(onTheGround) {
     let lastState = this.playerState;
     if (this.weaponManager.isShooting()) {
@@ -217,10 +227,12 @@ export default class Player {
       this.scene.timer.add(500, this.restoreDash, this);
     }
   };
+
   takeBullet(playerSprite = this.sprite, bullet) {
     this.die();
     bullet.kill();
   };
+
   takeDamage(playerSprite = this.sprite, threatSprite) {
     if (!this.invincibility) {
       let facingRight = (threatSprite.x > playerSprite.body.x) || (threatSprite.body.x > playerSprite.body.x);
@@ -236,6 +248,7 @@ export default class Player {
       }
     }
   };
+
   showDamage() {
     let damageColor = 0xc51b10;
     if (this.sprite.tint === damageColor)
@@ -245,6 +258,7 @@ export default class Player {
     if (this.invincibility === true)
       this.scene.timer.add(250, this.showDamage, this);
   };
+
   updateInvincibility() {
     this.invincibility = false;
   };

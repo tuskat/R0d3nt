@@ -149,6 +149,11 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/images/arrow.png'); };
     }
+    export class ImagesBackgroundTemplate {
+        static getName(): string { return 'background_template'; };
+
+        static getPNG(): string { return require('assets/images/background_template.png'); };
+    }
     export class ImagesCannonBall {
         static getName(): string { return 'cannon_ball'; };
 
@@ -203,6 +208,11 @@ export namespace Images {
         static getName(): string { return 'rat_spawn'; };
 
         static getPNG(): string { return require('assets/images/rat_spawn.png'); };
+    }
+    export class ImagesTriggerPush {
+        static getName(): string { return 'trigger-push'; };
+
+        static getPNG(): string { return require('assets/images/trigger-push.png'); };
     }
     export class ImagesTrigger {
         static getName(): string { return 'trigger'; };

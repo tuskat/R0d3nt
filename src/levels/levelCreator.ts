@@ -24,6 +24,7 @@ const enum Tiles {
     DASHER,
     ARROW
 };
+
 const enum Orientation {
     UP = 1,
     DOWN,
@@ -81,7 +82,7 @@ export default class LevelCreator  {
     }
 
     initLevel() {
-        if(this.walls) {
+        if (this.walls) {
             this.walls.destroy(true);
             this.glass.destroy(true);
         }
@@ -129,6 +130,7 @@ export default class LevelCreator  {
         }
         this.trapWeapon.push(trapWeapon);
     };
+
     initLightManager(lightSource, worldSize) {
         this.light = new LightManager(this.walls, this.game, this.scene);
         this.light.createLight(lightSource, worldSize);

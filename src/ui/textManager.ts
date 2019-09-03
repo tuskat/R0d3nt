@@ -10,6 +10,7 @@ export default class TextManager {
     instructionsText;
     poly;
     pauseBackground;
+
     constructor() {
 
     }
