@@ -16,7 +16,7 @@ export default class TextManager {
     }
 
     createText(game, score, life) {
-        let instructions = "Arrows to move\nUp is Jump\nPress X to shoot\nPress C to dash";
+        let instructions = 'A/D/Lft/Rgt to move\nSpace/O to Jump\nI/X to shoot\nP/C to dash';
         this.scoreText = game.add.text(10, 20, 'Score : ' + score, this.style);
         this.scoreText.fixedToCamera = true;
         this.lifeText = game.add.text(10, 5, 'Hp : ' + life, this.style);

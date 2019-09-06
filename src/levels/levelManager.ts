@@ -125,7 +125,7 @@ export default class LevelManager extends LevelCreator {
     });
   };
   stageMusic(level) {
-    this.scene.soundManager.playMusic('baws_waves');
+    this.scene.soundManager.playMusic('baws_sirens');
   }
 
   nextStage(player, exit) {

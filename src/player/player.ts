@@ -201,7 +201,7 @@ export default class Player {
   };
 
   isDashing() {
-    if (this.dash > 0 && (this.controls.dashInputIsActive(50))) {
+    if (this.dash > 0 && (this.controls.dashInputIsActive())) {
       this.playerState = PlayerState.DASHING;
       this.sprite.body.velocity.x = this.MAX_SPEED * (this.sprite.scale.x * 4);
       // this.sprite.body.gravity.y = -1150;

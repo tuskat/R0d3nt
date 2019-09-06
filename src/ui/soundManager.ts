@@ -40,7 +40,7 @@ export default class SoundManager {
       this.sounds[key].volume = 0.5;
     }
     for (let key in this.musics) {
-      this.musics[key].volume = 0.5;
+      this.musics[key].volume = 0.35;
     }
   };
   playSound(sfx) {

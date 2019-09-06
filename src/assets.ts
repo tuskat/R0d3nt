@@ -5,19 +5,16 @@ export namespace Images {
         static getName(): string { return 'ball'; };
 
         static getPNG(): string { return require('assets/gfx/ball.png'); };
-        static getSVG(): string { return require('assets/gfx/ball.svg'); };
     }
     export class GfxBlock {
         static getName(): string { return 'block'; };
 
         static getPNG(): string { return require('assets/gfx/block.png'); };
-        static getSVG(): string { return require('assets/gfx/block.svg'); };
     }
     export class GfxBlurredCircle {
         static getName(): string { return 'blurred-circle'; };
 
         static getPNG(): string { return require('assets/gfx/blurred-circle.png'); };
-        static getSVG(): string { return require('assets/gfx/blurred-circle.svg'); };
     }
     export class GfxBoss {
         static getName(): string { return 'boss'; };
@@ -33,7 +30,6 @@ export namespace Images {
         static getName(): string { return 'bullet'; };
 
         static getPNG(): string { return require('assets/gfx/bullet.png'); };
-        static getSVG(): string { return require('assets/gfx/bullet.svg'); };
     }
     export class GfxDasher {
         static getName(): string { return 'dasher'; };
@@ -44,13 +40,11 @@ export namespace Images {
         static getName(): string { return 'explosion'; };
 
         static getPNG(): string { return require('assets/gfx/explosion.png'); };
-        static getSVG(): string { return require('assets/gfx/explosion.svg'); };
     }
     export class GfxFlag {
         static getName(): string { return 'flag'; };
 
         static getPNG(): string { return require('assets/gfx/flag.png'); };
-        static getSVG(): string { return require('assets/gfx/flag.svg'); };
     }
     export class GfxFloor {
         static getName(): string { return 'floor'; };
@@ -61,7 +55,6 @@ export namespace Images {
         static getName(): string { return 'ground'; };
 
         static getPNG(): string { return require('assets/gfx/ground.png'); };
-        static getSVG(): string { return require('assets/gfx/ground.svg'); };
     }
     export class GfxHtml5 {
         static getName(): string { return 'html5'; };
@@ -77,37 +70,31 @@ export namespace Images {
         static getName(): string { return 'light'; };
 
         static getPNG(): string { return require('assets/gfx/light.png'); };
-        static getSVG(): string { return require('assets/gfx/light.svg'); };
     }
     export class GfxMonster {
         static getName(): string { return 'monster'; };
 
         static getPNG(): string { return require('assets/gfx/monster.png'); };
-        static getSVG(): string { return require('assets/gfx/monster.svg'); };
     }
     export class GfxPlayer {
         static getName(): string { return 'player'; };
 
         static getPNG(): string { return require('assets/gfx/player.png'); };
-        static getSVG(): string { return require('assets/gfx/player.svg'); };
     }
     export class GfxRocket {
         static getName(): string { return 'rocket'; };
 
         static getPNG(): string { return require('assets/gfx/rocket.png'); };
-        static getSVG(): string { return require('assets/gfx/rocket.svg'); };
     }
     export class GfxShip {
         static getName(): string { return 'ship'; };
 
         static getPNG(): string { return require('assets/gfx/ship.png'); };
-        static getSVG(): string { return require('assets/gfx/ship.svg'); };
     }
     export class GfxSmoke {
         static getName(): string { return 'smoke'; };
 
         static getPNG(): string { return require('assets/gfx/smoke.png'); };
-        static getSVG(): string { return require('assets/gfx/smoke.svg'); };
     }
     export class GfxSpawn {
         static getName(): string { return 'spawn'; };
@@ -508,10 +495,10 @@ export namespace Audio {
 
         static getOGG(): string { return require('assets/audio/slash.ogg'); };
     }
-    export class MusicBawsWaves {
-        static getName(): string { return 'baws_waves'; };
+    export class MusicBawsSirens {
+        static getName(): string { return 'baws_sirens'; };
 
-        static getOGG(): string { return require('assets/music/baws_waves.ogg'); };
+        static getMP3(): string { return require('assets/music/baws_sirens.mp3'); };
     }
 }
 
@@ -524,25 +511,6 @@ export namespace GoogleWebFonts {
 }
 
 export namespace CustomWebFonts {
-    export class Fonts2DumbWebfont {
-        static getName(): string { return '2Dumb-webfont'; };
-
-        static getFamily(): string { return '2dumbregular'; };
-
-        static getCSS(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/2Dumb-webfont.css'); };
-        static getEOT(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/2Dumb-webfont.eot'); };
-        static getSVG(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/2Dumb-webfont.svg'); };
-        static getTTF(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/2Dumb-webfont.ttf'); };
-        static getWOFF(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/2Dumb-webfont.woff'); };
-    }
-    export class FontsHavanaHavana {
-        static getName(): string { return 'Havana'; };
-
-        static getFamily(): string { return 'Havana'; };
-
-        static getCSS(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/Havana/Havana.css'); };
-        static getTTF(): string { return require('!file-loader?name=assets/fonts/[name].[ext]!assets/fonts/Havana/Havana.ttf'); };
-    }
     export class FontsVCROSDMONOVCROSDMONO {
         static getName(): string { return 'VCR_OSD_MONO'; };
 
@@ -554,18 +522,7 @@ export namespace CustomWebFonts {
 }
 
 export namespace BitmapFonts {
-    export class FontsFontFnt {
-        static getName(): string { return 'font_fnt'; };
-
-        static getFNT(): string { return require('assets/fonts/font_fnt.fnt'); };
-        static getPNG(): string { return require('assets/fonts/font_fnt.png'); };
-    }
-    export class FontsFontXml {
-        static getName(): string { return 'font_xml'; };
-
-        static getPNG(): string { return require('assets/fonts/font_xml.png'); };
-        static getXML(): string { return require('assets/fonts/font_xml.xml'); };
-    }
+    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
 }
 
 export namespace JSON {

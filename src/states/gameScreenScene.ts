@@ -27,6 +27,12 @@ export default class Scene extends Phaser.State {
     timer;
     gradient;
 
+
+  public init(args) {
+    if (args === true) {
+        this.level = 0;
+    }
+  }
     // GAME CYCLE
     public preload(): void {
             this.controls = new PlayerControls(this.input, this.game);

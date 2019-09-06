@@ -15,7 +15,9 @@ export default class PlayerControls {
     };
 
     upInputReleased() {
-     if (this.keyReleased(Phaser.Keyboard.UP) || this.keyReleased(Phaser.Keyboard.SPACEBAR)) {
+     if (this.keyReleased(Phaser.Keyboard.UP)
+     || this.keyReleased(Phaser.Keyboard.SPACEBAR)
+     || this.keyReleased(Phaser.Keyboard.O)) {
         this.game.input.activePointer.justReleased();
         return true;
      }
@@ -26,6 +28,9 @@ export default class PlayerControls {
         let isActive = this.input.keyboard.downDuration(Phaser.Keyboard.UP, duration);
         if (!isActive) {
             isActive = this.input.keyboard.downDuration(Phaser.Keyboard.SPACEBAR, duration);
+        }
+        if (!isActive) {
+            isActive = this.input.keyboard.downDuration(Phaser.Keyboard.O, duration);
         }
         return isActive;
     };
@@ -38,8 +43,8 @@ export default class PlayerControls {
         return (this.input.keyboard.isDown(Phaser.Keyboard.RIGHT) || this.input.keyboard.isDown(Phaser.Keyboard.D));
     };
 
-    dashInputIsActive(duration) {
-        return this.input.keyboard.downDuration(Phaser.Keyboard.C, duration);
+    dashInputIsActive() {
+        return this.input.keyboard.isDown(Phaser.Keyboard.C) || this.input.keyboard.isDown(Phaser.Keyboard.P);
     };
 
     retryInputIsActive() {

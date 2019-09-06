@@ -4,6 +4,7 @@ export default class Title extends Phaser.State {
   private pressStartText: Phaser.Text = null;
 
   public preload(): void {
+    let menuText = localStorage.getItem('level') ? 'Press Space to Start\n Enter for New Game' : 'Press Anything to Start';
     this.backgroundTemplateSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'my_background');
     this.backgroundTemplateSprite.anchor.setTo(0.5);
 
@@ -13,7 +14,7 @@ export default class Title extends Phaser.State {
     });
     this.titleText.anchor.setTo(0.5);
 
-    this.pressStartText = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 100, 'Press Space to Start', {
+    this.pressStartText = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 100, menuText, {
         font: '25px VCR_OSD',
         fill: '#fff'
     });
@@ -26,7 +27,12 @@ export default class Title extends Phaser.State {
   }
 
   public keyPress(): void {
+  let clearedStorage = false;
+  if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+    localStorage.clear();
+    clearedStorage = true;
+  }
   this.game.input.keyboard.removeCallbacks();
-  this.state.start('scene');
+  this.state.start('scene', true, false, clearedStorage);
   }
 }

@@ -31,7 +31,7 @@ export default class WeaponManager {
         },
         {
             magazine: 10,
-            pellet: 7,
+            pellet: 12,
             fireInterval: 400,
             weapon: {
                 type: WeaponsType.SHOTGUN,
@@ -67,17 +67,18 @@ export default class WeaponManager {
         }
     ];
     weapon = null;
-    fireButton = null;
+    fireButton = [];
     canShoot = true;
     fireInterval: number = 0;
     constructor(scene) {
         this.scene = scene;
     }
 
-    initWeapon(shootKey = Phaser.KeyCode.X) {
+    initWeapon() {
         this.initGun();
-        if (this.fireButton === null) {
-            this.fireButton = this.scene.input.keyboard.addKey(shootKey);
+        if (this.fireButton.length === 0) {
+            this.fireButton[0] = this.scene.input.keyboard.addKey(Phaser.KeyCode.X);
+            this.fireButton[1] = this.scene.input.keyboard.addKey(Phaser.KeyCode.I);
         }
     };
 
@@ -149,7 +150,7 @@ export default class WeaponManager {
         this.weaponTracking(false, playerSprite);
     };
     isShooting() {
-        if (this.fireButton.isDown) {
+        if (this.fireButton[0].isDown || this.fireButton[1].isDown) {
             if (this.isShotReleased()) {
                 return false;
             }
@@ -160,10 +161,14 @@ export default class WeaponManager {
     };
     isShotReleased() {
         let released = false;
-        released = this.scene.input.keyboard.upDuration(this.fireButton, 1000);
-        if (released)
+        released = this.scene.input.keyboard.upDuration(this.fireButton[0], 1000);
+        if (!released) {
+            released = this.scene.input.keyboard.upDuration(this.fireButton[1], 1000);
+        }
+        if (released) {
             this.scene.input.activePointer.justReleased();
-        return released;
+        }
+        return false;
     };
 
     weaponTracking(right, playerSprite) {
