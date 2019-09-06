@@ -1,6 +1,7 @@
 _SPECIAL THANKS:_
 
 Boilerplate : Phaser NPM Webpack TypeScript Starter Project by [RRoylance](https://github.com/rroylance)
+
 Music by [Bad Ass Wolf Shirt](https://badasswolfshirt.com/)
 
 Sprites by [Marvin-Z](https://marvin-z.itch.io/spriter-animations)
