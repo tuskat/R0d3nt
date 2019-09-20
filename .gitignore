@@ -12,3 +12,6 @@ dist
 
 # Visual Studio
 .vs
+
+# Sentry
+sentryKey.ts
