@@ -125,20 +125,20 @@ for (var i in gameAssets) {
     } else if (fontType) {
         loaderTypes.font[i] = gameAssets[i];
     } else if (jsonType) {
-        var isItATilemap = false;
-
-        for (var ext in gameAssets[i]) {
-            if (((shell.grep(/^[\s\S]*?"tiledversion"/g, ('assets/' + i + '.' + gameAssets[i][ext]))).length > 1) && ((shell.grep(/^[\s\S]*?"tilewidth"/g, ('assets/' + i + '.' + gameAssets[i][ext]))).length > 1) && ((shell.grep(/^[\s\S]*?"tileheight"/g, ('assets/' + i + '.' + gameAssets[i][ext]))).length > 1)) {
-                loaderTypes.tilemap_json[i] = gameAssets[i];
+        // my game doesn't support tilesets
+        // var isItATilemap = false;
+        // for (var ext in gameAssets[i]) {
+        //     if (((shell.grep(/^[\s\S]*?"tiledversion"/g, ('assets/' + i + '.' + gameAssets[i][ext]))).length > 1) && ((shell.grep(/^[\s\S]*?"tilewidth"/g, ('assets/' + i + '.' + gameAssets[i][ext]))).length > 1) && ((shell.grep(/^[\s\S]*?"tileheight"/g, ('assets/' + i + '.' + gameAssets[i][ext]))).length > 1)) {
+        //         loaderTypes.tilemap_json[i] = gameAssets[i];
                 
-                isItATilemap = true;
-                break;
-            }
-        }
+        //         isItATilemap = true;
+        //         break;
+        //     }
+        // }
 
-        if (!isItATilemap) {
-            loaderTypes.json[i] = gameAssets[i];
-        }
+        // if (!isItATilemap) {
+        loaderTypes.json[i] = gameAssets[i];
+        // }
     } else if (xmlType) {
         loaderTypes.xml[i] = gameAssets[i];
     } else if (textType) {

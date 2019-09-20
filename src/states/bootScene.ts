@@ -22,7 +22,7 @@ export default class Boot extends Phaser.State {
 
             this.game.scale.setUserScale(screenMetrics.scaleX, screenMetrics.scaleY);
         }
-
+        this.game.stage.smoothed = false;
         this.game.scale.pageAlignHorizontally = true;
         this.game.scale.pageAlignVertically = true;
 

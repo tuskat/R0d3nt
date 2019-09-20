@@ -11,11 +11,6 @@ export namespace Images {
 
         static getPNG(): string { return require('assets/gfx/block.png'); }
     }
-    export class GfxBlurredCircle {
-        static getName(): string { return 'blurred-circle'; }
-
-        static getPNG(): string { return require('assets/gfx/blurred-circle.png'); }
-    }
     export class GfxBoss {
         static getName(): string { return 'boss'; }
 
@@ -35,11 +30,6 @@ export namespace Images {
         static getName(): string { return 'dasher'; }
 
         static getPNG(): string { return require('assets/gfx/dasher.png'); }
-    }
-    export class GfxExplosion {
-        static getName(): string { return 'explosion'; }
-
-        static getPNG(): string { return require('assets/gfx/explosion.png'); }
     }
     export class GfxFlag {
         static getName(): string { return 'flag'; }
@@ -530,10 +520,6 @@ export namespace BitmapFonts {
 }
 
 export namespace JSON {
-    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
-}
-
-export namespace TilemapJSON {
     export class LevelsHardMap10 {
         static getName(): string { return 'map10'; }
 
@@ -614,6 +600,10 @@ export namespace TilemapJSON {
 
         static getJSON(): string { return require('assets/levels/map6.json'); }
     }
+}
+
+export namespace TilemapJSON {
+    class IExistSoTypeScriptWillNotComplainAboutAnEmptyNamespace {}
 }
 
 export namespace XML {

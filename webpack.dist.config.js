@@ -50,7 +50,7 @@ module.exports = {
             path.join(__dirname, 'dist')
         ]),
         new HtmlWebpackPlugin({
-            title: 'Phaser NPM Webpack TypeScript Starter Project!',
+            title: 'R0D3NT',
             template: path.join(__dirname, 'templates/index.ejs')
         })
     ],
