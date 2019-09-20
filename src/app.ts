@@ -1,6 +1,6 @@
-(global as any).p2 = require('p2');
-(global as any).PIXI = require('pixi');
-(global as any).Phaser = require('phaser');
+import 'p2';
+import 'pixi';
+import 'phaser';
 
 import * as WebFontLoader from 'webfontloader';
 
@@ -35,17 +35,17 @@ function startApp(): void {
     let gameHeight: number = DEFAULT_GAME_HEIGHT;
 
     if (SCALE_MODE === 'USER_SCALE') {
-        let screenMetrics: Utils.ScreenMetrics = Utils.ScreenUtils.calculateScreenMetrics(gameWidth, gameHeight);
+        let screenMetrics: Utils.ScreenMetrics = Utils.ScreenUtils.calculateScreenMetrics(gameWidth, gameHeight, MAX_GAME_WIDTH, MAX_GAME_HEIGHT);
 
         gameWidth = screenMetrics.gameWidth;
         gameHeight = screenMetrics.gameHeight;
     }
 
-    // There are a few more options you can set if needed, just take a look at Phaser.IGameCongig
+    // There are a few more options you can set if needed, just take a look at Phaser.IGameConfig
     let gameConfig: Phaser.IGameConfig = {
         width: gameWidth,
         height: gameHeight,
-        renderer: Phaser.WEBGL,
+        renderer: Phaser.AUTO,
         parent: '',
         resolution: 1
     };
@@ -73,9 +73,11 @@ window.onload = () => {
             urls: []
         };
 
-        for (let font in Assets.CustomWebFonts) {
-            webFontLoaderOptions.custom.families.push(Assets.CustomWebFonts[font].getFamily());
-            webFontLoaderOptions.custom.urls.push(Assets.CustomWebFonts[font].getCSS());
+        let allCustomWebFonts = (Assets.CustomWebFonts as any);
+
+        for (let font in allCustomWebFonts) {
+            webFontLoaderOptions.custom.families.push(allCustomWebFonts[font].getFamily());
+            webFontLoaderOptions.custom.urls.push(allCustomWebFonts[font].getCSS());
         }
     }
 

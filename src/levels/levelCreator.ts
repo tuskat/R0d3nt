@@ -65,7 +65,7 @@ export default class LevelCreator  {
 
     getJsonData(lvlIndex) {
         let levelJson = this.game.cache.getJSON('map' + lvlIndex);
-
+        console.log(this.game.cache);
         if (levelJson === null) {
             levelJson = this.game.cache.getJSON('hub');
             let level = levelJson;
