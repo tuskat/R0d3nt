@@ -15,7 +15,6 @@ import sentryId from './sentryKey'; // add your own, or comment sentry if you do
 import * as Sentry from '@sentry/browser';
 
 Sentry.init({ dsn: sentryId });
-Sentry.captureException(new Error('Something broke'));
 
 class App extends Phaser.Game {
     constructor(config: Phaser.IGameConfig) {
