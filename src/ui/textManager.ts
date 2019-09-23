@@ -32,7 +32,8 @@ export default class TextManager {
         this.instructionsText = game.add.text(game.width * 0.30, game.height * 0.4, instructions, this.pauseStyle);
         this.instructionsText.fixedToCamera = true;
         this.instructionsText.alpha = 0;
-    };
+    }
+
     createBG(game) {
         this.poly = new Phaser.Rectangle(0, 0, game.width * 0.35, game.height * 0.35);
         this.pauseBackground = game.add.graphics(game.width * 0.25, game.height * 0.25);
@@ -43,21 +44,23 @@ export default class TextManager {
         this.pauseBackground.body.immovable = true;
         this.pauseBackground.body.allowGravity = false;
         this.pauseBackground.alpha = 0;
-    };
+    }
+
     updateShadows() {
         this.textShadow(this.scoreText);
         this.textShadow(this.lifeText);
-    };
+    }
 
     textUpdate(life, score) {
         if (life !== null) {
             this.lifeText.setText('Hp :' + life);
         }
         this.scoreText.setText('Score :' + score);
-    };
+    }
+
     textShadow(text) {
         text.setShadow(1, 1, 'rgba(0, 0, 0, 0.5)', 1);
-    };
+    }
 
     levelTitle(levelName, game, player) {
         let posX = player.sprite.x;
@@ -79,7 +82,8 @@ export default class TextManager {
         game.add.tween(text).to({ alpha: 0 }, 5000, Phaser.Easing.Linear.None, true);
         game.add.tween(textReflect).to({ alpha: 1 }, 1500, Phaser.Easing.Linear.None, true);
         game.add.tween(textReflect).to({ alpha: 0 }, 5000, Phaser.Easing.Linear.None, true);
-    };
+    }
+
     showPauseText() {
         this.pauseText.alpha = 1;
         this.pauseBackground.alpha = 1;

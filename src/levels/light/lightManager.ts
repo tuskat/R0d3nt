@@ -9,11 +9,13 @@ export default class LightManager {
     public light;
     public darkCanvas;
     public state;
+
     constructor(walls, game, state) {
         this.game = game;
         this.state = state;
         this.walls = walls;
     }
+
     createLight(lightSource, worldSize) {
         if (this.light) {
             this.light.destroy(true);
@@ -45,7 +47,8 @@ export default class LightManager {
         // you'll see gray shadows and white light instead of colors and it
         // generally won't look nearly as cool. So use a browser with WebGL.
         lightBitmap.blendMode = PIXI.blendModes.MULTIPLY;
-    };
+    }
+
     updateLight() {
         // Move the light to the pointer/touch location
         //   this.bitmap.context.clearRect(0, 0, this.game.width, this.game.height);
@@ -224,9 +227,7 @@ export default class LightManager {
 
         // This just tells the engine it should update the texture cache
         this.bitmap.dirty = true;
-
-
-    };
+    }
 
     getWallIntersection(ray) {
         let distanceToWall = this.game.world.width;
@@ -261,5 +262,5 @@ export default class LightManager {
         }, this);
 
         return closestIntersection;
-    };
+    }
 }

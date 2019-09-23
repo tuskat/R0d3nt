@@ -5,9 +5,11 @@ export default class SoundManager {
   musics = [];
   current_music;
   isplaying = false;
+
   constructor(game) {
     this.game = game;
   }
+
   initSounds() {
     let audio = [
       'clear',
@@ -42,10 +44,12 @@ export default class SoundManager {
     for (let key in this.musics) {
       this.musics[key].volume = 0.35;
     }
-  };
+  }
+
   playSound(sfx) {
     this.sounds[sfx].play();
-  };
+  }
+
   playMusic(title) {
     if (this.isplaying) {
       return;

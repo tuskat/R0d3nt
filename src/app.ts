@@ -16,6 +16,7 @@ import * as Sentry from '@sentry/browser';
 
 Sentry.init({ dsn: sentryId });
 
+let game = null;
 class App extends Phaser.Game {
     constructor(config: Phaser.IGameConfig) {
         super(config);
@@ -27,6 +28,7 @@ class App extends Phaser.Game {
         this.state.add('end', End);
         this.state.start('boot');
 
+        window.addEventListener("resize", resize, false);
     }
 }
 
@@ -45,12 +47,12 @@ function startApp(): void {
     let gameConfig: Phaser.IGameConfig = {
         width: gameWidth,
         height: gameHeight,
-        renderer: Phaser.AUTO,
+        renderer: Phaser.WEBGL,
         parent: '',
         resolution: 1
     };
 
-    let app = new App(gameConfig);
+    game = new App(gameConfig);
 }
 
 window.onload = () => {
@@ -91,3 +93,18 @@ window.onload = () => {
         WebFontLoader.load(webFontLoaderOptions);
     }
 };
+
+function resize() {
+    var height = window.innerHeight;
+    var width = window.innerWidth;
+   
+    game.width = width;
+    game.height = height;
+    game.stage.bounds.width = width;
+    game.stage.bounds.height = height;
+   
+    if (game.renderType === 1) {
+      game.renderer.resize(width, height);
+      Phaser.Canvas.setSmoothingEnabled(game.context, false);
+    }
+  } 
