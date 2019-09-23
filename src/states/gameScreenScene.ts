@@ -94,7 +94,7 @@ export default class Scene extends Phaser.State {
 
     public currentScore() {
         return this.levelManager.score + this.score;
-    };
+    }
 
     public initGradientBackground() {
         let color =  1;
@@ -118,7 +118,7 @@ export default class Scene extends Phaser.State {
         this.background.add(grad);
         this.background.add(bg1);
         this.background.add(bg2);
-    };
+    }
 
     public uploadBackground() {
         let slide = 0.05;
@@ -129,7 +129,7 @@ export default class Scene extends Phaser.State {
                 slide += 0.05;
             }
         });
-    };
+    }
 
     public updateGradient(colorTop = '#457fca', colorBottom = '#5691c8') {
         let margin = 50;
@@ -156,7 +156,7 @@ export default class Scene extends Phaser.State {
             this.soundManager.playSound('pause_in');
             this.textManager.showPauseText();
         }
-    };
+    }
 
     togglePause() {
         this.game.paused = !this.game.paused;

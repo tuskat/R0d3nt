@@ -23,7 +23,7 @@ const enum Tiles {
     GLASS,
     DASHER,
     ARROW
-};
+}
 
 const enum Orientation {
     UP = 1,
@@ -61,7 +61,7 @@ export default class LevelCreator  {
     setScale(item) {
         item.scale.y = this.scale;
         item.scale.x = this.scale;
-    };
+    }
 
     getJsonData(lvlIndex) {
         let levelJson = this.game.cache.getJSON('map' + lvlIndex);
@@ -94,7 +94,7 @@ export default class LevelCreator  {
         this.glass = this.game.add.group();
         this.walls = this.game.add.group();
         this.score = 0;
-    };
+    }
 
     initTrap(trap, rotation) {
         let trapWeapon = this.game.add.weapon(1, 'cannon_ball', 5, this.trap);
@@ -128,14 +128,14 @@ export default class LevelCreator  {
             }
         }
         this.trapWeapon.push(trapWeapon);
-    };
+    }
 
     initLightManager(lightSource, worldSize) {
         this.light = new LightManager(this.walls, this.game, this.scene);
         this.light.createLight(lightSource, worldSize);
         this.light.updateLight();
         this.scene.initGradientBackground();
-    };
+    }
 
     createLevel(player) {
         let levelTileSize = 32 * this.scale;
@@ -312,5 +312,5 @@ export default class LevelCreator  {
         this.initLightManager(lightSource, worldSize);
         this.textManager.levelTitle(level.layers[0].properties[0].value, this.game, player);
         return level.new;
-    };
+    }
 }
