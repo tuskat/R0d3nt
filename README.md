@@ -18,6 +18,17 @@ around 25 to 45 minutes on first play-through.
 
 probably less than 5 minutes if you're doing everything perfectly.
 
+_LICENSE:_
+This is unlicensed, R0d3nt may not be copied or re-purposed for commercial use in any way.
+
+You are allowed to use/repurpose/copy:
+- The code.
+
+You are *NOT* allowed to use without permission from original authors:
+- The sprites by Marvin-Z (The ninjas)
+- The music by Bad Ass Wolf Shirt
+- The sound effects.
+
 --------
 
 _CONTROLS _:

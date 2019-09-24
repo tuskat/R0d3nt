@@ -7,7 +7,7 @@ export default class End extends Phaser.State {
     this.backgroundTemplateSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'my_background');
     this.backgroundTemplateSprite.anchor.setTo(0.5);
     this.game.world.setBounds(0, 0, this.game.width, this.game.height);
-    this.titleText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 100, 'THANKS FOR PLAYING !!\n GAME MADE BY TUSKAT\n MUSIC BY BAD ASS WOLF SHIRT\nNINJA SPRITES BY MARVIN Z', {
+    this.titleText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 100, 'THANKS FOR PLAYING !!\n\nGAME MADE BY TUSKAT\n MUSIC BY BAD ASS WOLF SHIRT\nNINJA SPRITES BY MARVIN Z\n\nR0d3nt is a FREE game', {
         font: '30px VCR_OSD',
         fill: '#fff'
     });

@@ -47,9 +47,10 @@ function startApp(): void {
     let gameConfig: Phaser.IGameConfig = {
         width: gameWidth,
         height: gameHeight,
-        renderer: Phaser.WEBGL,
+        renderer: Phaser.WEBGL_MULTI,
         parent: '',
-        resolution: 1
+        resolution: 1,
+        enableDebug: false
     };
 
     game = new App(gameConfig);
@@ -97,14 +98,16 @@ window.onload = () => {
 function resize() {
     var height = window.innerHeight;
     var width = window.innerWidth;
-   
-    game.width = width;
-    game.height = height;
-    game.stage.bounds.width = width;
-    game.stage.bounds.height = height;
-   
-    if (game.renderType === 1) {
-      game.renderer.resize(width, height);
-      Phaser.Canvas.setSmoothingEnabled(game.context, false);
+    if (game) {
+        game.width = width;
+        game.height = height;
+        if (game.stage.bounds) {
+            game.stage.bounds.width = width;
+            game.stage.bounds.height = height;
+        }
+        if (game.renderType === 1) {
+        game.renderer.resize(width, height);
+        Phaser.Canvas.setSmoothingEnabled(game.context, false);
+        }
     }
   } 

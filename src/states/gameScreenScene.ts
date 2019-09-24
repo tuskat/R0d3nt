@@ -1,3 +1,4 @@
+import * as Assets from '../assets';
 import LevelManager from '../levels/levelManager';
 import TextManager from '../ui/textManager';
 import SoundManager from '../ui/soundManager';
@@ -58,7 +59,6 @@ export default class Scene extends Phaser.State {
         this.game.physics.setBoundsToWorld();
 
         this.game.stage.smoothed = false;
-        this.game.stage.backgroundColor = 0x4488cc;
         this.background = this.game.add.group();
 
         this.timer = this.game.time.create(false);
@@ -69,6 +69,12 @@ export default class Scene extends Phaser.State {
         this.levelManager.stageMusic(this.level);
         this.textManager.createText(this.game, this.currentScore(), this.player.life);
         let pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        this.game.clearBeforeRender = false;
+        this.game.renderer.setTexturePriority([
+            Assets.Atlases.AtlasesPlayerNinja.getName(), 
+            Assets.Atlases.AtlasesEnemyNinja.getName(), 
+            Assets.Images.ImagesMyBackground.getName(), 
+            Assets.Images.ImagesMyBackground2.getName()]);
         pauseKey.onDown.add(this.pauseGame, this);
     }
 
