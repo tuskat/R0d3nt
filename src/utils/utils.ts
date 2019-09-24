@@ -114,3 +114,16 @@ export class StringUtils {
         return (camelCase[0].toUpperCase() + camelCase.substr(1));
     }
 }
+
+export class StorageSupport {
+    public static storageIsSupported(storage) {
+        try {
+          const key = "654f6sd4gf6s5d4g56";
+          storage.setItem(key, key);
+          storage.removeItem(key);
+          return true;
+        } catch (e) {
+          return false;
+        }
+    }
+}

@@ -1,10 +1,15 @@
+import { StorageSupport } from "../utils/utils";
+
 export default class Title extends Phaser.State {
   private backgroundTemplateSprite: Phaser.Sprite = null;
   private titleText: Phaser.Text = null;
   private pressStartText: Phaser.Text = null;
 
   public preload(): void {
-    let menuText = localStorage.getItem('level') ? 'Press Space to Start\n Enter for New Game' : 'Press Anything to Start';
+    let menuText = 'Press Anything to Start';
+    if (StorageSupport.storageIsSupported(window.localStorage)) {
+       menuText = window.localStorage.getItem('level') ? 'Press Space to Start\n Enter for New Game' : 'Press Anything to Start';
+    }
     this.backgroundTemplateSprite = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'my_background');
     this.backgroundTemplateSprite.anchor.setTo(0.5);
 
