@@ -110,4 +110,4 @@ function resize() {
         Phaser.Canvas.setSmoothingEnabled(game.context, false);
         }
     }
-  } 
+  }
