@@ -16,7 +16,7 @@
     "electron:dev": "npm run build:dev && electron .",
     "electron:dist": "npm run build:dist && electron .",
     "electron:pack:dev": "npm run build:dev && node ./scripts/packageElectronApp.js",
-    "electron:pack:dist": "npm run build:dist && node ./scripts/packageElectronApp.js",
+    "electron:pack:dist": "npm run build:dist && node ./scripts/packageElectronApp.js --platform=all",
     "checkDepsVersions": "npm-check --skip-unused -u"
   },
   "dependencies": {
