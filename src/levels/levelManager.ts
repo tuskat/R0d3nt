@@ -1,5 +1,6 @@
 import * as Assets from '../assets';
 import LevelCreator from './levelCreator';
+import { StorageSupport } from '../utils/utils';
 
 const enum State {
   IDLE = 1,
@@ -136,8 +137,10 @@ export default class LevelManager extends LevelCreator {
       this.scene.soundManager.playSound('clear');
       this.scene.score = this.scene.currentScore();
       this.scene.level = this.scene.level + 1;
-      localStorage.setItem('level', this.scene.level.toString());
-      localStorage.setItem('score', this.scene.score.toString());
+      if (StorageSupport.storageIsSupported()) {
+        localStorage.setItem('level', this.scene.level.toString());
+        localStorage.setItem('score', this.scene.score.toString());
+      }
       if (this.scene.level === 16) {
         this.game.state.start('end');
         return;
