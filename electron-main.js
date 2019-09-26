@@ -12,13 +12,13 @@ function createWindow () {
     // Create the browser window.
     mainWindow = new BrowserWindow({
         fullscreen: false,
-        fullscreenable: false,
-        height: /*[[DEFAULT_GAME_HEIGHT*/500/*DEFAULT_GAME_HEIGHT]]*/, // This is changed via the setupGameSize script, change DEFAULT_GAME_HEIGHT to MAX_GAME_HEIGHT if you'd rather use the full size instead of only the safe zone size.
-        maximizable: false,
-        resizeable: false,
+        fullscreenable: true,
+        height: /*[[DEFAULT_GAME_HEIGHT*/480/*DEFAULT_GAME_HEIGHT]]*/, // This is changed via the setupGameSize script, change DEFAULT_GAME_HEIGHT to MAX_GAME_HEIGHT if you'd rather use the full size instead of only the safe zone size.
+        maximizable: true,
+        resizeable: true,
         show: false,
         useContentSize: true,
-        width: /*[[DEFAULT_GAME_WIDTH*/800/*DEFAULT_GAME_WIDTH]]*/ // This is changed via the setupGameSize script, change DEFAULT_GAME_WIDTH to MAX_GAME_WIDTH if you'd rather use the full size instead of only the safe zone size.
+        width: /*[[DEFAULT_GAME_WIDTH*/640/*DEFAULT_GAME_WIDTH]]*/ // This is changed via the setupGameSize script, change DEFAULT_GAME_WIDTH to MAX_GAME_WIDTH if you'd rather use the full size instead of only the safe zone size.
     });
 
     mainWindow.once('ready-to-show', function() {
