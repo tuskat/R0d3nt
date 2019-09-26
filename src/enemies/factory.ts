@@ -8,12 +8,13 @@ const enum State {
     CHASE,
     CONFUSED,
     DEAD
-};
+}
+
 const enum EnemyType {
     SLASHER = 1,
     DASHER,
     SHOOTER
-  };
+}
 
 export default class EnemiesFactory {
     public MAX_SPEED = 750; // pixels/second
@@ -42,17 +43,17 @@ export default class EnemiesFactory {
         this.enemyGroup = this.game.add.group();
         this.initAttack();
     }
-    stopDash = function (enemy) {
+    stopDash(enemy) {
         if (this.scene.levelManager.player.sprite.x > enemy.body.x) {
             enemy.scale.x = this.scale;
         } else {
             enemy.scale.x = -this.scale;
         }
         enemy.body.velocity.x = 0;
-    };
-    recharge = function (enemy) {
+    }
+    recharge(enemy) {
         enemy.onCooldown = false;
-    };
+    }
     dashAttack(enemy) {
         enemy.body.velocity.x = this.MAX_SPEED * enemy.scale.x;
         enemy.body.velocity.y = 0;
@@ -60,7 +61,7 @@ export default class EnemiesFactory {
         this.scene.timer.add(500, this.stopDash, this, enemy);
         this.scene.timer.add(1000, this.recharge, this, enemy);
         enemy.onCooldown = true;
-    };
+    }
     slashAttack(enemy) {
         enemy.body.velocity.x = 0;
         enemy.body.velocity.y = 0;
@@ -68,11 +69,11 @@ export default class EnemiesFactory {
         this.scene.timer.add(1000, this.recharge, this, enemy);
 
         enemy.onCooldown = true;
-    };
+    }
     initAttack() {
         this.attackList[EnemyType.SLASHER] = this.slashAttack.bind(this);
         this.attackList[EnemyType.DASHER] = this.dashAttack.bind(this);
-    };
+    }
     initEnemySpawn(x, y, nbr, tilesize) {
         this.tilesize = tilesize;
         let spawn = <EnemySprite> this.game.add.sprite(this.tilesize * x, (this.tilesize * y) - 10 , 'rat_spawn');
@@ -83,7 +84,7 @@ export default class EnemiesFactory {
             let spawnRate = (100 * i) + this.game.rnd.integerInRange(200, 500);
             this.scene.timer.add(spawnRate, this.initSlasher, this, x, y, tilesize);
         }
-    };
+    }
 
     initSlasher(x, y, tilesize) {
         this.tilesize = tilesize;
@@ -112,7 +113,7 @@ export default class EnemiesFactory {
         enemy.state = State.IDLE;
         enemy.attackDistance = 30;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
-    };
+    }
     initDasher(x, y, tilesize) {
         this.tilesize = tilesize;
 
@@ -139,12 +140,12 @@ export default class EnemiesFactory {
         enemy.state = State.IDLE;
         enemy.attackDistance = 90;
         this.game.physics.enable(enemy, Phaser.Physics.ARCADE);
-    };
+    }
 
     public getEnemiesCount() {
         return this.enemyGroup.countLiving().toString();
-    };
+    }
     public getSprites() {
         return this.enemyGroup;
-    };
+    }
 }

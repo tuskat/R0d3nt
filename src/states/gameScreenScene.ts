@@ -4,6 +4,7 @@ import TextManager from '../ui/textManager';
 import SoundManager from '../ui/soundManager';
 import Player from '../player/player';
 import PlayerControls from '../player/controls';
+import { StorageSupport } from '../utils/utils';
 
 export default class Scene extends Phaser.State {
     public levelManager: LevelManager;
@@ -11,7 +12,7 @@ export default class Scene extends Phaser.State {
     public soundManager: SoundManager;
     private player: Player = null;
     controls: PlayerControls = null;
-    public level: number = parseInt(localStorage.getItem('level')) || 0;
+    public level: number = 0;
     public background: Phaser.Group = null;
     public sky: Phaser.Sprite = null;
     public score = 0;
@@ -32,6 +33,9 @@ export default class Scene extends Phaser.State {
   public init(args) {
     if (args === true) {
         this.level = 0;
+    } else if (StorageSupport.storageIsSupported()) {
+        this.level = parseInt(localStorage.getItem('level')) || 0;
+        this.score = parseInt(localStorage.getItem('score')) || 0;
     }
   }
     // GAME CYCLE
@@ -71,9 +75,9 @@ export default class Scene extends Phaser.State {
         let pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.game.clearBeforeRender = false;
         this.game.renderer.setTexturePriority([
-            Assets.Atlases.AtlasesPlayerNinja.getName(), 
-            Assets.Atlases.AtlasesEnemyNinja.getName(), 
-            Assets.Images.ImagesMyBackground.getName(), 
+            Assets.Atlases.AtlasesPlayerNinja.getName(),
+            Assets.Atlases.AtlasesEnemyNinja.getName(),
+            Assets.Images.ImagesMyBackground.getName(),
             Assets.Images.ImagesMyBackground2.getName()]);
         pauseKey.onDown.add(this.pauseGame, this);
     }
@@ -167,5 +171,6 @@ export default class Scene extends Phaser.State {
     togglePause() {
         this.game.paused = !this.game.paused;
     }
+
 }
 
