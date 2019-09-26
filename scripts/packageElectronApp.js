@@ -35,11 +35,4 @@ options.ignore = (options.ignore || function (fileName) {
     );
 });
 
-packager(options, function done_callback (err) {
-    if (err) {
-        console.log(err);
-        return;
-    }
-
-    console.log('Packaging Complete ✔');
-});
+packager(options);

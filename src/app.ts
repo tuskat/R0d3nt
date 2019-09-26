@@ -11,10 +11,10 @@ import Scene from './states/gameScreenScene';
 import End from './states/endScene';
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
-import sentryId from './sentryKey'; // add your own, or comment sentry if you don't have one
-import * as Sentry from '@sentry/browser';
+// import sentryId from './sentryKey'; // add your own, or comment sentry if you don't have one
+// import * as Sentry from '@sentry/browser';
 
-Sentry.init({ dsn: sentryId });
+// Sentry.init({ dsn: sentryId });
 
 let game = null;
 class App extends Phaser.Game {
@@ -110,4 +110,4 @@ function resize() {
         Phaser.Canvas.setSmoothingEnabled(game.context, false);
         }
     }
-  } 
+  }

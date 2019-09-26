@@ -6,7 +6,7 @@ var shell = require('shelljs');
 var filename = './assets/images/background_template.png';
 var defaultWidth = 640;
 var defaultHeight = 480;
-var defaultAspectRatio = 1.33;
+var defaultAspectRatio = 1.333;
 var defaultScaleMode = 'USER_SCALE';
 var possibleScaleModes = ['USER_SCALE', 'SHOW_ALL', 'EXACT_FIT', 'NO_SCALE', 'RESIZE'];
 
