@@ -12,7 +12,7 @@ export default class PlayerControls {
         let released = false;
         released = this.input.keyboard.upDuration(key, 1000);
         return released;
-    };
+    }
 
     upInputReleased() {
      if (this.keyReleased(Phaser.Keyboard.UP)
@@ -22,7 +22,7 @@ export default class PlayerControls {
         return true;
      }
      return false;
-    };
+    }
 
     jumpInputIsActive(duration) {
         let isActive = this.input.keyboard.downDuration(Phaser.Keyboard.UP, duration);
@@ -33,22 +33,22 @@ export default class PlayerControls {
             isActive = this.input.keyboard.downDuration(Phaser.Keyboard.O, duration);
         }
         return isActive;
-    };
+    }
 
     leftInputIsActive() {
         return (this.input.keyboard.isDown(Phaser.Keyboard.LEFT) || this.input.keyboard.isDown(Phaser.Keyboard.A));
-    };
+    }
 
     rightInputIsActive() {
         return (this.input.keyboard.isDown(Phaser.Keyboard.RIGHT) || this.input.keyboard.isDown(Phaser.Keyboard.D));
-    };
+    }
 
     dashInputIsActive() {
         return this.input.keyboard.isDown(Phaser.Keyboard.C) || this.input.keyboard.isDown(Phaser.Keyboard.P);
-    };
+    }
 
     retryInputIsActive() {
         return this.input.keyboard.isDown(Phaser.Keyboard.X);
-    };
+    }
 
 }

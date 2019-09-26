@@ -14,7 +14,7 @@ export default class EnemyAnimation {
     Assets.Atlases.AtlasesSlasherNinja.Frames.Idle01,
     Assets.Atlases.AtlasesSlasherNinja.Frames.Idle02,
     Assets.Atlases.AtlasesSlasherNinja.Frames.Idle03]);
-  };
+  }
 
   initRun() {
     let anim = this.sprite.animations.add('run', [Assets.Atlases.AtlasesSlasherNinja.Frames.Run00,
@@ -26,7 +26,7 @@ export default class EnemyAnimation {
 
     anim.enableUpdate = true;
     anim.onUpdate.add(this.runningSound, this);
-  };
+  }
 
   initSlash() {
     let anim = this.sprite.animations.add('slash', [Assets.Atlases.AtlasesSlasherNinja.Frames.Slash00,
@@ -38,7 +38,7 @@ export default class EnemyAnimation {
     anim.enableUpdate = true;
     anim.onUpdate.add(this.slashing, this);
     anim.onComplete.add(this.doneSlashing, this);
-  };
+  }
 
   initAnimation() {
     this.initIdle();
@@ -46,7 +46,7 @@ export default class EnemyAnimation {
     this.initSlash();
 
     this.sprite.animations.play('idle', 4, true);
-  };
+  }
 
   playAnimation(animation, framerate = 30, loop = true, immovable = false) {
     if (animation !== this.lastAnimation) {
@@ -62,26 +62,26 @@ export default class EnemyAnimation {
         this.sprite.body.checkCollision.right = true;
       }
     }
-  };
+  }
 
   setCollision(width, height = 86) {
     this.sprite.body.setSize(width, height, 0, 0);
-  };
+  }
 
   doneSlashing() {
     this.playAnimation('idle', 4, true);
-  };
+  }
 
   slashing(anim, frame) {
     if (frame.name === Assets.Atlases.AtlasesSlasherNinja.Frames.Slash02) {
       this.scene.soundManager.playSound('slash');
       this.setCollision(frame.sourceSizeW);
     }
-  };
+  }
   runningSound(anim, frame) {
     let playSound = (frame.name === Assets.Atlases.AtlasesSlasherNinja.Frames.Run02);
     if (playSound) {
       this.scene.soundManager.playSound('enemy-run');
     }
-  };
+  }
 }

@@ -11,10 +11,13 @@ import Scene from './states/gameScreenScene';
 import End from './states/endScene';
 import * as Utils from './utils/utils';
 import * as Assets from './assets';
-// import sentryId from './sentryKey'; // add your own, or comment sentry if you don't have one
-// import * as Sentry from '@sentry/browser';
 
-// Sentry.init({ dsn: sentryId });
+import sentryId from './sentryKey'; // add your own, or comment sentry if you don't have one
+import * as Sentry from '@sentry/browser';
+
+if (process.env.NODE_ENV === 'production') {
+    Sentry.init({ dsn: sentryId });
+}
 
 let game = null;
 class App extends Phaser.Game {
@@ -28,7 +31,7 @@ class App extends Phaser.Game {
         this.state.add('end', End);
         this.state.start('boot');
 
-        window.addEventListener("resize", resize, false);
+        window.addEventListener('resize', resize, false);
     }
 }
 
@@ -96,8 +99,8 @@ window.onload = () => {
 };
 
 function resize() {
-    var height = window.innerHeight;
-    var width = window.innerWidth;
+    let height = window.innerHeight;
+    let width = window.innerWidth;
     if (game) {
         game.width = width;
         game.height = height;

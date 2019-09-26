@@ -116,13 +116,17 @@ export class StringUtils {
 }
 
 export class StorageSupport {
-    public static storageIsSupported(storage) {
+    public static storageIsSupported() {
         try {
-          const key = "654f6sd4gf6s5d4g56";
+          let storage = window.localStorage;
+          const key = '654f6sd4gf6s5d4g56';
           storage.setItem(key, key);
           storage.removeItem(key);
           return true;
         } catch (e) {
+            if (e.code === 22) {
+                console.log('storage full');
+            }
           return false;
         }
     }

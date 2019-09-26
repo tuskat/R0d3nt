@@ -4,7 +4,7 @@ const enum WeaponsType {
     PISTOL = 0,
     SHOTGUN,
     SMG
-};
+}
 
 export default class WeaponManager {
     scene: Scene = null;
@@ -80,7 +80,7 @@ export default class WeaponManager {
             this.fireButton[0] = this.scene.input.keyboard.addKey(Phaser.KeyCode.X);
             this.fireButton[1] = this.scene.input.keyboard.addKey(Phaser.KeyCode.I);
         }
-    };
+    }
 
     fireAction() {
         if (this.canShoot) {
@@ -88,7 +88,7 @@ export default class WeaponManager {
             return true;
         }
         return false;
-    };
+    }
 
     initGun() {
         if (this.weapon) {
@@ -97,7 +97,7 @@ export default class WeaponManager {
         this.weapon = this.scene.game.add.weapon(100, 'my_bullet');
         this.weapon.bulletGravity = new Phaser.Point(-100, -1150);
         this.setGun(WeaponsType.PISTOL);
-    };
+    }
 
     setGun(index) {
         this.magazine = this.armory[index].magazine;
@@ -128,27 +128,29 @@ export default class WeaponManager {
             }
         }
         this.scene.timer.add(this.fireInterval, this.reload, this);
-    };
+    }
 
     shoot() {
         this.weapon.fire();
         this.scene.soundManager.playSound('shoot');
-    };
+    }
 
     getPistolBullets() {
         return this.weapon.bullets;
-    };
+    }
 
     shootRight(playerSprite) {
         this.weapon.bulletSpeed = this.armory[this.weapon.type].weapon.bulletSpeed;
         this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(true, playerSprite);
-    };
+    }
+
     shootLeft(playerSprite) {
         this.weapon.bulletSpeed = -this.armory[this.weapon.type].weapon.bulletSpeed;
         this.weapon.bulletAngleOffset = 0;
         this.weaponTracking(false, playerSprite);
-    };
+    }
+
     isShooting() {
         if (this.fireButton[0].isDown || this.fireButton[1].isDown) {
             if (this.isShotReleased()) {
@@ -158,7 +160,8 @@ export default class WeaponManager {
         }
         else
             return false;
-    };
+    }
+
     isShotReleased() {
         let released = false;
         released = this.scene.input.keyboard.upDuration(this.fireButton[0], 1000);
@@ -169,15 +172,15 @@ export default class WeaponManager {
             this.scene.input.activePointer.justReleased();
         }
         return false;
-    };
+    }
 
     weaponTracking(right, playerSprite) {
         if (right)
             this.weapon.trackSprite(playerSprite, 26, -8, true);
         else
             this.weapon.trackSprite(playerSprite, 26, 8, true);
-    };
+    }
     reload() {
         this.canShoot = !this.canShoot;
-    };
+    }
 }

@@ -33,8 +33,9 @@ export default class Scene extends Phaser.State {
   public init(args) {
     if (args === true) {
         this.level = 0;
-    } else if (StorageSupport.storageIsSupported(window.localStorage)) {
-        this.level = parseInt(window.localStorage.getItem('level'));
+    } else if (StorageSupport.storageIsSupported()) {
+        this.level = parseInt(localStorage.getItem('level')) || 0;
+        this.score = parseInt(localStorage.getItem('score')) || 0;
     }
   }
     // GAME CYCLE
@@ -74,9 +75,9 @@ export default class Scene extends Phaser.State {
         let pauseKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         this.game.clearBeforeRender = false;
         this.game.renderer.setTexturePriority([
-            Assets.Atlases.AtlasesPlayerNinja.getName(), 
-            Assets.Atlases.AtlasesEnemyNinja.getName(), 
-            Assets.Images.ImagesMyBackground.getName(), 
+            Assets.Atlases.AtlasesPlayerNinja.getName(),
+            Assets.Atlases.AtlasesEnemyNinja.getName(),
+            Assets.Images.ImagesMyBackground.getName(),
             Assets.Images.ImagesMyBackground2.getName()]);
         pauseKey.onDown.add(this.pauseGame, this);
     }
@@ -170,6 +171,6 @@ export default class Scene extends Phaser.State {
     togglePause() {
         this.game.paused = !this.game.paused;
     }
-    
+
 }
 

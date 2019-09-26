@@ -10,7 +10,7 @@ const enum PlayerState {
   JUMPING,
   DASHING,
   DEAD
-};
+}
 
 export default class Player {
   public MAX_SPEED = 1000; // pixels/second
@@ -76,7 +76,7 @@ export default class Player {
     this.animation = new PlayerAnimation(this.sprite, this);
     this.animation.initPlayerAnimation();
     this.weaponManager.initWeapon();
-  };
+  }
 
   updatePlayer() {
     let onTheGround = this.sprite.body.touching.down;
@@ -93,10 +93,9 @@ export default class Player {
       this.isJumping(onTheGround);
     }
     this.game.camera.focusOnXY(this.sprite.x + 50, this.sprite.y);
-  };
+  }
 
   die() {
-    ;
     this.playerState = PlayerState.DEAD;
     this.life = 0;
     this.sprite.body.immovable = true;
@@ -106,11 +105,11 @@ export default class Player {
     this.scene.textManager.showRetryText(this.game);
     this.scene.soundManager.playSound('die');
     this.sprite.kill();
-  };
+  }
 
   isDead() {
     return this.playerState === PlayerState.DEAD;
-  };
+  }
 
   isOutBound() {
     if (this.sprite.body.y > this.game.world.height + 128) {
@@ -118,13 +117,13 @@ export default class Player {
       return true;
     }
     return false;
-  };
+  }
 
   jump() {
     this.sprite.body.velocity.y = this.JUMP_SPEED;
     this.animation.playAnimation('jump', 10, false);
     this.playerState = PlayerState.JUMPING;
-  };
+  }
 
   isJumping(onTheGround) {
     if (this.jumps > 0) {
@@ -141,7 +140,7 @@ export default class Player {
       this.jumps--;
       this.jumping = false;
     }
-  };
+  }
 
   isOnFloor() {
     this.jumps = 2;
@@ -159,7 +158,7 @@ export default class Player {
         this.animation.playAnimation('idle', 4, true);
       }
     }
-  };
+  }
 
   isRunning() {
     if (this.controls.leftInputIsActive()) {
@@ -172,7 +171,7 @@ export default class Player {
       this.facingRight = true;
       this.sprite.body.velocity.x = this.SPEED;
     }
-  };
+  }
 
   isShooting(onTheGround) {
     let lastState = this.playerState;
@@ -198,7 +197,7 @@ export default class Player {
     } else {
       this.playerState = PlayerState.RUNNING;
     }
-  };
+  }
 
   isDashing() {
     if (this.dash > 0 && (this.controls.dashInputIsActive())) {
@@ -212,12 +211,12 @@ export default class Player {
       this.scene.timer.add(375, this.endDash, this);
     }
     return this.playerState === PlayerState.DASHING;
-  };
+  }
 
   restoreDash() {
     this.cooldownIcon.alpha = 0;
     this.dash = 1;
-  };
+  }
 
   endDash() {
     if (!this.isDead()) {
@@ -226,12 +225,12 @@ export default class Player {
       // this.sprite.body.gravity.y = 0;
       this.scene.timer.add(500, this.restoreDash, this);
     }
-  };
+  }
 
   takeBullet(playerSprite = this.sprite, bullet) {
     this.die();
     bullet.kill();
-  };
+  }
 
   takeDamage(playerSprite = this.sprite, threatSprite) {
     if (!this.invincibility) {
@@ -247,7 +246,7 @@ export default class Player {
         this.die();
       }
     }
-  };
+  }
 
   showDamage() {
     let damageColor = 0xc51b10;
@@ -257,9 +256,9 @@ export default class Player {
       this.sprite.tint = damageColor;
     if (this.invincibility === true)
       this.scene.timer.add(250, this.showDamage, this);
-  };
+  }
 
   updateInvincibility() {
     this.invincibility = false;
-  };
+  }
 }
