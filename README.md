@@ -62,7 +62,4 @@ _TROUBLESHOOTING:_
 
 - "It's not even starting/Failed to create a Canvas 2d context in console" Using Brave? You might have to disable the shield for this one.
 
-- "It's none of the above" Please comment below. 
-
-There are downloadable builds for each platform, if your browser is absolutely against the idea of running the game, try downloading it.
-
+- "It's none of the above" Please raise an issue here
