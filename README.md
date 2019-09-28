@@ -52,3 +52,14 @@ You **will** be outnumbered, Use the environment against the enemies.
 
 --------
 
+_TROUBLESHOOTING:_
+
+"It doesn't work" :
+
+- "The page is gray" Wait a little bit.
+
+- "The loading bar finish then nothing" Make sure your adblocker is off then refresh.
+
+- "It's not even starting/Failed to create a Canvas 2d context in console" Using Brave? You might have to disable the shield for this one.
+
+- "It's none of the above" Please raise an issue here
