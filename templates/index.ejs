@@ -3,14 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title><%= htmlWebpackPlugin.options.title %></title>
-
+    <description><%= htmlWebpackPlugin.options.description %></description>
+    <div class='toubleshoot' id='troubleshoot'>
+        <h1>R0d3nt is loading...</h1>
+        <p>If you're seeing this, the game is going through initial loading.
+            <br>
+           It should dissapear in a moment.
+        </p>
+        <hr>
+        <h3>Troubleshooting</h3>
+        <p>If it's not dissapearing and/or nothing is happening :</p>
+        <ul>
+            <li>Do you have an ad-Blocker? Try whitelisting this page (there's no ads here I swear)</li>
+            <li>Slow connection? You'll have to wait a moment <br> Try refreshing if it takes too long</li>
+        </ul>
+        <p>There <b>is</b> downloadable version of the game on <a href='https://tuskat.itch.io/r0d3nt'>itch.io page</a>. Download it if nothing else work.</p>
+    </div>
     <style>
+        @font-face {
+            font-family: 'VCR_OSD';
+            src: url('/assets/fonts/VCR_OSD_MONO.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
             margin: 0px;/*This removes the border around the canvas that Phaser adds, making the game actually take up all the available space*/
+            font-size: 24px;
+            font-weight: lighter;
+            font-family: 'VCR_OSD', sans-serif;
+            background: black;
+            color: white;
+        }
+        a {
+            text-decoration: none;
+            color: #1e2e4f;
         }
         canvas {
             max-width: 100vw;
             max-height: 100vh;
+        }
+        .toubleshoot {
+            width: 50vw;
+            margin: 0 auto;
+
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>

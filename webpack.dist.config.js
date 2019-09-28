@@ -51,6 +51,7 @@ module.exports = {
         ]),
         new HtmlWebpackPlugin({
             title: 'R0D3NT',
+            description: 'R0D3NT is a platformer where you use the environment against your enemies',
             template: path.join(__dirname, 'templates/index.ejs')
         })
     ],

@@ -31,7 +31,10 @@ class App extends Phaser.Game {
         this.state.add('end', End);
         this.state.start('boot');
 
+        let troubleshoot = document.getElementById('troubleshoot');
+        troubleshoot.classList.add('hidden');
         window.addEventListener('resize', resize, false);
+
     }
 }
 
