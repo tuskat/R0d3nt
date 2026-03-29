@@ -1,3 +1,7 @@
+_NOTE ABOUT INSTALL:_ 
+The packages are all very old, and modern node might not install at all.
+Consider the project deprecated for the moment.
+
 _SPECIAL THANKS:_
 
 Boilerplate : Phaser NPM Webpack TypeScript Starter Project by [RRoylance](https://github.com/rroylance)
